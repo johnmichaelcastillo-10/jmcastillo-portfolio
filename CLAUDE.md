@@ -61,6 +61,11 @@ php -l <file>                                          # host PHP 8.5.11, lint o
   record); `scripts/seed-images.php` attaches one to each project that has no featured image
   (safe to re-run). The hero photo ships with the theme (`assets/images/`, see SOURCES.md).
   No captions, no credits page.
+- Images must be HD: project masters 1920×1200 (WordPress makes the srcset sizes), hero
+  ~1100px wide. Source them from **Wikimedia Commons** (API search, filter licence to
+  CC0/public domain, width ≥ 2000); download the 1920px `thumburl` (arbitrary widths like
+  2400px return an error page, so check the file is really an image). Openverse's proxy
+  caps downloads at ~800–1024px, so it is only good for finding candidates.
 - Finding images: Openverse API with `license=cc0,pdm` (never `by`). Flickr's image host
   (live.staticflickr.com) is unreachable from this network; download through Openverse's
   proxy `https://api.openverse.org/v1/images/<id>/thumb/?full_size=true&compressed=false`.
