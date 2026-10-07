@@ -2,7 +2,7 @@
 Theme Name:        JMC Portfolio
 Author:            John Michael Castillo
 Description:       A personal portfolio block theme. Pairs with the JMC Portfolio Core plugin for projects.
-Version:           1.1.0
+Version:           1.2.0
 Requires at least: 6.6
 Tested up to:      6.8
 Requires PHP:      8.1
@@ -976,7 +976,7 @@ button.wp-element-button:not(:disabled):hover {
 	content: "";
 	position: absolute;
 	z-index: -1;
-	inset: 1.5rem -1.5rem 2.75rem 1.5rem;
+	inset: 1.5rem -1.5rem -1.5rem 1.5rem;
 	border: 1px solid color-mix(in srgb, var(--wp--preset--color--primary) 18%, transparent);
 	border-radius: var(--jmc-radius-lg);
 	background: var(--wp--preset--color--primary-soft);
@@ -1003,7 +1003,7 @@ button.wp-element-button:not(:disabled):hover {
    off the photo's left edge, overlapping it. */
 .stats-card {
 	position: absolute;
-	bottom: 4.5rem;
+	bottom: 2.5rem;
 	left: -2.75rem;
 	display: grid;
 	gap: 0.7rem;
@@ -1034,26 +1034,6 @@ button.wp-element-button:not(:disabled):hover {
 	color: var(--wp--preset--color--contrast);
 	font-size: var(--wp--preset--font-size--small);
 	font-weight: 650;
-}
-
-/* Photo credits (CC BY requires them next to the image). */
-.hero-figure figcaption,
-.photo-credit {
-	margin-top: 0.75rem;
-	color: var(--wp--preset--color--muted);
-	font-size: var(--wp--preset--font-size--xs);
-	text-align: left;
-}
-
-.hero-figure figcaption a,
-.photo-credit a {
-	color: inherit;
-}
-
-/* Core makes every link in a featured-image block display:block (for the linked image). */
-.wp-block-post-featured-image .photo-credit a {
-	display: inline;
-	height: auto;
 }
 
 /* Photos are lit for white pages; take the glare off them on the dark canvas. */
@@ -1665,12 +1645,6 @@ button.wp-element-button:not(:disabled):hover {
 
 .prose li::marker {
 	color: var(--wp--preset--color--accent);
-}
-
-.credit-list {
-	display: grid;
-	gap: 0.75rem;
-	padding-left: 1.2rem;
 }
 
 .post-nav {

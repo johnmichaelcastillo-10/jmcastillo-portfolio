@@ -17,7 +17,6 @@ require_once __DIR__ . '/includes/content.php';
 require_once __DIR__ . '/includes/links.php';
 require_once __DIR__ . '/includes/contact.php';
 require_once __DIR__ . '/includes/seo.php';
-require_once __DIR__ . '/includes/media.php';
 
 register_activation_hook(
 	__FILE__,

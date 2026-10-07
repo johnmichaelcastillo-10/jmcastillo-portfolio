@@ -39,7 +39,7 @@
 	</div>
 	<div class="footer-bottom">
 		<p>© <?php echo esc_html( gmdate( 'Y' ) ); ?> <?php echo esc_html( get_bloginfo( 'name' ) ); ?></p>
-		<p><a href="/photo-credits/">Photo credits</a> <a href="#top">Back to top</a></p>
+		<p><a href="#top">Back to top</a></p>
 	</div>
 </div>
 <!-- /wp:html -->
