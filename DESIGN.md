@@ -7,10 +7,11 @@ read this before changing the theme. Tokens are theme.json presets (`--wp--prese
 ## Concept
 
 The copy presents the owner as a software developer in general (web applications and APIs);
-employers appear only in Experience. The hero photo is a developer at a laptop. The palette
-is **steel blue** (primary) and **beam orange** (accent), from warehouse racking. The accent
-appears as the short "beam" bar on section labels, the headline underline, the current-job
-timeline marker, the active-nav underline and list markers. Nowhere else.
+employers appear only in Experience. The hero photo is a close-up of code. The palette is
+the **Monochrome** group (Apple-like, minimal): #09090B · #18181B · #3F3F46 · #A1A1AA ·
+#FAFAFA. There is no hue at all; the photos are the only colour on the page. The "accent"
+(#18181B, #FAFAFA in dark mode) appears as the short bar on section labels, the headline
+underline, the current-job timeline marker, the active-nav underline and list markers.
 
 Credible-product polish without template tells: one photo-led hero, real content only (résumé
 facts, no invented metrics), restraint with effects (glass used once, on the stats card over
@@ -20,19 +21,21 @@ the photo; one faint dot-grid pattern, reused in the contact panel).
 
 | Role | Token | Light | Dark |
 | --- | --- | --- | --- |
-| Background | `base` | #f7f7f5 | #0d1117 |
-| Surface (cards) | `surface` | #ffffff | #141a22 |
-| Surface 2 (badges, fills) | `surface-2` | #f0f1ef | #1b222c |
-| Border | `line` | #e3e4e1 | #262f3b |
-| Field border / strong border | `field` | #b5b8b2 | #3d4756 |
-| Muted text | `muted` | #636b78 | #8d97a7 |
-| Text | `body` | #363d48 | #c6ccd6 |
-| Headings | `contrast` | #11151b | #f1f3f6 |
-| Primary (rack steel) | `primary` / `primary-soft` / `on-primary` | #1f4a8a / #e8eef7 / #fff | #7fa7ec / #16233a / #0d1117 |
-| Accent (beam orange) | `accent` / `accent-soft` | #c2410c / #fdeee5 | #fb8c3c / #2c1a0e |
-| Success / Warning / Error / Info | `success` `warning` `error` `info` | #15803d #a15c07 #b42318 #1d4ed8 | #4ade80 #fbbf24 #f87171 #60a5fa |
+| Background | `base` | #fafafa | #09090b |
+| Surface (cards) | `surface` | #ffffff | #18181b |
+| Surface 2 (badges, fills) | `surface-2` | #f4f4f5 | #222226 |
+| Border | `line` | #e4e4e7 | #2a2a2f |
+| Field border / strong border | `field` | #a1a1aa | #3f3f46 |
+| Muted text | `muted` | #71717a | #a1a1aa |
+| Text | `body` | #3f3f46 | #d4d4d8 |
+| Headings | `contrast` | #09090b | #fafafa |
+| Primary | `primary` / `primary-soft` / `on-primary` | #18181b / #f4f4f5 / #fafafa | #fafafa / #27272a / #09090b |
+| Accent | `accent` / `accent-soft` | #18181b / #f4f4f5 | #fafafa / #27272a |
+| Success / Warning / Error / Info | `success` `warning` `error` `info` | #15803d #a15c07 #b42318 #3f3f46 | #4ade80 #fbbf24 #f87171 #a1a1aa |
 
-Dark mode follows `prefers-color-scheme`. Shadows are ink-tinted, never pure black.
+Dark mode follows `prefers-color-scheme`. Shadows are tinted #09090B, never pure black.
+#A1A1AA is only 2.5:1 on #FAFAFA, so in light mode it is used for borders, not text; muted
+text there is #71717A (4.8:1). Red and green stay for error and success messages only.
 
 ## Type
 

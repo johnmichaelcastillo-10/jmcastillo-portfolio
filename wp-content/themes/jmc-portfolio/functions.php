@@ -117,8 +117,8 @@ add_action(
 add_action(
 	'wp_head',
 	static function () {
-		echo '<meta name="theme-color" content="#f7f7f5" media="(prefers-color-scheme: light)" />' . "\n";
-		echo '<meta name="theme-color" content="#0d1117" media="(prefers-color-scheme: dark)" />' . "\n";
+		echo '<meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />' . "\n";
+		echo '<meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)" />' . "\n";
 
 		// The body face is needed for first paint; preloading avoids a late font swap.
 		printf(
