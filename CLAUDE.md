@@ -64,6 +64,9 @@ php -l <file>                                          # host PHP 8.5.11, lint o
   (live.staticflickr.com) is unreachable from this network; download through Openverse's
   proxy `https://api.openverse.org/v1/images/<id>/thumb/?full_size=true&compressed=false`.
   Crop/convert with host PHP GD (`imagewebp`).
+- Identity rule (from the owner): present him as a software developer in general. Employers,
+  including Mets Cold Storage, appear **only in the Experience section**, never in the hero,
+  About, Work intro, project write-ups, tagline or meta tags.
 - Content rule: only facts from the résumé (`Downloads\Castillo-Resume-Dev.pdf`). Never invent
   metrics, outcomes or promises. Ask the user for numbers.
 

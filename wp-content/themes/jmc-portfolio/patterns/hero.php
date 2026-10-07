@@ -5,9 +5,9 @@
  * Categories: jmc-portfolio
  * Description: Headline, summary, actions, and the warehouse photo with a stats card.
  *
- * The photo is a pallet-rack aisle, the world the software I work on runs in; its steel-blue
- * uprights and orange beams are where the primary and accent colours come from. The stats
- * are résumé facts only: change them when the résumé changes.
+ * The copy describes the owner as a developer in general; employers belong in Experience
+ * only. The photo's steel-blue uprights and orange beams are where the primary and accent
+ * colours come from. The stats are résumé facts only: change them when the résumé changes.
  */
 
 $hero_src = get_theme_file_uri( 'assets/images/hero-warehouse-aisle.webp' );
@@ -18,11 +18,11 @@ $hero_src = get_theme_file_uri( 'assets/images/hero-warehouse-aisle.webp' );
 <!-- /wp:html -->
 
 <!-- wp:heading {"level":1,"className":"hero-title"} -->
-<h1 class="wp-block-heading hero-title">I build and maintain warehouse software.</h1>
+<h1 class="wp-block-heading hero-title">I build web applications and the APIs behind them.</h1>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"className":"lead hero-lead"} -->
-<p class="lead hero-lead">I'm John Michael, a developer at Mets Cold Storage working in C#, ASP.NET Web Forms and SQL Server, with backend API experience in PHP and Laravel.</p>
+<p class="lead hero-lead">I'm John Michael, a software developer working in C#, ASP.NET and SQL Server, and building backend APIs in PHP with Laravel.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:buttons {"className":"hero-actions"} -->
@@ -48,7 +48,7 @@ $hero_src = get_theme_file_uri( 'assets/images/hero-warehouse-aisle.webp' );
 <dl class="stats-card">
 	<div><dt>Experience</dt><dd>Nearly 2 years</dd></div>
 	<div><dt>Roles</dt><dd>Intern to junior programmer</dd></div>
-	<div><dt>Projects</dt><dd>6, from a WMS to university systems</dd></div>
+	<div><dt>Projects</dt><dd>6 web apps and APIs</dd></div>
 </dl>
 <!-- /wp:html --></div>
 <!-- /wp:group --></section>

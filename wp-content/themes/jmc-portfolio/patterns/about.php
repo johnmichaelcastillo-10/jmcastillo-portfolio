@@ -29,7 +29,7 @@ $groups = array(
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
-<p>Most of my week goes into a warehouse management system and its customer portal: new features, Excel import tools, replacing concatenated SQL with parameterized queries, and fixing production bugs. Before that I built backend APIs in PHP with Laravel and Lumen, including an e-wallet API and systems for my university's Registrar's Office and Foundation Day.</p>
+<p>I work across every layer of a business web application: server-side C#, the T-SQL queries and stored procedures behind it, and the jQuery front end. I've built data-import tools, moved concatenated SQL to parameterized queries, and fixed bugs in production. On the PHP side I've built backend APIs with Laravel and Lumen, including an e-wallet API and systems for a university's Registrar's Office and Foundation Day.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->

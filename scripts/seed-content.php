@@ -36,7 +36,7 @@ $projects = array(
 		'excerpt' => 'Maintaining and extending a cold-storage warehouse management system and its client-facing customer portal.',
 		'skills'  => array( 'C#', 'ASP.NET Web Forms', 'SQL Server', 'DevExpress', 'jQuery' ),
 		'content' => array(
-			$p( 'At Mets Cold Storage Services, I maintain and enhance the warehouse management system (WMS) and the client-facing customer portal of a cold storage and logistics company.' ),
+			$p( 'I maintain and enhance a warehouse management system (WMS) and the client-facing customer portal of a cold storage and logistics company.' ),
 			$h( 'What I do' ),
 			$list(
 				array(

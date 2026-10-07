@@ -6,9 +6,9 @@ read this before changing the theme. Tokens are theme.json presets (`--wp--prese
 
 ## Concept
 
-Built from the owner's work: warehouse and cold-storage systems. The hero photo is a
-pallet-rack aisle; its **steel-blue uprights** are the primary colour and its **orange beams**
-the accent. The accent appears as the short "beam" bar on section labels, the current-job
+The copy presents the owner as a software developer in general (web applications and APIs);
+employers appear only in Experience. Visually, the hero photo is a pallet-rack aisle; its
+**steel-blue uprights** are the primary colour and its **orange beams** the accent. The accent appears as the short "beam" bar on section labels, the current-job
 timeline marker, the active-nav underline and list markers. Nowhere else.
 
 Credible-product polish without template tells: one photo-led hero, real content only (résumé
