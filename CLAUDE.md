@@ -62,6 +62,10 @@ php -l <file>                                          # host PHP 8.5.11, lint o
   team `johnmichaelcastillo-10`, Free plan, this folder is linked via `.netlify/`). Deploy with
   `.\scripts\publish.ps1 -Deploy`. Visibility, form detection and notifications are
   dashboard-only settings (no API/CLI): https://app.netlify.com/projects/jmcastillo-portfolio
+  Project ID `6ff4e9d9-a159-48e4-9b49-237899dfc845`; the contact form registers as `contact`.
+  `netlify` is a PowerShell shim, so pass JSON through cmd:
+  `cmd /c 'netlify api listSiteForms --data "{\"site_id\":\"<id>\"}"'`. Check
+  `getSite` → `processing_settings.ignore_html_forms` is false before expecting forms.
 - **Hosting is static (Netlify).** `scripts/publish.ps1` runs `scripts/export-static.php`
   (host PHP, crawls http://localhost:8088 from `/`, `/projects/`, `/message-sent/` and the
   sitemap, downloads every referenced asset, rewrites URLs to `STATIC_URL`, strips REST/feed
