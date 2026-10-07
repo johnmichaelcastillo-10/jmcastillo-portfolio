@@ -14,3 +14,6 @@ graphify-out/
 
 # Static export: rebuild with scripts/publish.ps1
 dist/
+
+# Netlify CLI link state
+.netlify/
