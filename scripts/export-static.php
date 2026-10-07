@@ -1,0 +1,297 @@
+<?php
+/**
+ * Exports the running local WordPress site to plain static files in dist/, ready for
+ * Netlify (or any static host). Runs on the host's PHP, not in Docker:
+ *
+ *   php scripts/export-static.php [--source=http://localhost:8088] [--url=https://example.com] [--out=dist]
+ *
+ * What it does:
+ * - Starts from the home page, a few known pages and the WordPress sitemap, then follows every
+ *   internal link it finds.
+ * - Downloads every asset those pages reference (CSS, JS, fonts, images, PDFs), including
+ *   url(...) references inside CSS.
+ * - Rewrites the local site URL to --url (absolute, for canonical/og tags and the sitemap) or,
+ *   without --url, to root-relative paths for local previews.
+ * - Swaps the contact form over to Netlify Forms (WordPress's admin-post.php isn't there).
+ * - Drops head links that point at things a static site doesn't have (REST API, feeds, RSD).
+ * - Fails if any page contains a PHP warning, so a broken page can't be published.
+ */
+
+if ( PHP_SAPI !== 'cli' ) {
+	exit( 1 );
+}
+
+$opts   = getopt( '', array( 'source::', 'url::', 'out::' ) );
+$source = rtrim( $opts['source'] ?? 'http://localhost:8088', '/' );
+$target = rtrim( $opts['url'] ?? '', '/' ); // '' = root-relative output
+$out    = $opts['out'] ?? dirname( __DIR__ ) . '/dist';
+
+$src_parts = parse_url( $source );
+$src_host  = $src_parts['host'] . ( isset( $src_parts['port'] ) ? ':' . $src_parts['port'] : '' );
+
+/** GET a URL. Returns [status, body, content-type]. */
+function fetch( string $url ): array {
+	$ch = curl_init( $url );
+	curl_setopt_array(
+		$ch,
+		array(
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_FOLLOWLOCATION => false,
+			CURLOPT_TIMEOUT        => 60,
+			CURLOPT_USERAGENT      => 'jmc-static-export/1.0',
+		)
+	);
+	$body   = curl_exec( $ch );
+	$status = curl_getinfo( $ch, CURLINFO_RESPONSE_CODE );
+	$type   = (string) curl_getinfo( $ch, CURLINFO_CONTENT_TYPE );
+	return array( $status, false === $body ? '' : $body, $type );
+}
+
+/** Path part of an internal URL, or null if the URL isn't on the local site. */
+function internal_path( string $url, string $source, string $src_host ): ?string {
+	$url = html_entity_decode( trim( $url ), ENT_QUOTES );
+	if ( '' === $url || str_starts_with( $url, '#' ) || str_starts_with( $url, 'data:' )
+		|| preg_match( '#^(mailto|tel|javascript):#i', $url ) ) {
+		return null;
+	}
+	if ( str_starts_with( $url, '//' ) ) {
+		$url = 'http:' . $url;
+	}
+	if ( preg_match( '#^https?://#i', $url ) ) {
+		$p = parse_url( $url );
+		$h = ( $p['host'] ?? '' ) . ( isset( $p['port'] ) ? ':' . $p['port'] : '' );
+		if ( $h !== $src_host ) {
+			return null;
+		}
+		$url = $p['path'] ?? '/';
+	} elseif ( ! str_starts_with( $url, '/' ) ) {
+		return null; // relative paths are resolved by the CSS handler only
+	}
+	$url = preg_replace( '/[?#].*$/', '', $url );
+	return '' === $url ? '/' : $url;
+}
+
+/** Whether a path is something we never publish. */
+function skipped( string $path ): bool {
+	return (bool) preg_match( '#^/(wp-admin|wp-login\.php|wp-json|xmlrpc\.php|wp-cron\.php|feed|comments/feed)|/feed/?$|/embed/?$|\.php$#', $path );
+}
+
+/** Where a path is written inside dist/. */
+function out_file( string $out, string $path ): string {
+	if ( str_ends_with( $path, '/' ) ) {
+		$path .= 'index.html';
+	}
+	return $out . str_replace( '/', DIRECTORY_SEPARATOR, rawurldecode( $path ) );
+}
+
+function write_file( string $file, string $data ): void {
+	if ( ! is_dir( dirname( $file ) ) ) {
+		mkdir( dirname( $file ), 0777, true );
+	}
+	file_put_contents( $file, $data );
+}
+
+/** Every URL referenced by an HTML document. */
+function html_refs( string $html ): array {
+	$refs = array();
+	preg_match_all( '/\b(?:href|src|content)\s*=\s*(["\'])(.*?)\1/is', $html, $m );
+	$refs = array_merge( $refs, $m[2] );
+	preg_match_all( '/\bsrcset\s*=\s*(["\'])(.*?)\1/is', $html, $m );
+	foreach ( $m[2] as $set ) {
+		foreach ( explode( ',', $set ) as $candidate ) {
+			$refs[] = preg_split( '/\s+/', trim( $candidate ) )[0];
+		}
+	}
+	return array_merge( $refs, css_refs( $html ) );
+}
+
+/** url(...) references in CSS (also used on inline <style> in HTML). */
+function css_refs( string $css ): array {
+	preg_match_all( '/url\(\s*(["\']?)([^"\')]+)\1\s*\)/i', $css, $m );
+	return $m[2];
+}
+
+// ---------------------------------------------------------------------------
+
+if ( is_dir( $out ) ) {
+	// Start clean so pages deleted in WordPress don't linger in the export.
+	$it = new RecursiveIteratorIterator( new RecursiveDirectoryIterator( $out, FilesystemIterator::SKIP_DOTS ), RecursiveIteratorIterator::CHILD_FIRST );
+	foreach ( $it as $f ) {
+		$f->isDir() ? rmdir( $f->getPathname() ) : unlink( $f->getPathname() );
+	}
+}
+mkdir( $out, 0777, true );
+
+$pages  = array( '/', '/projects/', '/message-sent/' );
+$assets = array();
+$seen   = array();
+$errors = array();
+
+// Seed from the sitemap index and its child sitemaps.
+[ $status, $index ] = fetch( "$source/wp-sitemap.xml" );
+if ( 200 === $status ) {
+	preg_match_all( '#<loc>(.*?)</loc>#', $index, $m );
+	foreach ( $m[1] as $child ) {
+		[ , $xml ] = fetch( html_entity_decode( $child ) );
+		preg_match_all( '#<loc>(.*?)</loc>#', $xml, $mm );
+		foreach ( $mm[1] as $loc ) {
+			$p = internal_path( $loc, $source, $src_host );
+			if ( null !== $p ) {
+				$pages[] = $p;
+			}
+		}
+	}
+}
+
+$rewrite = static function ( string $text ) use ( $source, $target ): string {
+	// Plain and JSON-escaped forms of the local URL.
+	$text = str_replace( $source, $target, $text );
+	return str_replace( str_replace( '/', '\/', $source ), str_replace( '/', '\/', $target ), $text );
+};
+
+// Crawl pages.
+while ( $pages ) {
+	$path = array_shift( $pages );
+	if ( isset( $seen[ $path ] ) || skipped( $path ) ) {
+		continue;
+	}
+	$seen[ $path ] = true;
+
+	[ $status, $html, $type ] = fetch( $source . $path );
+	if ( 200 !== $status || ! str_contains( $type, 'text/html' ) ) {
+		$errors[] = "$path returned $status";
+		continue;
+	}
+	if ( preg_match( '#<b>(Warning|Notice|Deprecated|Fatal error)</b>#', $html ) ) {
+		$errors[] = "$path contains a PHP warning";
+	}
+
+	foreach ( html_refs( $html ) as $ref ) {
+		$p = internal_path( $ref, $source, $src_host );
+		if ( null === $p || skipped( $p ) ) {
+			continue;
+		}
+		if ( str_ends_with( $p, '/' ) ) {
+			$pages[] = $p;
+		} elseif ( preg_match( '/\.[a-z0-9]{2,5}$/i', $p ) ) {
+			$assets[ $p ] = true;
+		}
+	}
+
+	write_file( out_file( $out, $path ), $html ); // transformed below, after the crawl
+	echo "page   $path\n";
+}
+
+// The 404 page: Netlify serves /404.html for any missing path.
+[ $status, $html ] = fetch( "$source/__static-export-404__/" );
+if ( 404 === $status ) {
+	write_file( "$out/404.html", $html );
+	foreach ( html_refs( $html ) as $ref ) {
+		$p = internal_path( $ref, $source, $src_host );
+		if ( null !== $p && ! skipped( $p ) && preg_match( '/\.[a-z0-9]{2,5}$/i', $p ) ) {
+			$assets[ $p ] = true;
+		}
+	}
+	echo "page   /404.html\n";
+}
+
+// Download assets; follow url(...) inside CSS.
+$queue = array_keys( $assets );
+$done  = array();
+while ( $queue ) {
+	$path = array_shift( $queue );
+	if ( isset( $done[ $path ] ) ) {
+		continue;
+	}
+	$done[ $path ] = true;
+	[ $status, $body ] = fetch( $source . $path );
+	if ( 200 !== $status ) {
+		$errors[] = "asset $path returned $status";
+		continue;
+	}
+	if ( str_ends_with( $path, '.css' ) ) {
+		foreach ( css_refs( $body ) as $ref ) {
+			if ( str_starts_with( $ref, 'data:' ) ) {
+				continue;
+			}
+			$p = str_starts_with( $ref, '/' ) || preg_match( '#^https?://#', $ref )
+				? internal_path( $ref, $source, $src_host )
+				: internal_path( dirname( $path ) . '/' . $ref, $source, $src_host );
+			if ( null !== $p ) {
+				// Collapse ../ segments.
+				$parts = array();
+				foreach ( explode( '/', $p ) as $seg ) {
+					if ( '..' === $seg ) {
+						array_pop( $parts );
+					} elseif ( '.' !== $seg ) {
+						$parts[] = $seg;
+					}
+				}
+				$queue[] = implode( '/', $parts );
+			}
+		}
+		$body = $rewrite( $body );
+	}
+	write_file( out_file( $out, $path ), $body );
+}
+echo 'assets ' . count( $done ) . " files\n";
+
+// robots.txt and sitemaps.
+foreach ( array( '/robots.txt', '/wp-sitemap.xml', '/wp-sitemap.xsl', '/wp-sitemap-index.xsl' ) as $path ) {
+	[ $status, $body ] = fetch( $source . $path );
+	if ( 200 === $status ) {
+		write_file( out_file( $out, $path ), $rewrite( $body ) );
+	}
+}
+[ , $index ] = fetch( "$source/wp-sitemap.xml" );
+preg_match_all( '#<loc>(.*?)</loc>#', $index, $m );
+foreach ( $m[1] as $child ) {
+	$p = internal_path( $child, $source, $src_host );
+	[ $status, $body ] = fetch( html_entity_decode( $child ) );
+	if ( null !== $p && 200 === $status ) {
+		write_file( out_file( $out, $p ), $rewrite( $body ) );
+	}
+}
+
+// Transform every exported HTML file.
+$netlify_form = static function ( string $html ): string {
+	if ( ! str_contains( $html, 'jmc-contact-form' ) ) {
+		return $html;
+	}
+	$html = preg_replace(
+		'#<form class="jmc-contact-form" method="post" action="[^"]*"#',
+		'<form class="jmc-contact-form" name="contact" method="POST" action="/message-sent/" data-netlify="true" netlify-honeypot="jmc_website"',
+		$html
+	);
+	$html = preg_replace( '#<input type="hidden" name="action" value="jmc_contact" />#', '<input type="hidden" name="form-name" value="contact" />', $html );
+	return preg_replace( '#\s*<input type="hidden" name="jmc_ts" value="\d+" />#', '', $html );
+};
+
+$it = new RecursiveIteratorIterator( new RecursiveDirectoryIterator( $out, FilesystemIterator::SKIP_DOTS ) );
+foreach ( $it as $f ) {
+	if ( 'html' !== $f->getExtension() ) {
+		continue;
+	}
+	$html = file_get_contents( $f->getPathname() );
+	$html = preg_replace( '#<link[^>]+(wp-json|xmlrpc\.php|/feed/|EditURI|rel=["\']shortlink)[^>]*>\s*#i', '', $html );
+	$html = preg_replace( '#<meta name="generator"[^>]*>\s*#i', '', $html );
+	$html = $netlify_form( $html );
+	file_put_contents( $f->getPathname(), $rewrite( $html ) );
+}
+
+// Final check: nothing may still point at the local site.
+$left = array();
+foreach ( new RecursiveIteratorIterator( new RecursiveDirectoryIterator( $out, FilesystemIterator::SKIP_DOTS ) ) as $f ) {
+	if ( preg_match( '/\.(html|css|js|xml|xsl|txt)$/', $f->getFilename() ) && str_contains( file_get_contents( $f->getPathname() ), $src_host ) ) {
+		$left[] = substr( $f->getPathname(), strlen( $out ) );
+	}
+}
+if ( $left ) {
+	$errors[] = 'still references ' . $src_host . ': ' . implode( ', ', $left );
+}
+
+if ( $errors ) {
+	fwrite( STDERR, "\nExport finished with problems:\n - " . implode( "\n - ", $errors ) . "\n" );
+	exit( 1 );
+}
+echo "\nExported " . count( $seen ) . ' pages to ' . realpath( $out ) . ( $target ? " for $target" : ' (root-relative links)' ) . "\n";

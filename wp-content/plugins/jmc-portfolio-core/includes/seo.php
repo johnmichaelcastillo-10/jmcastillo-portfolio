@@ -8,6 +8,40 @@ defined( 'ABSPATH' ) || exit;
 
 add_action( 'wp_head', 'jmc_portfolio_meta_tags', 1 );
 
+// The users sitemap would publish author archives, and with them the admin username.
+add_filter(
+	'wp_sitemaps_add_provider',
+	static fn( $provider, $name ) => 'users' === $name ? false : $provider,
+	10,
+	2
+);
+
+// The thank-you page after a contact form submission has no business in search results.
+add_action(
+	'wp_head',
+	static function () {
+		if ( is_page( 'message-sent' ) ) {
+			echo '<meta name="robots" content="noindex" />' . "\n";
+		}
+	},
+	1
+);
+
+add_filter(
+	'wp_sitemaps_posts_query_args',
+	static function ( $args, $post_type ) {
+		if ( 'page' === $post_type ) {
+			$page = get_page_by_path( 'message-sent' );
+			if ( $page ) {
+				$args['post__not_in'] = array_merge( $args['post__not_in'] ?? array(), array( $page->ID ) );
+			}
+		}
+		return $args;
+	},
+	10,
+	2
+);
+
 function jmc_portfolio_meta_tags(): void {
 	if ( defined( 'WPSEO_VERSION' ) || defined( 'RANK_MATH_VERSION' ) || defined( 'AIOSEO_VERSION' ) || defined( 'SEOPRESS_VERSION' ) ) {
 		return;

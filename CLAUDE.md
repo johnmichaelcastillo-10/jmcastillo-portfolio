@@ -55,7 +55,16 @@ php -l <file>                                          # host PHP 8.5.11, lint o
   are personal work only, added by the owner. Experience duties stay generic ("internal
   business web applications"). The Work section, its nav/footer links and the hero's "View my
   work" button appear only when a project is published (`jmc_has_projects()`).
-- `scripts/seed-content.php` only sets the tagline. Pre-removal backup with the old projects:
+- **Hosting is static (Netlify).** `scripts/publish.ps1` runs `scripts/export-static.php`
+  (host PHP, crawls http://localhost:8088 from `/`, `/projects/`, `/message-sent/` and the
+  sitemap, downloads every referenced asset, rewrites URLs to `STATIC_URL`, strips REST/feed
+  head links) into `dist/` (gitignored), then copies `static/` (`_headers`) in. The export
+  fails on PHP warnings or leftover localhost links. Anything that needs PHP at request time
+  won't work live: the contact form becomes a Netlify form (`name="contact"`, honeypot
+  `jmc_website`, success page `/message-sent/`); new server features must have a static
+  equivalent. A new page reachable only by a link is found by the crawler; one not linked
+  anywhere must be added to the seed list in the exporter.
+- `scripts/seed-content.php` sets the tagline and creates the `message-sent` page. Pre-removal backup with the old projects:
   `backups/wordpress-before-removing-projects-*.sql` (local only, never publish it).
 - Back up before anything risky. Dump inside the container and copy out, never pipe through
   PowerShell 5.1 (it re-encodes):

@@ -1,0 +1,10 @@
+# Netlify response headers, copied into dist/ by scripts/publish.ps1.
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+# Fonts, images and scripts rarely change; let browsers keep them for a week.
+/wp-content/*
+  Cache-Control: public, max-age=604800

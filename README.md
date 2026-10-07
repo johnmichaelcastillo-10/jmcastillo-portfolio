@@ -40,6 +40,30 @@ docker compose down -v                    # delete everything, including the dat
 
 Theme and plugin folders are bind-mounted, so edits show up on refresh.
 
+## Publishing (static, serverless)
+
+WordPress only runs on this computer, as the editor. The public site is a static copy: plain
+HTML, CSS, fonts and images, hosted on Netlify with no PHP or database online.
+
+```powershell
+.\scripts\publish.ps1            # build dist/ from the local site
+php -S 127.0.0.1:8099 -t dist    # preview it at http://127.0.0.1:8099
+.\scripts\publish.ps1 -Deploy    # build and deploy to Netlify
+```
+
+One-time Netlify setup:
+
+1. `npx netlify-cli login`, then `npx netlify-cli sites:create` (or `link` to an existing site)
+   in this folder.
+2. In the Netlify site settings, turn on **Forms → Enable form detection**, then add an email
+   notification under **Forms → Form notifications** so contact messages reach your inbox.
+3. Put the site's address in `.env` as `STATIC_URL=https://<your-site>.netlify.app` (or your
+   own domain) so canonical, share-preview and sitemap links are absolute.
+
+On the static site the contact form is handled by Netlify Forms (with spam filtering and the
+hidden honeypot field); after sending, visitors land on `/message-sent/`. Locally, the same
+form still saves to Admin → Messages.
+
 ## Editing content
 
 - **Projects:** Admin → Projects. Set a featured image, an excerpt (the card text) and skills.
