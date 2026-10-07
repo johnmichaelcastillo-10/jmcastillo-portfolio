@@ -5,3 +5,6 @@ Thumbs.db
 node_modules/
 # Playwright CLI output (may contain credentials)
 .playwright-cli/
+
+# Local database dumps
+backups/

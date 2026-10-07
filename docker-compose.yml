@@ -2,9 +2,12 @@ name: portfolio
 
 services:
   db:
-    image: mariadb:11
+    # 12.3 is the current LTS. Pinned to the minor version so a pull never jumps a major.
+    image: mariadb:12.3
     restart: unless-stopped
     environment:
+      # Runs mariadb-upgrade on start when the data directory came from an older version.
+      MARIADB_AUTO_UPGRADE: "1"
       MARIADB_DATABASE: ${DB_NAME}
       MARIADB_USER: ${DB_USER}
       MARIADB_PASSWORD: ${DB_PASSWORD}
@@ -18,7 +21,7 @@ services:
       retries: 20
 
   wordpress:
-    image: wordpress:php8.3-apache
+    image: wordpress:php8.5-apache
     restart: unless-stopped
     depends_on:
       db:
@@ -41,7 +44,7 @@ services:
 
   # WP-CLI, run on demand: docker compose run --rm cli wp <command>
   cli:
-    image: wordpress:cli-php8.3
+    image: wordpress:cli-php8.5
     profiles: ["cli"]
     user: "33:33"
     environment: *wp_env
