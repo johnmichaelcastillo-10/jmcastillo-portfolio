@@ -69,32 +69,39 @@ function jmc_portfolio_contact_form(): string {
 
 	ob_start();
 
+	$is_error = false;
 	if ( isset( $notices[ $status ] ) ) {
 		[ $is_error, $text ] = $notices[ $status ];
 		printf(
-			'<p class="jmc-contact-notice%1$s" role="%2$s">%3$s</p>',
+			'<p id="jmc-contact-status" class="jmc-contact-notice%1$s" role="%2$s">%3$s</p>',
 			$is_error ? ' is-error' : '',
 			$is_error ? 'alert' : 'status',
 			esc_html( $text )
 		);
 	}
+	// Ties the error message to the fields so screen readers announce it on focus.
+	$described = $is_error ? ' aria-describedby="jmc-contact-status" aria-invalid="true"' : '';
 	?>
-	<form class="jmc-contact-form" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+	<form class="jmc-contact-form" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" data-sending-label="<?php esc_attr_e( 'Sending…', 'jmc-portfolio-core' ); ?>">
 		<input type="hidden" name="action" value="<?php echo esc_attr( JMC_CONTACT_ACTION ); ?>" />
 		<input type="hidden" name="jmc_ts" value="<?php echo esc_attr( (string) time() ); ?>" />
-		<label><?php esc_html_e( 'Name', 'jmc-portfolio-core' ); ?>
-			<input type="text" name="jmc_name" required maxlength="100" autocomplete="name" />
-		</label>
-		<label><?php esc_html_e( 'Email', 'jmc-portfolio-core' ); ?>
-			<input type="email" name="jmc_email" required maxlength="200" autocomplete="email" />
-		</label>
-		<label><?php esc_html_e( 'Message', 'jmc-portfolio-core' ); ?>
-			<textarea name="jmc_message" required minlength="10" maxlength="5000"></textarea>
-		</label>
+		<div class="jmc-field">
+			<label for="jmc-name"><?php esc_html_e( 'Name', 'jmc-portfolio-core' ); ?></label>
+			<input id="jmc-name" type="text" name="jmc_name" required maxlength="100" autocomplete="name"<?php echo $described; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed string. ?> />
+		</div>
+		<div class="jmc-field">
+			<label for="jmc-email"><?php esc_html_e( 'Email', 'jmc-portfolio-core' ); ?></label>
+			<input id="jmc-email" type="email" name="jmc_email" required maxlength="200" autocomplete="email" inputmode="email" spellcheck="false" autocapitalize="off"<?php echo $described; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed string. ?> />
+		</div>
+		<div class="jmc-field">
+			<label for="jmc-message"><?php esc_html_e( 'Message', 'jmc-portfolio-core' ); ?></label>
+			<textarea id="jmc-message" name="jmc_message" required minlength="10" maxlength="5000" aria-describedby="jmc-message-help<?php echo $is_error ? ' jmc-contact-status' : ''; ?>"></textarea>
+			<p id="jmc-message-help" class="jmc-help"><?php esc_html_e( 'At least 10 characters.', 'jmc-portfolio-core' ); ?></p>
+		</div>
 		<div class="jmc-hp" aria-hidden="true">
 			<label>Leave this empty <input type="text" name="jmc_website" tabindex="-1" autocomplete="off" /></label>
 		</div>
-		<button type="submit" class="wp-element-button"><?php esc_html_e( 'Send message', 'jmc-portfolio-core' ); ?></button>
+		<button type="submit" class="wp-element-button"><?php esc_html_e( 'Send Message', 'jmc-portfolio-core' ); ?></button>
 	</form>
 	<?php
 	return (string) ob_get_clean();

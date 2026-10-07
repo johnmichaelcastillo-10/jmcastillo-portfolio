@@ -2,23 +2,17 @@
 
 <!-- wp:group {"tagName":"main","layout":{"type":"constrained"}} -->
 <main class="wp-block-group"><!-- wp:group {"align":"wide","className":"section","layout":{"type":"default"}} -->
-<div class="wp-block-group alignwide section"><!-- wp:paragraph {"className":"eyebrow"} -->
-<p class="eyebrow">Work</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:query-title {"type":"archive","showPrefix":false} /-->
+<div class="wp-block-group alignwide section"><!-- wp:query-title {"type":"archive","showPrefix":false} /-->
 
 <!-- wp:term-description /-->
 
-<!-- wp:query {"queryId":2,"query":{"perPage":12,"pages":0,"offset":0,"postType":"project","inherit":true},"className":"project-grid"} -->
-<div class="wp-block-query project-grid"><!-- wp:post-template {"layout":{"type":"grid","columnCount":3,"minimumColumnWidth":"16rem"}} -->
-<!-- wp:post-featured-image {"isLink":true,"aspectRatio":"4/3"} /-->
-
-<!-- wp:post-title {"level":2,"isLink":true,"fontSize":"large"} /-->
+<!-- wp:query {"queryId":3,"query":{"perPage":20,"pages":0,"offset":0,"postType":"project","inherit":true},"className":"project-list"} -->
+<div class="wp-block-query project-list"><!-- wp:post-template -->
+<!-- wp:post-title {"level":2,"isLink":true,"fontSize":"h3"} /-->
 
 <!-- wp:post-excerpt {"excerptLength":24} /-->
 
-<!-- wp:post-terms {"term":"project_skill","separator":" ","className":"skill-tags"} /-->
+<!-- wp:post-terms {"term":"project_skill","separator":", ","className":"stack"} /-->
 <!-- /wp:post-template -->
 
 <!-- wp:query-pagination {"layout":{"type":"flex","justifyContent":"space-between"}} -->
