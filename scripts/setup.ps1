@@ -64,6 +64,9 @@ if ([int]$projectCount -eq 0) {
     Invoke-WP eval-file /scripts/seed-content.php
 }
 
+# Only fills in projects that have no featured image yet, so it's safe on every run.
+Invoke-WP eval-file /scripts/seed-images.php
+
 Write-Host ''
 Write-Host "Site:  $($cfg.WP_URL)"
 Write-Host "Admin: $($cfg.WP_URL)/wp-admin  (user: $($cfg.WP_ADMIN_USER), password in .env)"
