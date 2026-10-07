@@ -121,8 +121,6 @@ Image generation (Higgsfield) costs credits: never use it without asking.
 
 ## Open items
 
-- PHP 8.3 winget package half-uninstalled: VS Code's PHP IntelliSense held a file. With VS
-  Code closed, run `winget uninstall --id PHP.PHP.8.3 -e`, then delete its leftover folder.
 - Missing from the user: personal projects (none yet), LinkedIn URL, resume copy without
   the phone number.
 - Hosting choice, then SMTP for contact mail and analytics.
