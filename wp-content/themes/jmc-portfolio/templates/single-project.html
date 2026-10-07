@@ -1,0 +1,33 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","className":"section","layout":{"type":"constrained"}} -->
+<main class="wp-block-group section"><!-- wp:paragraph {"className":"eyebrow"} -->
+<p class="eyebrow"><a href="/projects/">← All projects</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:post-title {"level":1} /-->
+
+<!-- wp:post-excerpt {"className":"lead","fontSize":"large"} /-->
+
+<!-- wp:post-terms {"term":"project_skill","separator":" ","className":"skill-tags"} /-->
+
+<!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button {"metadata":{"bindings":{"url":{"source":"core/post-meta","args":{"key":"project_url"}}}}} -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button">View live site</a></div>
+<!-- /wp:button -->
+
+<!-- wp:button {"className":"is-style-outline","metadata":{"bindings":{"url":{"source":"core/post-meta","args":{"key":"repo_url"}}}}} -->
+<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button">Source code</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->
+
+<!-- wp:post-featured-image {"align":"wide","aspectRatio":"16/9"} /-->
+
+<!-- wp:post-content {"layout":{"type":"constrained"}} /-->
+
+<!-- wp:post-navigation-link {"type":"previous","showTitle":true,"linkLabel":true} /-->
+
+<!-- wp:post-navigation-link {"showTitle":true,"linkLabel":true} /--></main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

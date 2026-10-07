@@ -1,0 +1,157 @@
+/*
+Theme Name:        JMC Portfolio
+Author:            John Michael Castillo
+Description:       A minimal block theme for a personal portfolio. Pairs with the JMC Portfolio Core plugin for projects.
+Version:           0.1.0
+Requires at least: 6.6
+Tested up to:      6.8
+Requires PHP:      8.1
+License:           GPL-2.0-or-later
+Text Domain:       jmc-portfolio
+*/
+
+/* Most styling lives in theme.json; this file holds what theme.json can't express. */
+
+html {
+	scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+}
+
+/* Sticky header */
+header.wp-block-template-part {
+	position: sticky;
+	top: 0;
+	z-index: 50;
+	background: var(--wp--preset--color--base);
+	border-bottom: 1px solid var(--wp--preset--color--line);
+}
+
+.admin-bar header.wp-block-template-part {
+	top: 32px;
+}
+
+@media (max-width: 782px) {
+	.admin-bar header.wp-block-template-part {
+		top: 46px;
+	}
+}
+
+@media (max-width: 600px) {
+	.admin-bar header.wp-block-template-part {
+		top: 0;
+	}
+}
+
+.site-header-inner {
+	padding-block: var(--wp--preset--spacing--30);
+}
+
+/* Sections */
+.section {
+	padding-block: var(--wp--preset--spacing--70);
+}
+
+.section-tight {
+	padding-block: var(--wp--preset--spacing--50);
+}
+
+.section[id] {
+	scroll-margin-top: 5rem;
+}
+
+.section + .section {
+	border-top: 1px solid var(--wp--preset--color--line);
+}
+
+.eyebrow {
+	font-family: var(--wp--preset--font-family--mono);
+	font-size: var(--wp--preset--font-size--small);
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--wp--preset--color--muted);
+}
+
+.hero h1 {
+	max-width: 22ch;
+}
+
+.hero .lead {
+	max-width: 60ch;
+	color: var(--wp--preset--color--muted);
+}
+
+/* Project cards */
+.project-grid .wp-block-post {
+	display: flex;
+	flex-direction: column;
+	gap: var(--wp--preset--spacing--20);
+}
+
+.project-grid .wp-block-post-featured-image {
+	margin: 0;
+}
+
+.project-grid .wp-block-post-featured-image img {
+	border-radius: 12px;
+	background: var(--wp--preset--color--surface);
+}
+
+.project-grid .wp-block-post-title a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.project-grid .wp-block-post-title a:hover {
+	color: var(--wp--preset--color--accent);
+}
+
+.project-grid .wp-block-post-excerpt__excerpt {
+	margin: 0;
+	color: var(--wp--preset--color--muted);
+}
+
+/* Skill pills: used for project terms and the About skill list */
+.skill-tags,
+.skill-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+
+.skill-tags a,
+.skill-list li {
+	display: inline-block;
+	padding: 0.2rem 0.7rem;
+	border: 1px solid var(--wp--preset--color--line);
+	border-radius: 999px;
+	color: var(--wp--preset--color--contrast);
+	text-decoration: none;
+}
+
+.skill-tags a:hover {
+	border-color: var(--wp--preset--color--accent);
+	color: var(--wp--preset--color--accent);
+}
+
+.skill-tags .wp-block-post-terms__separator {
+	display: none;
+}
+
+.skill-list {
+	list-style: none;
+	padding: 0;
+	font-family: var(--wp--preset--font-family--mono);
+	font-size: var(--wp--preset--font-size--small);
+}
+
+/* Footer */
+footer.wp-block-template-part {
+	border-top: 1px solid var(--wp--preset--color--line);
+	color: var(--wp--preset--color--muted);
+	font-size: var(--wp--preset--font-size--small);
+}
