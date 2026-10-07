@@ -10,7 +10,7 @@
  * are résumé facts only: change them when the résumé changes.
  */
 
-$hero_src = get_theme_file_uri( 'assets/images/hero-developer.webp' );
+$hero_src = get_theme_file_uri( 'assets/images/hero-code.webp' );
 ?>
 <!-- wp:group {"tagName":"section","anchor":"top","align":"wide","className":"hero","layout":{"type":"default"}} -->
 <section id="top" class="wp-block-group alignwide hero"><!-- wp:group {"className":"hero-copy","layout":{"type":"default"}} -->
@@ -43,7 +43,7 @@ $hero_src = get_theme_file_uri( 'assets/images/hero-developer.webp' );
 
 <!-- wp:group {"className":"hero-media","layout":{"type":"default"}} -->
 <div class="wp-block-group hero-media"><!-- wp:image {"aspectRatio":"4/5","scale":"cover","sizeSlug":"full","linkDestination":"none","className":"hero-figure"} -->
-<figure class="wp-block-image size-full hero-figure"><img src="<?php echo esc_url( $hero_src ); ?>" alt="Hands typing on a laptop showing PHP code in an editor" style="aspect-ratio:4/5;object-fit:cover"/></figure>
+<figure class="wp-block-image size-full hero-figure"><img src="<?php echo esc_url( $hero_src ); ?>" alt="Close-up of colourful PHP code in a code editor" style="aspect-ratio:4/5;object-fit:cover"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:html -->
