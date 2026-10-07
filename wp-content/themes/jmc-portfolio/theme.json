@@ -27,13 +27,45 @@
 			"fontFamilies": [
 				{
 					"slug": "sans",
-					"name": "System Sans",
-					"fontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif"
+					"name": "Inter",
+					"fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+					"fontFace": [
+						{
+							"fontFamily": "Inter",
+							"fontStyle": "normal",
+							"fontWeight": "400 700",
+							"fontDisplay": "swap",
+							"src": [ "file:./assets/fonts/inter.woff2" ]
+						}
+					]
+				},
+				{
+					"slug": "heading",
+					"name": "Space Grotesk",
+					"fontFamily": "\"Space Grotesk\", Inter, ui-sans-serif, system-ui, sans-serif",
+					"fontFace": [
+						{
+							"fontFamily": "Space Grotesk",
+							"fontStyle": "normal",
+							"fontWeight": "500 700",
+							"fontDisplay": "swap",
+							"src": [ "file:./assets/fonts/space-grotesk.woff2" ]
+						}
+					]
 				},
 				{
 					"slug": "mono",
-					"name": "System Mono",
-					"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, \"Liberation Mono\", monospace"
+					"name": "JetBrains Mono",
+					"fontFamily": "\"JetBrains Mono\", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+					"fontFace": [
+						{
+							"fontFamily": "JetBrains Mono",
+							"fontStyle": "normal",
+							"fontWeight": "400 600",
+							"fontDisplay": "swap",
+							"src": [ "file:./assets/fonts/jetbrains-mono.woff2" ]
+						}
+					]
 				}
 			],
 			"fontSizes": [
@@ -82,6 +114,7 @@
 			},
 			"heading": {
 				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--heading)",
 					"fontWeight": "700",
 					"lineHeight": "1.15",
 					"letterSpacing": "-0.02em"
@@ -110,7 +143,11 @@
 		},
 		"blocks": {
 			"core/site-title": {
-				"typography": { "fontSize": "var(--wp--preset--font-size--medium)", "fontWeight": "700" },
+				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--heading)",
+					"fontSize": "var(--wp--preset--font-size--medium)",
+					"fontWeight": "700"
+				},
 				"elements": {
 					"link": {
 						"color": { "text": "var(--wp--preset--color--contrast)" },

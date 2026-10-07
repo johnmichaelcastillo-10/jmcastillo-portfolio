@@ -26,6 +26,10 @@
 
 <!-- wp:button {"className":"is-style-outline"} -->
 <div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="#contact">Get in touch</a></div>
+<!-- /wp:button -->
+
+<!-- wp:button {"className":"is-style-outline","metadata":{"bindings":{"url":{"source":"jmc-portfolio/resume"}}}} -->
+<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button">Download résumé</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons --></div>
 <!-- /wp:group -->

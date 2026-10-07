@@ -1,0 +1,16 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "jmc-portfolio/contact-form",
+	"title": "Contact form",
+	"category": "widgets",
+	"icon": "email",
+	"description": "Name, email and message form. Messages appear under Admin → Messages.",
+	"textdomain": "jmc-portfolio-core",
+	"supports": {
+		"html": false,
+		"multiple": false
+	},
+	"editorScript": "file:./editor.js",
+	"render": "file:./render.php"
+}

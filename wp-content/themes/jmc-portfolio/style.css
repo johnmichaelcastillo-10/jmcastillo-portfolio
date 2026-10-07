@@ -2,7 +2,7 @@
 Theme Name:        JMC Portfolio
 Author:            John Michael Castillo
 Description:       A minimal block theme for a personal portfolio. Pairs with the JMC Portfolio Core plugin for projects.
-Version:           0.1.0
+Version:           0.2.0
 Requires at least: 6.6
 Tested up to:      6.8
 Requires PHP:      8.1
@@ -12,6 +12,23 @@ Text Domain:       jmc-portfolio
 
 /* Most styling lives in theme.json; this file holds what theme.json can't express. */
 
+:root {
+	color-scheme: light dark;
+}
+
+/* Dark mode follows the visitor's system setting. theme.json styles reference the
+   palette through these variables, so swapping them recolours everything. */
+@media (prefers-color-scheme: dark) {
+	:root {
+		--wp--preset--color--base: #0f1012;
+		--wp--preset--color--surface: #181a1e;
+		--wp--preset--color--line: #2a2d33;
+		--wp--preset--color--muted: #a3a3ab;
+		--wp--preset--color--contrast: #ececef;
+		--wp--preset--color--accent: #8aa4ff;
+	}
+}
+
 html {
 	scroll-behavior: smooth;
 }
@@ -20,6 +37,21 @@ html {
 	html {
 		scroll-behavior: auto;
 	}
+
+	*,
+	*::before,
+	*::after {
+		transition: none !important;
+	}
+}
+
+::selection {
+	background: color-mix(in srgb, var(--wp--preset--color--accent) 30%, transparent);
+}
+
+/* The hero glow reaches past the content edge; clip it instead of scrolling sideways. */
+main {
+	overflow-x: clip;
 }
 
 /* Sticky header */
@@ -27,7 +59,9 @@ header.wp-block-template-part {
 	position: sticky;
 	top: 0;
 	z-index: 50;
-	background: var(--wp--preset--color--base);
+	background: color-mix(in srgb, var(--wp--preset--color--base) 82%, transparent);
+	backdrop-filter: saturate(160%) blur(10px);
+	-webkit-backdrop-filter: saturate(160%) blur(10px);
 	border-bottom: 1px solid var(--wp--preset--color--line);
 }
 
@@ -73,15 +107,43 @@ header.wp-block-template-part {
 	font-size: var(--wp--preset--font-size--small);
 	letter-spacing: 0.08em;
 	text-transform: uppercase;
-	color: var(--wp--preset--color--muted);
+	color: var(--wp--preset--color--accent);
+}
+
+.eyebrow a {
+	color: inherit;
+	text-decoration: none;
+}
+
+/* Hero */
+.hero {
+	position: relative;
+	isolation: isolate;
+	padding-block: clamp(4rem, 12vw, 9rem);
+}
+
+.hero::before {
+	content: "";
+	position: absolute;
+	z-index: -1;
+	top: -30%;
+	right: -15%;
+	width: min(48rem, 90vw);
+	aspect-ratio: 1;
+	background: radial-gradient(circle, color-mix(in srgb, var(--wp--preset--color--accent) 22%, transparent), transparent 65%);
+	pointer-events: none;
 }
 
 .hero h1 {
-	max-width: 22ch;
+	max-width: 20ch;
 }
 
 .hero .lead {
-	max-width: 60ch;
+	max-width: 58ch;
+	color: var(--wp--preset--color--muted);
+}
+
+.lead {
 	color: var(--wp--preset--color--muted);
 }
 
@@ -90,6 +152,36 @@ header.wp-block-template-part {
 	display: flex;
 	flex-direction: column;
 	gap: var(--wp--preset--spacing--20);
+	padding: 0.75rem 0.75rem 1.25rem;
+	border: 1px solid var(--wp--preset--color--line);
+	border-radius: 18px;
+	background: var(--wp--preset--color--surface);
+	transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-grid .wp-block-post:hover {
+	transform: translateY(-3px);
+	border-color: color-mix(in srgb, var(--wp--preset--color--accent) 55%, var(--wp--preset--color--line));
+	box-shadow: 0 12px 30px -18px color-mix(in srgb, var(--wp--preset--color--accent) 60%, transparent);
+}
+
+/* Spacing inside a card comes from the flex gap alone; default heading margins doubled it. */
+.project-grid .wp-block-post > * {
+	margin-block: 0;
+}
+
+.project-grid .wp-block-post > :not(.wp-block-post-featured-image) {
+	margin-inline: 0.5rem;
+}
+
+/* Cards without a screenshot get a quiet gradient panel so the grid stays even. */
+.project-grid .wp-block-post:not(:has(.wp-block-post-featured-image))::before {
+	content: "";
+	aspect-ratio: 4 / 3;
+	border-radius: 12px;
+	background:
+		radial-gradient(circle at 25% 30%, color-mix(in srgb, var(--wp--preset--color--accent) 35%, transparent), transparent 55%),
+		linear-gradient(135deg, var(--wp--preset--color--line), var(--wp--preset--color--base));
 }
 
 .project-grid .wp-block-post-featured-image {
@@ -98,12 +190,27 @@ header.wp-block-template-part {
 
 .project-grid .wp-block-post-featured-image img {
 	border-radius: 12px;
-	background: var(--wp--preset--color--surface);
+}
+
+.project-grid .wp-block-post-title {
+	margin-top: 0.5rem;
+	margin-bottom: 0;
 }
 
 .project-grid .wp-block-post-title a {
 	text-decoration: none;
 	color: inherit;
+}
+
+.project-grid .wp-block-post-title a::after {
+	/* Makes the whole card clickable through the title link. */
+	content: "";
+	position: absolute;
+	inset: 0;
+}
+
+.project-grid .wp-block-post {
+	position: relative;
 }
 
 .project-grid .wp-block-post-title a:hover {
@@ -115,7 +222,7 @@ header.wp-block-template-part {
 	color: var(--wp--preset--color--muted);
 }
 
-/* Skill pills: used for project terms and the About skill list */
+/* Skill pills: project terms and the About skill list */
 .skill-tags,
 .skill-list {
 	display: flex;
@@ -125,10 +232,13 @@ header.wp-block-template-part {
 
 .skill-tags a,
 .skill-list li {
+	position: relative;
+	z-index: 1; /* above the card's stretched link */
 	display: inline-block;
 	padding: 0.2rem 0.7rem;
 	border: 1px solid var(--wp--preset--color--line);
 	border-radius: 999px;
+	background: var(--wp--preset--color--base);
 	color: var(--wp--preset--color--contrast);
 	text-decoration: none;
 }
@@ -149,9 +259,76 @@ header.wp-block-template-part {
 	font-size: var(--wp--preset--font-size--small);
 }
 
+/* Contact form (rendered by the JMC Portfolio Core plugin) */
+.jmc-contact-form {
+	display: grid;
+	gap: 1rem;
+}
+
+.jmc-contact-form label {
+	display: grid;
+	gap: 0.35rem;
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 600;
+}
+
+.jmc-contact-form input,
+.jmc-contact-form textarea {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0.75rem 0.9rem;
+	border: 1px solid var(--wp--preset--color--line);
+	border-radius: 12px;
+	background: var(--wp--preset--color--surface);
+	color: var(--wp--preset--color--contrast);
+	font: inherit;
+	font-weight: 400;
+}
+
+.jmc-contact-form input:focus,
+.jmc-contact-form textarea:focus {
+	outline: 2px solid var(--wp--preset--color--accent);
+	outline-offset: 1px;
+	border-color: transparent;
+}
+
+.jmc-contact-form textarea {
+	min-height: 9rem;
+	resize: vertical;
+}
+
+.jmc-contact-form .jmc-hp {
+	position: absolute;
+	left: -9999px;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+}
+
+.jmc-contact-form button {
+	justify-self: start;
+	cursor: pointer;
+}
+
+.jmc-contact-notice {
+	padding: 0.75rem 1rem;
+	border: 1px solid var(--wp--preset--color--line);
+	border-left: 4px solid var(--wp--preset--color--accent);
+	border-radius: 8px;
+	background: var(--wp--preset--color--surface);
+}
+
+.jmc-contact-notice.is-error {
+	border-left-color: #d64545;
+}
+
 /* Footer */
 footer.wp-block-template-part {
 	border-top: 1px solid var(--wp--preset--color--line);
 	color: var(--wp--preset--color--muted);
 	font-size: var(--wp--preset--font-size--small);
+}
+
+footer .wp-block-social-links {
+	gap: 0.75rem;
 }

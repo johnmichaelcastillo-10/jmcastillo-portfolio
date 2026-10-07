@@ -6,8 +6,8 @@ The repo holds only the code that is ours:
 
 | Path | What |
 | --- | --- |
-| `wp-content/themes/jmc-portfolio` | Block theme: design tokens (`theme.json`), templates, front-page sections (`patterns/`) |
-| `wp-content/plugins/jmc-portfolio-core` | `project` post type, `project_skill` tags, `project_url` / `repo_url` links |
+| `wp-content/themes/jmc-portfolio` | Block theme: design tokens (`theme.json`), templates, front-page sections (`patterns/`), self-hosted fonts, automatic dark mode |
+| `wp-content/plugins/jmc-portfolio-core` | Projects + skills, project/résumé link buttons, contact form block, social-preview meta tags |
 | `docker-compose.yml` | WordPress (PHP 8.3) + MariaDB 11 + WP-CLI |
 | `scripts/setup.ps1` | One-time install and sample content |
 
@@ -44,6 +44,16 @@ Theme and plugin folders are bind-mounted, so edits show up on refresh.
   For the "View live site" and "Source code" buttons, open the editor's ⋮ menu →
   Preferences → General → Custom fields, then fill in `project_url` and `repo_url`.
   A button whose field is empty is hidden.
+- **Résumé button:** upload the PDF under Media, then paste its URL in Settings → General →
+  Résumé (PDF) URL. The hero's "Download résumé" button is hidden until this is set.
+- **Contact form messages:** Admin → Messages. Every message is saved there first; email to the
+  admin address is best-effort. Locally there is no mail server, so check Messages. On a live
+  host, add an SMTP plugin if mail doesn't arrive.
+- **Social links:** edit the footer (Appearance → Editor → Patterns → Footer). Icons without a URL
+  are hidden, so LinkedIn stays invisible until you add yours.
+- **Link previews:** the page description and preview image come from the site tagline, each
+  project's excerpt and featured image, and the Site Icon (Settings → General). Installing an
+  SEO plugin (Yoast, Rank Math) turns these tags off automatically.
 - **Front page text:** Appearance → Editor → Templates → Front Page. Edits made there
   are stored in the database. To keep them in git, copy the changed markup back into
   `patterns/`, or export the theme with Appearance → Editor → ⋮ → Export.
