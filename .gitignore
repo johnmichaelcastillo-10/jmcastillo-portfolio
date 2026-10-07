@@ -8,3 +8,6 @@ node_modules/
 
 # Local database dumps
 backups/
+
+# Graphify output: regenerate with `graphify update .`
+graphify-out/

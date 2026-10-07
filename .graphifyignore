@@ -1,0 +1,4 @@
+# Vendored third-party skills: not this project's code, and they drown out real results.
+.claude/skills/
+backups/
+graphify-out/
