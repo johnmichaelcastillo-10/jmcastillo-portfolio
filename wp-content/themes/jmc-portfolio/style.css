@@ -148,14 +148,22 @@ header.wp-block-template-part {
 }
 
 /* Project cards */
+/* Text-first: a card is number, title, summary and tags. A featured image, when a
+   project has one, sits on top and replaces the number. */
+.project-grid .wp-block-post-template {
+	counter-reset: project;
+}
+
 .project-grid .wp-block-post {
+	position: relative;
 	display: flex;
 	flex-direction: column;
-	gap: var(--wp--preset--spacing--20);
-	padding: 0.75rem 0.75rem 1.25rem;
+	gap: 0.75rem;
+	padding: 1.5rem;
 	border: 1px solid var(--wp--preset--color--line);
 	border-radius: 18px;
 	background: var(--wp--preset--color--surface);
+	counter-increment: project;
 	transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -167,25 +175,38 @@ header.wp-block-template-part {
 
 /* Spacing inside a card comes from the flex gap alone; default heading margins doubled it. */
 .project-grid .wp-block-post > * {
-	margin-block: 0;
+	margin: 0;
 }
 
-.project-grid .wp-block-post > :not(.wp-block-post-featured-image) {
-	margin-inline: 0.5rem;
-}
-
-/* Cards without a screenshot get a quiet gradient panel so the grid stays even. */
 .project-grid .wp-block-post:not(:has(.wp-block-post-featured-image))::before {
-	content: "";
-	aspect-ratio: 4 / 3;
-	border-radius: 12px;
-	background:
-		radial-gradient(circle at 25% 30%, color-mix(in srgb, var(--wp--preset--color--accent) 35%, transparent), transparent 55%),
-		linear-gradient(135deg, var(--wp--preset--color--line), var(--wp--preset--color--base));
+	content: counter(project, decimal-leading-zero);
+	font-family: var(--wp--preset--font-family--mono);
+	font-size: var(--wp--preset--font-size--small);
+	color: var(--wp--preset--color--accent);
+}
+
+/* Arrow in the top-right corner, nudged on hover. */
+.project-grid .wp-block-post::after {
+	content: "↗";
+	position: absolute;
+	top: 1.15rem;
+	right: 1.4rem;
+	font-size: 1.1rem;
+	color: var(--wp--preset--color--muted);
+	transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.project-grid .wp-block-post:hover::after {
+	transform: translate(2px, -2px);
+	color: var(--wp--preset--color--accent);
+}
+
+.project-grid .wp-block-post:has(.wp-block-post-featured-image)::after {
+	display: none;
 }
 
 .project-grid .wp-block-post-featured-image {
-	margin: 0;
+	margin: -0.75rem -0.75rem 0.25rem;
 }
 
 .project-grid .wp-block-post-featured-image img {
@@ -193,13 +214,13 @@ header.wp-block-template-part {
 }
 
 .project-grid .wp-block-post-title {
-	margin-top: 0.5rem;
-	margin-bottom: 0;
+	padding-right: 1.5rem; /* clear of the arrow */
 }
 
 .project-grid .wp-block-post-title a {
 	text-decoration: none;
 	color: inherit;
+	transition: color 0.2s ease;
 }
 
 .project-grid .wp-block-post-title a::after {
@@ -209,17 +230,19 @@ header.wp-block-template-part {
 	inset: 0;
 }
 
-.project-grid .wp-block-post {
-	position: relative;
-}
-
-.project-grid .wp-block-post-title a:hover {
+.project-grid .wp-block-post:hover .wp-block-post-title a {
 	color: var(--wp--preset--color--accent);
 }
 
 .project-grid .wp-block-post-excerpt__excerpt {
 	margin: 0;
 	color: var(--wp--preset--color--muted);
+}
+
+/* Tags sit on the bottom edge so they line up across a row of cards. */
+.project-grid .wp-block-post .skill-tags {
+	margin-top: auto;
+	padding-top: 0.5rem;
 }
 
 /* Skill pills: project terms and the About skill list */
