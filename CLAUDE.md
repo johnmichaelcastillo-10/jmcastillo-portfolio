@@ -49,19 +49,21 @@ php -l <file>                                          # host PHP 8.5.11, lint o
 
 ## Data
 
-- `scripts/seed-content.php` (via `wp eval-file /scripts/seed-content.php`) **overwrites** the
-  six projects and the tagline. Only `setup.ps1` should run it, on an empty site. Don't run it
-  "to check something": it destroys wp-admin edits.
+- **Confidentiality rule (from the owner): systems built at any job or internship must never
+  appear on the site**: no project pages, screenshots, system names or descriptions of them
+  (WMS, customer portal, e-wallet, university systems, the 3D twin, the Nuxt ERP...). Projects
+  are personal work only, added by the owner. Experience duties stay generic ("internal
+  business web applications"). The Work section, its nav/footer links and the hero's "View my
+  work" button appear only when a project is published (`jmc_has_projects()`).
+- `scripts/seed-content.php` only sets the tagline. Pre-removal backup with the old projects:
+  `backups/wordpress-before-removing-projects-*.sql` (local only, never publish it).
 - Back up before anything risky. Dump inside the container and copy out, never pipe through
   PowerShell 5.1 (it re-encodes):
   `docker compose exec -T -e MYSQL_PWD=... db sh -c "mariadb-dump -u root --single-transaction --databases wordpress > /tmp/x.sql"`
   then `docker compose cp db:/tmp/x.sql backups/`.
-- Photos: **only CC0 or public domain** (the owner wants no credits on the site). Project
-  photos live in `scripts/media/` with `media.json` (alt text + source + licence, for the
-  record); `scripts/seed-images.php` attaches one to each project that has no featured image
-  (safe to re-run). The hero photo ships with the theme (`assets/images/`, see SOURCES.md).
-  No captions, no credits page.
-- Images must be HD: project masters 1920×1200 (WordPress makes the srcset sizes), hero
+- Photos: **only CC0 or public domain** (the owner wants no credits on the site). The hero
+  photo ships with the theme (`assets/images/`, see SOURCES.md). No captions, no credits page.
+- Images must be HD: project images 1920×1200 (WordPress makes the srcset sizes), hero
   ~1100px wide. Source them from **Wikimedia Commons** (API search, filter licence to
   CC0/public domain, width ≥ 2000); download the 1920px `thumburl` (arbitrary widths like
   2400px return an error page, so check the file is really an image). Openverse's proxy
@@ -109,9 +111,8 @@ Image generation (Higgsfield) costs credits: never use it without asking.
 
 - PHP 8.3 winget package half-uninstalled: VS Code's PHP IntelliSense held a file. With VS
   Code closed, run `winget uninstall --id PHP.PHP.8.3 -e`, then delete its leftover folder.
-- Missing from the user: photo or sanitized screenshots, LinkedIn URL, resume copy without
-  the phone number, project numbers. Ask before adding the 3D warehouse digital twin or the
-  Nuxt ERP rewrite (work projects; confidentiality unknown).
+- Missing from the user: personal projects (none yet), LinkedIn URL, resume copy without
+  the phone number.
 - Hosting choice, then SMTP for contact mail and analytics.
 
 ## graphify

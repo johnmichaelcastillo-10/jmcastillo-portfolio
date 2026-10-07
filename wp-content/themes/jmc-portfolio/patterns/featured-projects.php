@@ -4,7 +4,14 @@
  * Slug: jmc-portfolio/featured-projects
  * Categories: jmc-portfolio
  * Description: The six latest projects as photo cards; the newest one is shown large.
+ *
+ * Renders nothing until a project is published. Only personal projects go here: systems
+ * built at work are confidential and must not be shown.
  */
+
+if ( ! jmc_has_projects() ) {
+	return;
+}
 ?>
 <!-- wp:group {"tagName":"section","anchor":"work","align":"wide","className":"section","layout":{"type":"default"}} -->
 <section id="work" class="wp-block-group alignwide section"><!-- wp:group {"className":"section-head section-head-split","layout":{"type":"default"}} -->

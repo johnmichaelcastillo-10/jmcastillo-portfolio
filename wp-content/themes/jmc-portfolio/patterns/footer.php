@@ -21,7 +21,9 @@
 			<div>
 				<p class="footer-heading">Site</p>
 				<ul>
+					<?php if ( jmc_has_projects() ) : ?>
 					<li><a href="/#work">Work</a></li>
+					<?php endif; ?>
 					<li><a href="/#about">About</a></li>
 					<li><a href="/#experience">Experience</a></li>
 					<li><a href="/#contact">Contact</a></li>
@@ -32,7 +34,9 @@
 				<ul>
 					<li><a href="https://github.com/johnmichaelcastillo-10">GitHub</a></li>
 					<li><a href="mailto:johnmichaelcastillo.it@gmail.com">Email</a></li>
+					<?php if ( jmc_has_projects() ) : ?>
 					<li><a href="/projects/">All projects</a></li>
+					<?php endif; ?>
 				</ul>
 			</div>
 		</nav>

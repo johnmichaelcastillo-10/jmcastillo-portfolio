@@ -58,14 +58,7 @@ Invoke-WP theme activate jmc-portfolio
 Invoke-WP plugin activate jmc-portfolio-core
 Invoke-WP rewrite structure '/%postname%/'
 
-$projectCount = docker compose run --rm cli wp post list --post_type=project --post_status=any --format=count
-if ([int]$projectCount -eq 0) {
-    Write-Host 'Adding portfolio content...'
-    Invoke-WP eval-file /scripts/seed-content.php
-}
-
-# Only fills in projects that have no featured image yet, so it's safe on every run.
-Invoke-WP eval-file /scripts/seed-images.php
+Invoke-WP eval-file /scripts/seed-content.php
 
 Write-Host ''
 Write-Host "Site:  $($cfg.WP_URL)"

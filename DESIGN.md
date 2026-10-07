@@ -65,16 +65,16 @@ Simple Icons, CC0). Decorative icons are `aria-hidden`.
 ## Sections
 
 Header (sticky, blur, hairline on scroll; mobile menu behind a 44px button, see site.js) →
-Hero (two columns: badge, display headline with the key phrase underlined by an orange beam
-stroke, lead, actions; a 4:5 photo on an offset steel-blue panel with the glass stats card
-hanging off its left edge; soft blue/orange washes behind) →
-Work (split heading, bento cards) → About (full-bleed surface band, prose + toolkit card) →
-Experience (timeline cards on a rail, education card) → Contact (the page's one dark
-moment: a deep rack-steel panel, fixed colours in both schemes, with the form card floating
-on it) → Footer (brand, two link columns, back to top).
+Hero (two columns: badge, display headline with the key phrase underlined, lead, actions; a
+4:5 photo on an offset panel with the glass stats card hanging off its left edge) →
+Work (split heading, bento cards; **only rendered when a personal project is published**,
+work systems are confidential) → About (full-bleed surface band, prose + toolkit card) →
+Experience (timeline cards on a rail, generic duties, education card) → Contact (the page's
+one dark moment: a near-black panel, fixed colours in both schemes, with the form card
+floating on it) → Footer (brand, two link columns, back to top).
 
-Card photos share one grade (slightly desaturated, more contrast, faint ink wash) so six
-photographers read as one set; hover restores full colour.
+Card photos share one grade (slightly desaturated, more contrast, faint ink wash) so photos
+from different sources read as one set; hover restores full colour.
 
 ## Motion
 
@@ -86,8 +86,7 @@ hover lifts 4px and zooms the photo 3.5%. All of it collapses under
 ## Images
 
 Only CC0 or public-domain photos (via Openverse, `license=cc0,pdm`), so the site shows no
-credits. Self-hosted WebP with alt text from `scripts/media/media.json`; sources are recorded
-there and in `assets/images/SOURCES.md`. Never hotlink, never use a licence that needs
+credits. Self-hosted WebP with alt text; sources are recorded in `assets/images/SOURCES.md`. Never hotlink, never use a licence that needs
 attribution, avoid photos that show a real company's brand or identifiable faces.
 
 ## Rules that keep it fast

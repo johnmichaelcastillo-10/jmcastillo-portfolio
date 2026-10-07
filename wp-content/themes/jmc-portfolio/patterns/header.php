@@ -25,7 +25,9 @@
 	</button>
 	<nav id="site-menu" class="site-menu" aria-label="Main">
 		<ul>
+			<?php if ( jmc_has_projects() ) : ?>
 			<li><a href="/#work">Work</a></li>
+			<?php endif; ?>
 			<li><a href="/#about">About</a></li>
 			<li><a href="/#experience">Experience</a></li>
 		</ul>

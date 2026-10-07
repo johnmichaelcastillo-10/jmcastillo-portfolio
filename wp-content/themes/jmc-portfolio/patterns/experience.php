@@ -5,6 +5,9 @@
  * Categories: jmc-portfolio
  * Description: Work history as a timeline, with education below. Resume facts only.
  *
+ * Duties are described generically: the systems built at each job are confidential, so never
+ * name or describe a specific employer system here.
+ *
  * Dates are written out ("Mar 2025 to now") because WordPress turns " - " into an en dash.
  */
 
@@ -16,9 +19,9 @@ $jobs = array(
 		'org'     => 'Mets Cold Storage Services Inc.',
 		'place'   => 'Makati',
 		'points'  => array(
-			'Maintain and extend the warehouse management system and client-facing customer portal.',
-			'Built Excel data-import features and templates for loading distribution records.',
-			'Moved concatenated SQL to parameterized queries to close SQL injection risks.',
+			'Develop and maintain internal business web applications in C#, ASP.NET and SQL Server.',
+			'Build data-import features and write the T-SQL queries and stored procedures behind them.',
+			'Harden data access by replacing concatenated SQL with parameterized queries.',
 			'Investigate and fix reported production issues.',
 		),
 		'stack'   => array( 'C#', 'ASP.NET Web Forms', 'SQL Server', 'DevExpress', 'jQuery' ),
@@ -30,7 +33,7 @@ $jobs = array(
 		'org'     => 'Leekie Enterprises Inc.',
 		'place'   => 'API team',
 		'points'  => array(
-			'Backend API development for an e-wallet system, with Redis for caching.',
+			'Backend API development in PHP and Lumen, with Redis for caching.',
 			'Wrote API feature tests and unit tests with PHPUnit.',
 		),
 		'stack'   => array( 'PHP 7', 'Lumen', 'MySQL', 'Redis', 'PHPUnit' ),
@@ -42,8 +45,7 @@ $jobs = array(
 		'org'     => 'Lyceum of the Philippines Laguna',
 		'place'   => 'MIS Department',
 		'points'  => array(
-			"Built the judging system used for events during the university's Foundation Day.",
-			"Built APIs for the Registrar's Office record management and queuing systems.",
+			'Built backend APIs for internal university systems used by campus offices and events.',
 		),
 		'stack'   => array( 'PHP 8', 'Laravel 9', 'MySQL' ),
 	),

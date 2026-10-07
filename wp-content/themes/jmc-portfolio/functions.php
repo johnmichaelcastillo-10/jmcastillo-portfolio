@@ -45,6 +45,19 @@ function jmc_icon( string $name, string $label = '' ): string {
 	return str_replace( '<svg', '<svg class="icon icon-' . esc_attr( $name ) . '" ' . $a11y, $cache[ $name ] );
 }
 
+/**
+ * Whether any project is published. The Work section, its nav links and the hero's "View my
+ * work" button only appear when there is something to show.
+ */
+function jmc_has_projects(): bool {
+	static $has = null;
+	if ( null === $has ) {
+		$counts = wp_count_posts( 'project' );
+		$has    = ! empty( $counts->publish );
+	}
+	return $has;
+}
+
 add_action(
 	'after_setup_theme',
 	static function () {
