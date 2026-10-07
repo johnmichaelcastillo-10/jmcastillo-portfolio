@@ -2,7 +2,7 @@
 Theme Name:        JMC Portfolio
 Author:            John Michael Castillo
 Description:       A personal portfolio block theme. Pairs with the JMC Portfolio Core plugin for projects.
-Version:           1.3.0
+Version:           1.4.0
 Requires at least: 6.6
 Tested up to:      6.8
 Requires PHP:      8.1
@@ -27,9 +27,9 @@ Text Domain:       jmc-portfolio
 	--jmc-radius-lg: 18px;
 
 	/* Shadows are tinted with the ink colour, never pure black. */
-	--jmc-shadow-sm: 0 1px 2px rgb(17 21 27 / 0.06);
-	--jmc-shadow-md: 0 1px 2px rgb(17 21 27 / 0.05), 0 10px 28px -14px rgb(17 21 27 / 0.22);
-	--jmc-shadow-lg: 0 2px 4px rgb(17 21 27 / 0.05), 0 24px 48px -20px rgb(17 21 27 / 0.32);
+	--jmc-shadow-sm: 0 1px 2px rgb(9 9 11 / 0.05);
+	--jmc-shadow-md: 0 1px 2px rgb(9 9 11 / 0.04), 0 10px 28px -14px rgb(9 9 11 / 0.18);
+	--jmc-shadow-lg: 0 2px 4px rgb(9 9 11 / 0.04), 0 24px 48px -20px rgb(9 9 11 / 0.26);
 
 	--jmc-ease: cubic-bezier(0.16, 1, 0.3, 1);
 	--jmc-fast: 150ms;
@@ -42,23 +42,25 @@ Text Domain:       jmc-portfolio
 
 @media (prefers-color-scheme: dark) {
 	:root {
-		--wp--preset--color--base: #0d1117;
-		--wp--preset--color--surface: #141a22;
-		--wp--preset--color--surface-2: #1b222c;
-		--wp--preset--color--line: #262f3b;
-		--wp--preset--color--field: #3d4756;
-		--wp--preset--color--muted: #8d97a7;
-		--wp--preset--color--body: #c6ccd6;
-		--wp--preset--color--contrast: #f1f3f6;
-		--wp--preset--color--primary: #7fa7ec;
-		--wp--preset--color--primary-soft: #16233a;
-		--wp--preset--color--on-primary: #0d1117;
-		--wp--preset--color--accent: #fb8c3c;
-		--wp--preset--color--accent-soft: #2c1a0e;
+		/* Monochrome at night: #09090B canvas, #18181B cards, #3F3F46 borders, #A1A1AA muted
+		   text, #FAFAFA ink and buttons. */
+		--wp--preset--color--base: #09090b;
+		--wp--preset--color--surface: #18181b;
+		--wp--preset--color--surface-2: #222226;
+		--wp--preset--color--line: #2a2a2f;
+		--wp--preset--color--field: #3f3f46;
+		--wp--preset--color--muted: #a1a1aa;
+		--wp--preset--color--body: #d4d4d8;
+		--wp--preset--color--contrast: #fafafa;
+		--wp--preset--color--primary: #fafafa;
+		--wp--preset--color--primary-soft: #27272a;
+		--wp--preset--color--on-primary: #09090b;
+		--wp--preset--color--accent: #fafafa;
+		--wp--preset--color--accent-soft: #27272a;
 		--wp--preset--color--success: #4ade80;
 		--wp--preset--color--warning: #fbbf24;
 		--wp--preset--color--error: #f87171;
-		--wp--preset--color--info: #60a5fa;
+		--wp--preset--color--info: #a1a1aa;
 
 		--jmc-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
 		--jmc-shadow-md: 0 1px 2px rgb(0 0 0 / 0.35), 0 12px 32px -16px rgb(0 0 0 / 0.7);
@@ -1476,16 +1478,16 @@ button.wp-element-button:not(:disabled):hover {
 	background: var(--wp--preset--color--surface);
 }
 
-/* The page's one dark moment: a deep rack-steel panel with the form floating on it. The
-   colours here are fixed (not palette tokens) because the panel is dark in both schemes. */
+/* The page's one dark moment: a near-black (#18181B) panel with the form floating on it and
+   a faint white light from the top-left corner. The colours here are fixed (not palette
+   tokens) because the panel is dark in both schemes. */
 .contact-panel {
-	--panel-text: #c4cfe0;
-	--panel-muted: #94a3bc;
+	--panel-text: #d4d4d8;
+	--panel-muted: #a1a1aa;
 	border-color: transparent;
 	background:
-		radial-gradient(70% 90% at 0% 0%, rgb(46 92 160 / 0.55), transparent 62%),
-		radial-gradient(45% 65% at 100% 100%, rgb(194 65 12 / 0.28), transparent 70%),
-		#0f2344;
+		radial-gradient(70% 90% at 0% 0%, rgb(250 250 250 / 0.09), transparent 62%),
+		#18181b;
 	color: var(--panel-text);
 	box-shadow: var(--jmc-shadow-lg);
 }
@@ -1494,9 +1496,8 @@ button.wp-element-button:not(:disabled):hover {
 	.contact-panel {
 		border-color: var(--wp--preset--color--line);
 		background:
-			radial-gradient(70% 90% at 0% 0%, rgb(46 92 160 / 0.35), transparent 62%),
-			radial-gradient(45% 65% at 100% 100%, rgb(251 140 60 / 0.16), transparent 70%),
-			#0f1a2c;
+			radial-gradient(70% 90% at 0% 0%, rgb(250 250 250 / 0.06), transparent 62%),
+			#121214;
 	}
 }
 
@@ -1530,7 +1531,7 @@ button.wp-element-button:not(:disabled):hover {
 .contact-intro .icon-chip {
 	border: 1px solid rgb(255 255 255 / 0.12);
 	background: rgb(255 255 255 / 0.07);
-	color: #d6e4ff;
+	color: #fafafa;
 }
 
 .contact-intro :focus-visible {
