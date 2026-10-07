@@ -61,10 +61,16 @@ Simple Icons, CC0). Decorative icons are `aria-hidden`.
 ## Sections
 
 Header (sticky, blur, hairline on scroll; mobile menu behind a 44px button, see site.js) →
-Hero (badge, display headline, lead, primary + secondary + text action, photo with stats card) →
+Hero (two columns: badge, display headline with the key phrase underlined by an orange beam
+stroke, lead, actions; a 4:5 photo on an offset steel-blue panel with the glass stats card
+hanging off its left edge; soft blue/orange washes behind) →
 Work (split heading, bento cards) → About (full-bleed surface band, prose + toolkit card) →
-Experience (timeline cards on a rail, education card) → Contact (panel: methods list + form
-card) → Footer (brand, two link columns, credits + back to top).
+Experience (timeline cards on a rail, education card) → Contact (the page's one dark
+moment: a deep rack-steel panel, fixed colours in both schemes, with the form card floating
+on it) → Footer (brand, two link columns, credits + back to top).
+
+Card photos share one grade (slightly desaturated, more contrast, faint ink wash) so six
+photographers read as one set; hover restores full colour.
 
 ## Motion
 
