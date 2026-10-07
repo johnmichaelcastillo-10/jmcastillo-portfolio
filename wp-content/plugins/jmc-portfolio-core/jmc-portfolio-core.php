@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       JMC Portfolio Core
- * Description:       Projects, skills, contact form, résumé link and social meta tags for the portfolio site.
+ * Description:       Projects, skills, contact form, resume link and social meta tags for the portfolio site.
  * Version:           0.2.0
  * Requires at least: 6.6
  * Requires PHP:      8.1
