@@ -29,7 +29,7 @@ $groups = array(
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
-<p>I work across every layer of a business web application: server-side C#, the T-SQL queries and stored procedures behind it, and the jQuery front end. I've built data-import tools, moved concatenated SQL to parameterized queries, and fixed bugs in production. On the PHP side I've built backend APIs with Laravel and Lumen, including an e-wallet API and systems for a university's Registrar's Office and Foundation Day.</p>
+<p>I work across every layer of a business web application: server-side C#, the T-SQL queries and stored procedures behind it, and the jQuery front end. I've built data-import tools, moved concatenated SQL to parameterized queries, and fixed bugs in production. On the PHP side I've built backend APIs with Laravel and Lumen, using Redis for caching.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->

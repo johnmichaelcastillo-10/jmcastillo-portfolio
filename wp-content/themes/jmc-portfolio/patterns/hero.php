@@ -28,7 +28,11 @@ $hero_src = get_theme_file_uri( 'assets/images/hero-code.webp' );
 
 <!-- wp:buttons {"className":"hero-actions"} -->
 <div class="wp-block-buttons hero-actions"><!-- wp:button {"className":"is-style-fill btn-arrow"} -->
+<?php if ( jmc_has_projects() ) : ?>
 <div class="wp-block-button is-style-fill btn-arrow"><a class="wp-block-button__link wp-element-button" href="#work">View my work</a></div>
+<?php else : ?>
+<div class="wp-block-button is-style-fill btn-arrow"><a class="wp-block-button__link wp-element-button" href="#contact">Get in touch</a></div>
+<?php endif; ?>
 <!-- /wp:button -->
 
 <!-- wp:button {"className":"is-style-secondary","metadata":{"bindings":{"url":{"source":"jmc-portfolio/resume"}}}} -->
@@ -50,7 +54,7 @@ $hero_src = get_theme_file_uri( 'assets/images/hero-code.webp' );
 <dl class="stats-card">
 	<div><dt>Experience</dt><dd>Nearly 2 years</dd></div>
 	<div><dt>Roles</dt><dd>Intern to junior programmer</dd></div>
-	<div><dt>Projects</dt><dd>6 web apps and APIs</dd></div>
+	<div><dt>Stack</dt><dd>C#, SQL Server, PHP</dd></div>
 </dl>
 <!-- /wp:html --></div>
 <!-- /wp:group --></section>
