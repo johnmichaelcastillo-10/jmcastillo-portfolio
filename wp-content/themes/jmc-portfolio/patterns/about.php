@@ -20,24 +20,24 @@
 
 <!-- wp:column {"width":"60%"} -->
 <div class="wp-block-column" style="flex-basis:60%"><!-- wp:paragraph -->
-<p>I'm an IT professional who enjoys the whole stack: from servers, networks and databases up to the tools people use every day. I like turning messy, manual processes into simple systems that just work.</p>
+<p>I'm a software developer with nearly two years of professional experience building and maintaining business web applications with C#, ASP.NET Web Forms and Microsoft SQL Server, plus backend API development in PHP with Laravel and Lumen.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
-<p>Replace this paragraph with your background, the kind of work you're looking for, and anything that makes you stand out.</p>
+<p>Day to day I work on feature development, data-import tools, SQL injection remediation and production bug fixes for a warehouse management system. I work in teams on Git and GitHub, and I've written unit and API tests with PHPUnit.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:list {"className":"skill-list"} -->
 <ul class="wp-block-list skill-list"><!-- wp:list-item -->
-<li>Systems administration</li>
+<li>C#</li>
 <!-- /wp:list-item -->
 
 <!-- wp:list-item -->
-<li>Networking</li>
+<li>ASP.NET Web Forms</li>
 <!-- /wp:list-item -->
 
 <!-- wp:list-item -->
-<li>SQL Server</li>
+<li>SQL Server / T-SQL</li>
 <!-- /wp:list-item -->
 
 <!-- wp:list-item -->
@@ -45,11 +45,35 @@
 <!-- /wp:list-item -->
 
 <!-- wp:list-item -->
-<li>WordPress</li>
+<li>Laravel / Lumen</li>
 <!-- /wp:list-item -->
 
 <!-- wp:list-item -->
-<li>Automation</li>
+<li>JavaScript / jQuery</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>MySQL</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Redis</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>DevExpress</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>REST APIs</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>PHPUnit</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Git / GitHub</li>
 <!-- /wp:list-item --></ul>
 <!-- /wp:list --></div>
 <!-- /wp:column --></div>

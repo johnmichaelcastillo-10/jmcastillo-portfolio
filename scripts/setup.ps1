@@ -51,7 +51,6 @@ if ($LASTEXITCODE -ne 0) {
     Invoke-WP core install "--url=$($cfg.WP_URL)" "--title=$($cfg.WP_TITLE)" `
         "--admin_user=$($cfg.WP_ADMIN_USER)" "--admin_password=$($cfg.WP_ADMIN_PASSWORD)" `
         "--admin_email=$($cfg.WP_ADMIN_EMAIL)" --skip-email
-    Invoke-WP option update blogdescription 'IT professional and developer'
     Invoke-WP plugin delete hello akismet
 }
 
@@ -61,22 +60,8 @@ Invoke-WP rewrite structure '/%postname%/'
 
 $projectCount = docker compose run --rm cli wp post list --post_type=project --post_status=any --format=count
 if ([int]$projectCount -eq 0) {
-    Write-Host 'Seeding sample projects...'
-    $samples = @(
-        @{ Title = 'Warehouse Dashboard'; Excerpt = 'Live inventory and dock metrics for a multi-site warehouse operation.'; Skills = 'SQL Server,Power BI' },
-        @{ Title = 'Network Refresh'; Excerpt = 'Planned and rolled out a zero-downtime network upgrade across three offices.'; Skills = 'Networking,Infrastructure' },
-        @{ Title = 'Internal Tools Portal'; Excerpt = 'A single sign-on portal that replaced a dozen spreadsheets and shared drives.'; Skills = 'PHP,WordPress' }
-    )
-    foreach ($s in $samples) {
-        $id = docker compose run --rm cli wp post create --post_type=project --post_status=publish `
-            "--post_title=$($s.Title)" "--post_excerpt=$($s.Excerpt)" `
-            '--post_content=<!-- wp:paragraph --><p>Replace this with the story of the project: the problem, what you did, and the result.</p><!-- /wp:paragraph -->' `
-            --porcelain
-        if ($LASTEXITCODE -ne 0) { throw "Could not create sample project '$($s.Title)'" }
-        $id = "$id".Trim()
-        Invoke-WP post term set $id project_skill @($s.Skills -split ',')
-        Invoke-WP post meta update $id project_url 'https://example.com'
-    }
+    Write-Host 'Adding portfolio content...'
+    Invoke-WP eval-file /scripts/seed-content.php
 }
 
 Write-Host ''

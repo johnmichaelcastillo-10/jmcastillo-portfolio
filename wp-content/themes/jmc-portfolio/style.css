@@ -259,6 +259,44 @@ header.wp-block-template-part {
 	font-size: var(--wp--preset--font-size--small);
 }
 
+/* Experience timeline */
+.timeline {
+	margin-top: var(--wp--preset--spacing--50);
+}
+
+.timeline-item {
+	position: relative;
+	margin: 0;
+	padding-block: var(--wp--preset--spacing--40);
+	border-top: 1px solid var(--wp--preset--color--line);
+}
+
+.timeline-item:last-child {
+	border-bottom: 1px solid var(--wp--preset--color--line);
+}
+
+.timeline-item h3 {
+	margin: 0;
+}
+
+.timeline-date,
+.timeline-org {
+	margin: 0;
+	font-family: var(--wp--preset--font-family--mono);
+	font-size: var(--wp--preset--font-size--small);
+	color: var(--wp--preset--color--muted);
+}
+
+.timeline-org {
+	margin-top: 0.25rem;
+	color: var(--wp--preset--color--accent);
+}
+
+.timeline-item .wp-block-column > p:not(.timeline-date, .timeline-org) {
+	margin-top: 0.75rem;
+	color: var(--wp--preset--color--muted);
+}
+
 /* Contact form (rendered by the JMC Portfolio Core plugin) */
 .jmc-contact-form {
 	display: grid;

@@ -8,15 +8,15 @@
 ?>
 <!-- wp:group {"align":"wide","className":"section hero","layout":{"type":"default"}} -->
 <div class="wp-block-group alignwide section hero"><!-- wp:paragraph {"className":"eyebrow"} -->
-<p class="eyebrow">IT Professional · Developer</p>
+<p class="eyebrow">Software Developer · Laguna, Philippines</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":1} -->
-<h1 class="wp-block-heading">Hi, I'm John Michael. I build reliable systems and the software that runs on them.</h1>
+<h1 class="wp-block-heading">Hi, I'm John Michael. I build and maintain the business systems companies run on.</h1>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"className":"lead","fontSize":"large"} -->
-<p class="lead has-large-font-size">I design, run and automate the infrastructure and internal tools that keep teams moving. Here is some of the work I'm proud of.</p>
+<p class="lead has-large-font-size">I work in C#, ASP.NET Web Forms and SQL Server, with backend API experience in PHP and Laravel. Right now I maintain and extend a warehouse management system and customer portal for a cold storage and logistics company.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:buttons -->
