@@ -19,7 +19,7 @@
 <!-- /wp:group -->
 
 <!-- wp:paragraph {"className":"lead"} -->
-<p class="lead">From the warehouse system I maintain today to the APIs I built as an intern and trainee.</p>
+<p class="lead">Web applications, backend APIs and internal tools I've built and maintained.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
