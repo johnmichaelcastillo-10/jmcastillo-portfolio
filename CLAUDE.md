@@ -6,6 +6,9 @@ true or a new non-obvious lesson is learned. Design rules live in `DESIGN.md`, s
 
 ## What this is
 
+Project name: **jmcastillo-portfolio** (folder, GitHub repo and Docker project; Docker
+volumes are `jmcastillo-portfolio_db_data` and `jmcastillo-portfolio_wp_core`).
+
 John Michael Castillo's personal portfolio: a WordPress block theme
 (`wp-content/themes/jmc-portfolio`) plus a plugin (`wp-content/plugins/jmc-portfolio-core`:
 projects, skills, contact form, resume link, meta tags), running locally in Docker.
@@ -14,7 +17,7 @@ Hosting is not decided yet.
 ## Git and accounts (do not get wrong)
 
 - Belongs to GitHub account **johnmichaelcastillo-10**, not the machine's default
-  `jmcastillo-mets`. Remote is `git@github-jmc10:johnmichaelcastillo-10/portfolio.git`
+  `jmcastillo-mets`. Remote is `git@github-jmc10:johnmichaelcastillo-10/jmcastillo-portfolio.git`
   (SSH alias in `~/.ssh/config`, key `~/.ssh/github_johnmichaelcastillo10`). Repo-local
   `user.name` / `user.email` are set; never change them or use HTTPS for this remote.
 - Never add `Co-Authored-By` or any AI attribution to commits.

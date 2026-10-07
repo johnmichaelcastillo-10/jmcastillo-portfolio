@@ -1,6 +1,6 @@
-# Portfolio
+# jmcastillo-portfolio
 
-Personal portfolio site built on WordPress, running locally in Docker.
+John Michael Castillo's personal portfolio: a WordPress site edited locally in Docker and published as a static site.
 
 The repo holds only the code that is ours:
 
