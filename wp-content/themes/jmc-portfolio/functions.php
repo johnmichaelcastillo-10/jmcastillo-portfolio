@@ -43,14 +43,22 @@ add_action(
 	'wp_head',
 	static function () {
 		// Browser chrome matches the canvas in both colour schemes.
-		echo '<meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />' . "\n";
-		echo '<meta name="theme-color" content="#0b0b0c" media="(prefers-color-scheme: dark)" />' . "\n";
+		echo '<meta name="theme-color" content="#f9f8f6" media="(prefers-color-scheme: light)" />' . "\n";
+		echo '<meta name="theme-color" content="#121110" media="(prefers-color-scheme: dark)" />' . "\n";
 
 		// The body face is needed for first paint; preloading avoids a late font swap.
 		printf(
 			'<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin />' . "\n",
-			esc_url( get_theme_file_uri( 'assets/fonts/geist.woff2' ) )
+			esc_url( get_theme_file_uri( 'assets/fonts/schibsted-grotesk.woff2' ) )
 		);
+
+		// Monogram favicon until a Site Icon is set in Settings → General.
+		if ( ! has_site_icon() ) {
+			printf(
+				'<link rel="icon" href="%s" type="image/svg+xml" />' . "\n",
+				esc_url( get_theme_file_uri( 'assets/favicon.svg' ) )
+			);
+		}
 	},
 	2
 );
