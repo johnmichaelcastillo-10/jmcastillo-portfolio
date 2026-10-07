@@ -3,21 +3,19 @@
  * Title: Contact
  * Slug: jmc-portfolio/contact
  * Categories: jmc-portfolio
- * Description: Heading, email link, then the contact form.
+ * Description: Email link and the contact form, label in the margin.
  */
 ?>
-<!-- wp:group {"anchor":"contact","align":"wide","className":"section contact","layout":{"type":"default"}} -->
-<div id="contact" class="wp-block-group alignwide section contact"><!-- wp:heading -->
+<!-- wp:group {"anchor":"contact","align":"wide","className":"section-row","layout":{"type":"default"}} -->
+<div id="contact" class="wp-block-group alignwide section-row"><!-- wp:heading -->
 <h2 class="wp-block-heading">Contact</h2>
 <!-- /wp:heading -->
 
-<!-- wp:paragraph {"className":"lead","fontSize":"large"} -->
-<p class="lead has-large-font-size">Hiring, or have a system that needs work? Email me directly or use the form below.</p>
+<!-- wp:group {"className":"row-content","layout":{"type":"default"}} -->
+<div class="wp-block-group row-content"><!-- wp:paragraph -->
+<p>The quickest way to reach me is email, at <a href="mailto:johnmichaelcastillo.it@gmail.com">johnmichaelcastillo.it@gmail.com</a>. Or leave a note below.</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:paragraph {"className":"contact-email"} -->
-<p class="contact-email"><a href="mailto:johnmichaelcastillo.it@gmail.com">johnmichaelcastillo.it@gmail.com</a></p>
-<!-- /wp:paragraph -->
-
-<!-- wp:jmc-portfolio/contact-form {"className":"contact-panel"} /--></div>
+<!-- wp:jmc-portfolio/contact-form /--></div>
+<!-- /wp:group --></div>
 <!-- /wp:group -->

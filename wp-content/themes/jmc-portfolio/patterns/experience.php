@@ -3,18 +3,18 @@
  * Title: Experience
  * Slug: jmc-portfolio/experience
  * Categories: jmc-portfolio
- * Description: Work history and education, date column beside each entry.
+ * Description: Work history and education, label in the margin.
  */
 ?>
-<!-- wp:group {"anchor":"experience","align":"wide","className":"section","layout":{"type":"default"}} -->
-<div id="experience" class="wp-block-group alignwide section"><!-- wp:heading -->
+<!-- wp:group {"anchor":"experience","align":"wide","className":"section-row","layout":{"type":"default"}} -->
+<div id="experience" class="wp-block-group alignwide section-row"><!-- wp:heading -->
 <h2 class="wp-block-heading">Experience</h2>
 <!-- /wp:heading -->
 
-<!-- wp:group {"className":"timeline","layout":{"type":"default"}} -->
-<div class="wp-block-group timeline"><!-- wp:group {"className":"timeline-item","layout":{"type":"default"}} -->
+<!-- wp:group {"className":"row-content timeline","layout":{"type":"default"}} -->
+<div class="wp-block-group row-content timeline"><!-- wp:group {"className":"timeline-item","layout":{"type":"default"}} -->
 <div class="wp-block-group timeline-item"><!-- wp:paragraph {"className":"timeline-date"} -->
-<p class="timeline-date">Mar 2025 to now</p>
+<p class="timeline-date">Since 2025</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:group {"className":"timeline-body","layout":{"type":"default"}} -->
@@ -34,7 +34,7 @@
 
 <!-- wp:group {"className":"timeline-item","layout":{"type":"default"}} -->
 <div class="wp-block-group timeline-item"><!-- wp:paragraph {"className":"timeline-date"} -->
-<p class="timeline-date">Mar to May 2024</p>
+<p class="timeline-date">2024</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:group {"className":"timeline-body","layout":{"type":"default"}} -->
@@ -54,7 +54,7 @@
 
 <!-- wp:group {"className":"timeline-item","layout":{"type":"default"}} -->
 <div class="wp-block-group timeline-item"><!-- wp:paragraph {"className":"timeline-date"} -->
-<p class="timeline-date">Feb to Sep 2023</p>
+<p class="timeline-date">2023</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:group {"className":"timeline-body","layout":{"type":"default"}} -->
