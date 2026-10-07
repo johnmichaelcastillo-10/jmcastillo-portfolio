@@ -1,17 +1,30 @@
 <!-- wp:template-part {"slug":"header","tagName":"header"} /-->
 
 <!-- wp:group {"tagName":"main","layout":{"type":"constrained"}} -->
-<main class="wp-block-group"><!-- wp:group {"className":"page-head","layout":{"type":"default"}} -->
-<div class="wp-block-group page-head"><!-- wp:paragraph {"className":"back-link"} -->
+<main class="wp-block-group"><!-- wp:group {"align":"wide","className":"page-head","layout":{"type":"default"}} -->
+<div class="wp-block-group alignwide page-head"><!-- wp:paragraph {"className":"back-link"} -->
 <p class="back-link"><a href="/projects/">All projects</a></p>
 <!-- /wp:paragraph -->
 
 <!-- wp:post-title {"level":1} /-->
 
-<!-- wp:post-excerpt {"className":"lead"} /-->
+<!-- wp:post-excerpt {"className":"lead"} /--></div>
+<!-- /wp:group -->
 
-<!-- wp:group {"className":"project-meta","layout":{"type":"default"}} -->
-<div class="wp-block-group project-meta"><!-- wp:post-date {"format":"Y"} /-->
+<!-- wp:group {"align":"wide","className":"section-row project-body","layout":{"type":"default"}} -->
+<div class="wp-block-group alignwide section-row project-body"><!-- wp:group {"tagName":"aside","className":"project-aside","layout":{"type":"default"}} -->
+<aside class="wp-block-group project-aside"><!-- wp:group {"className":"aside-item","layout":{"type":"default"}} -->
+<div class="wp-block-group aside-item"><!-- wp:paragraph {"className":"aside-label"} -->
+<p class="aside-label">Year</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:post-date {"format":"Y"} /--></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"aside-item","layout":{"type":"default"}} -->
+<div class="wp-block-group aside-item"><!-- wp:paragraph {"className":"aside-label"} -->
+<p class="aside-label">Stack</p>
+<!-- /wp:paragraph -->
 
 <!-- wp:post-terms {"term":"project_skill","separator":", ","className":"stack"} /--></div>
 <!-- /wp:group -->
@@ -24,10 +37,11 @@
 <!-- wp:button {"className":"is-style-text","metadata":{"bindings":{"url":{"source":"core/post-meta","args":{"key":"repo_url"}}}}} -->
 <div class="wp-block-button is-style-text"><a class="wp-block-button__link wp-element-button">Source</a></div>
 <!-- /wp:button --></div>
-<!-- /wp:buttons --></div>
+<!-- /wp:buttons --></aside>
 <!-- /wp:group -->
 
-<!-- wp:post-featured-image {"aspectRatio":"16/10"} /-->
+<!-- wp:group {"className":"row-content","layout":{"type":"default"}} -->
+<div class="wp-block-group row-content"><!-- wp:post-featured-image {"aspectRatio":"16/10"} /-->
 
 <!-- wp:post-content {"className":"entry","layout":{"type":"default"}} /-->
 
@@ -35,6 +49,8 @@
 <div class="wp-block-group post-nav"><!-- wp:post-navigation-link {"type":"previous","showTitle":true,"linkLabel":true} /-->
 
 <!-- wp:post-navigation-link {"showTitle":true,"linkLabel":true} /--></div>
+<!-- /wp:group --></div>
+<!-- /wp:group --></div>
 <!-- /wp:group --></main>
 <!-- /wp:group -->
 

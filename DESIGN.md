@@ -66,7 +66,23 @@ to 136px.
 - **Experience**: year column beside role, organisation and one paragraph.
 - **Contact**: one sentence with the email inline, then a two-column form (name, email) with
   the message full width. Inputs 44px tall, 8px radius.
-- **Footer**: hairline, name and year, social icons.
+- **Header**: name and a plain `<nav>` of four anchors (Custom HTML block). Never the
+  Navigation block: it inlines ~20 KB of menu CSS and loads ~16 KB of JS for a hamburger.
+  On phones the links wrap under the name and the header stops being sticky. A hairline
+  fades in under it once the page scrolls (CSS scroll timeline).
+- **Inner pages**: title on the same left edge as the header; body on the label grid, with
+  project metadata (year, stack, links) in the label column.
+- **Footer**: hairline, name and year, text links (GitHub, Email, Back to top). No Social
+  Icons block (~12 KB of brand CSS). Pinned to the window bottom on short pages.
+
+## Engineering rules
+
+- No emoji script, no Interactivity API on the front end. The only theme JS is the contact
+  form's "Sending…" state.
+- Decorative arrows use `content: "↗" / ""` so screen readers skip them.
+- List rows are one stretched link; keyboard focus outlines the whole row.
+- Hover-only effects sit inside `@media (hover: hover)`.
+- Print: ink on white, no header, footer or form.
 
 ## Motion
 

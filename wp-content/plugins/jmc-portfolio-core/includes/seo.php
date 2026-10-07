@@ -21,6 +21,8 @@ function jmc_portfolio_meta_tags(): void {
 		$title = $site;
 		$desc  = get_bloginfo( 'description' );
 		$url   = home_url( '/' );
+		// WordPress only prints a canonical link on single posts and pages.
+		printf( "<link rel=\"canonical\" href=\"%s\" />\n", esc_url( $url ) );
 	} elseif ( is_singular() ) {
 		$post  = get_queried_object();
 		$title = single_post_title( '', false );

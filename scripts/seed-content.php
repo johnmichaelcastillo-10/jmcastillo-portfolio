@@ -25,7 +25,7 @@ $list = static function ( array $items ): string {
 	return "<!-- wp:list -->\n<ul class=\"wp-block-list\">" . implode( "\n\n", $li ) . "</ul>\n<!-- /wp:list -->";
 };
 
-update_option( 'blogdescription', 'Software developer: C# / ASP.NET, SQL Server, PHP / Laravel' );
+update_option( 'blogdescription', 'Software developer working in C#, SQL Server and PHP' );
 
 // Newest first on the site; post_date only controls that order (dates aren't displayed).
 $projects = array(
