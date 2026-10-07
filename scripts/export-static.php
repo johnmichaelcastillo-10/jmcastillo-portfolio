@@ -263,8 +263,20 @@ $netlify_form = static function ( string $html ): string {
 		'<form class="jmc-contact-form" name="contact" method="POST" action="/message-sent/" data-netlify="true" netlify-honeypot="jmc_website"',
 		$html
 	);
-	$html = preg_replace( '#<input type="hidden" name="action" value="jmc_contact" />#', '<input type="hidden" name="form-name" value="contact" />', $html );
-	return preg_replace( '#\s*<input type="hidden" name="jmc_ts" value="\d+" />#', '', $html );
+	$html = preg_replace(
+		'#<input type="hidden" name="action" value="jmc_contact" />#',
+		'<input type="hidden" name="form-name" value="contact" />'
+		. '<input type="hidden" name="subject" value="New message from your portfolio (%{submissionId})" />',
+		$html
+	);
+	$html = preg_replace( '#\s*<input type="hidden" name="jmc_ts" value="\d+" />#', '', $html );
+	// Netlify sets the notification's Reply-To from a field named "email", and shows "name"
+	// and "message" as the submission summary, so use plain field names on the static form.
+	return str_replace(
+		array( 'name="jmc_name"', 'name="jmc_email"', 'name="jmc_message"' ),
+		array( 'name="name"', 'name="email"', 'name="message"' ),
+		$html
+	);
 };
 
 $it = new RecursiveIteratorIterator( new RecursiveDirectoryIterator( $out, FilesystemIterator::SKIP_DOTS ) );
