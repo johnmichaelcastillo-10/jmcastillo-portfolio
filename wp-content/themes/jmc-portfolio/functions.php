@@ -2,8 +2,8 @@
 /**
  * JMC Portfolio theme setup.
  *
- * Layout and design tokens live in theme.json; templates in /templates and /parts;
- * front-page sections in /patterns.
+ * Design rules live in DESIGN.md at the repo root; tokens in theme.json; templates in
+ * /templates and /parts; front-page sections in /patterns.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -26,5 +26,31 @@ add_action(
 	'init',
 	static function () {
 		register_block_pattern_category( 'jmc-portfolio', array( 'label' => __( 'Portfolio', 'jmc-portfolio' ) ) );
+
+		// A button that reads as a plain link: the hero's secondary action sits beside one
+		// primary button instead of competing with it.
+		register_block_style(
+			'core/button',
+			array(
+				'name'  => 'text',
+				'label' => __( 'Text link', 'jmc-portfolio' ),
+			)
+		);
 	}
+);
+
+add_action(
+	'wp_head',
+	static function () {
+		// Browser chrome matches the canvas in both colour schemes.
+		echo '<meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />' . "\n";
+		echo '<meta name="theme-color" content="#0b0b0c" media="(prefers-color-scheme: dark)" />' . "\n";
+
+		// The body face is needed for first paint; preloading avoids a late font swap.
+		printf(
+			'<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin />' . "\n",
+			esc_url( get_theme_file_uri( 'assets/fonts/geist.woff2' ) )
+		);
+	},
+	2
 );

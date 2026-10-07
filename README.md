@@ -8,6 +8,8 @@ The repo holds only the code that is ours:
 | --- | --- |
 | `wp-content/themes/jmc-portfolio` | Block theme: design tokens (`theme.json`), templates, front-page sections (`patterns/`), self-hosted fonts, automatic dark mode |
 | `wp-content/plugins/jmc-portfolio-core` | Projects + skills, project/résumé link buttons, contact form block, social-preview meta tags |
+| `DESIGN.md` | Design spec (palette, type, layout rules). Read it before changing the theme |
+| `.claude/skills/` | Claude Code skills used for the design: taste, redesign, image-to-code, web-design-guidelines, playwright-cli |
 | `docker-compose.yml` | WordPress (PHP 8.3) + MariaDB 11 + WP-CLI |
 | `scripts/setup.ps1` | One-time install and sample content |
 
