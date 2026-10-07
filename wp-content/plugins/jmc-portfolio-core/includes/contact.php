@@ -72,10 +72,13 @@ function jmc_portfolio_contact_form(): string {
 	$is_error = false;
 	if ( isset( $notices[ $status ] ) ) {
 		[ $is_error, $text ] = $notices[ $status ];
+		// Uses the theme's icon helper when the theme provides one; the alert works without it.
+		$icon = function_exists( 'jmc_icon' ) ? jmc_icon( $is_error ? 'circle-alert' : 'circle-check' ) : '';
 		printf(
-			'<p id="jmc-contact-status" class="jmc-contact-notice%1$s" role="%2$s">%3$s</p>',
-			$is_error ? ' is-error' : '',
+			'<div id="jmc-contact-status" class="alert %1$s" role="%2$s">%3$s<p>%4$s</p></div>',
+			$is_error ? 'alert-error' : 'alert-success',
 			$is_error ? 'alert' : 'status',
+			$icon, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG.
 			esc_html( $text )
 		);
 	}
@@ -101,7 +104,7 @@ function jmc_portfolio_contact_form(): string {
 		<div class="jmc-hp" aria-hidden="true">
 			<label>Leave this empty <input type="text" name="jmc_website" tabindex="-1" autocomplete="off" /></label>
 		</div>
-		<button type="submit" class="wp-element-button"><?php esc_html_e( 'Send Message', 'jmc-portfolio-core' ); ?></button>
+		<button type="submit" class="wp-element-button btn-submit"><span class="btn-spinner" aria-hidden="true"></span><span class="btn-label"><?php esc_html_e( 'Send message', 'jmc-portfolio-core' ); ?></span></button>
 	</form>
 	<?php
 	return (string) ob_get_clean();

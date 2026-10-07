@@ -3,39 +3,54 @@
  * Title: About
  * Slug: jmc-portfolio/about
  * Categories: jmc-portfolio
- * Description: Short bio and grouped skills, label in the margin.
+ * Description: Short bio beside a toolkit card of grouped skills.
  */
+
+$groups = array(
+	array( 'code', 'Languages', array( 'C#', 'T-SQL', 'PHP', 'JavaScript', 'HTML', 'CSS' ) ),
+	array( 'layers', 'Frameworks', array( 'ASP.NET Web Forms', 'Laravel', 'Lumen', 'jQuery', 'DevExpress', 'Bootstrap' ) ),
+	array( 'database', 'Data', array( 'SQL Server', 'MySQL', 'Redis' ) ),
+	array( 'wrench', 'Tools and practice', array( 'Git', 'GitHub', 'PHPUnit', 'REST APIs', 'TortoiseSVN', 'Trello' ) ),
+);
 ?>
-<!-- wp:group {"anchor":"about","align":"wide","className":"section-row","layout":{"type":"default"}} -->
-<div id="about" class="wp-block-group alignwide section-row"><!-- wp:heading -->
-<h2 class="wp-block-heading">About</h2>
+<!-- wp:group {"tagName":"section","anchor":"about","align":"wide","className":"section section-alt","layout":{"type":"default"}} -->
+<section id="about" class="wp-block-group alignwide section section-alt"><!-- wp:group {"className":"about-grid","layout":{"type":"default"}} -->
+<div class="wp-block-group about-grid"><!-- wp:group {"className":"about-text","layout":{"type":"default"}} -->
+<div class="wp-block-group about-text"><!-- wp:paragraph {"className":"section-label"} -->
+<p class="section-label">About</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Business software, from the database up</h2>
 <!-- /wp:heading -->
 
-<!-- wp:group {"className":"row-content","layout":{"type":"default"}} -->
-<div class="wp-block-group row-content"><!-- wp:paragraph -->
-<p>I have nearly two years of professional experience building and maintaining business web applications, mostly in C#, ASP.NET Web Forms and Microsoft SQL Server, with backend API work in PHP using Laravel and Lumen.</p>
+<!-- wp:paragraph {"className":"lead"} -->
+<p class="lead">I have nearly two years of professional experience building and maintaining business web applications, mostly in C#, ASP.NET Web Forms and Microsoft SQL Server.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
-<p>Most of my week goes into a warehouse management system: new features, Excel import tools, moving concatenated SQL to parameterized queries, and fixing production bugs. I work in a team on Git and GitHub, and I've written unit and API tests with PHPUnit.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:group {"className":"skill-groups","layout":{"type":"default"}} -->
-<div class="wp-block-group skill-groups"><!-- wp:paragraph -->
-<p><span class="skill-groups__label">Languages</span> <span class="skill-groups__items">C#, T-SQL, PHP, JavaScript, HTML, CSS</span></p>
+<p>Most of my week goes into a warehouse management system and its customer portal: new features, Excel import tools, replacing concatenated SQL with parameterized queries, and fixing production bugs. Before that I built backend APIs in PHP with Laravel and Lumen, including an e-wallet API and systems for my university's Registrar's Office and Foundation Day.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
-<p><span class="skill-groups__label">Frameworks</span> <span class="skill-groups__items">ASP.NET Web Forms, Laravel, Lumen, jQuery, DevExpress, Bootstrap</span></p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-<p><span class="skill-groups__label">Data</span> <span class="skill-groups__items">SQL Server, MySQL, Redis</span></p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-<p><span class="skill-groups__label">Tools</span> <span class="skill-groups__items">Git, GitHub, PHPUnit, TortoiseSVN, Trello, Linux</span></p>
+<p>I work in a team on Git and GitHub, and I've written unit and API tests with PHPUnit.</p>
 <!-- /wp:paragraph --></div>
-<!-- /wp:group --></div>
-<!-- /wp:group --></div>
+<!-- /wp:group -->
+
+<!-- wp:html -->
+<div class="card toolkit">
+	<p class="toolkit-title">Toolkit</p>
+	<?php foreach ( $groups as [ $icon, $label, $items ] ) : ?>
+	<div class="toolkit-group">
+		<p class="toolkit-label"><span class="icon-chip"><?php echo jmc_icon( $icon ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG. ?></span><?php echo esc_html( $label ); ?></p>
+		<ul class="badge-list" aria-label="<?php echo esc_attr( $label ); ?>">
+			<?php foreach ( $items as $item ) : ?>
+			<li class="badge"><?php echo esc_html( $item ); ?></li>
+			<?php endforeach; ?>
+		</ul>
+	</div>
+	<?php endforeach; ?>
+</div>
+<!-- /wp:html --></div>
+<!-- /wp:group --></section>
 <!-- /wp:group -->

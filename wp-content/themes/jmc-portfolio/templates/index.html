@@ -5,34 +5,32 @@
 <div class="wp-block-group alignwide page-head"><!-- wp:query-title {"type":"archive","showPrefix":false} /--></div>
 <!-- /wp:group -->
 
-<!-- wp:group {"align":"wide","className":"section-row","layout":{"type":"default"}} -->
-<div class="wp-block-group alignwide section-row"><!-- wp:heading -->
-<h2 class="wp-block-heading">Writing</h2>
-<!-- /wp:heading -->
+<!-- wp:group {"align":"wide","className":"section section-tight","layout":{"type":"default"}} -->
+<div class="wp-block-group alignwide section section-tight"><!-- wp:query {"queryId":4,"query":{"perPage":12,"pages":0,"offset":0,"postType":"post","inherit":true},"className":"project-cards"} -->
+<div class="wp-block-query project-cards"><!-- wp:post-template -->
+<!-- wp:post-featured-image {"aspectRatio":"16/10","className":"card-media"} /-->
 
-<!-- wp:group {"className":"row-content","layout":{"type":"default"}} -->
-<div class="wp-block-group row-content"><!-- wp:query {"queryId":4,"query":{"perPage":10,"pages":0,"offset":0,"postType":"post","inherit":true},"className":"project-list"} -->
-<div class="wp-block-query project-list"><!-- wp:post-template -->
-<!-- wp:post-title {"level":3,"isLink":true} /-->
+<!-- wp:group {"className":"card-body","layout":{"type":"default"}} -->
+<div class="wp-block-group card-body"><!-- wp:post-date {"className":"card-year"} /-->
 
-<!-- wp:post-date {"format":"M Y"} /-->
+<!-- wp:post-title {"level":2,"isLink":true,"className":"card-title"} /-->
 
-<!-- wp:post-excerpt {"excerptLength":24} /-->
+<!-- wp:post-excerpt {"excerptLength":22,"className":"card-text"} /--></div>
+<!-- /wp:group -->
 <!-- /wp:post-template -->
 
-<!-- wp:query-pagination {"layout":{"type":"flex","justifyContent":"space-between"}} -->
+<!-- wp:query-pagination {"className":"pagination","layout":{"type":"flex","justifyContent":"center"}} -->
 <!-- wp:query-pagination-previous /-->
 
 <!-- wp:query-pagination-next /-->
 <!-- /wp:query-pagination -->
 
 <!-- wp:query-no-results -->
-<!-- wp:paragraph -->
-<p>Nothing to show here yet.</p>
-<!-- /wp:paragraph -->
+<!-- wp:html -->
+<div class="empty-state"><p class="empty-state-title">Nothing here yet</p><p class="empty-state-text">There are no posts to show.</p><a class="btn btn-secondary btn-sm" href="/">Back to home</a></div>
+<!-- /wp:html -->
 <!-- /wp:query-no-results --></div>
 <!-- /wp:query --></div>
-<!-- /wp:group --></div>
 <!-- /wp:group --></main>
 <!-- /wp:group -->
 

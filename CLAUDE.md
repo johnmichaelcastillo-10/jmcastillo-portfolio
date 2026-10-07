@@ -79,7 +79,13 @@ php -l <file>                                          # host PHP 8.5.11, lint o
 - Buttons bound to post meta / the résumé option (Block Bindings) render nothing when empty;
   see `includes/links.php`.
 - Navigation and Social Icons blocks are banned on the front end (≈20 KB and ≈12 KB of inline
-  CSS, plus the Interactivity API). Header nav is a Custom HTML `<nav>`.
+  CSS, plus the Interactivity API). Header and footer are PHP patterns holding Custom HTML;
+  the mobile menu and current-section marker are `assets/js/site.js`. The menu only
+  collapses when `<html>` has the `js` class (set inline in `<head>` by functions.php).
+- A `wp:pattern` inside a Query Loop's post template loses the post context (titles render
+  empty), so card markup is inlined in each query.
+- Plain `.btn` links need `box-sizing: border-box` (core only sets it on block buttons).
+- `jmc_icon()` must only strip width/height from the root `<svg>`; inner `<rect>`s need theirs.
 - PowerShell 5.1: don't use `$ErrorActionPreference = 'Stop'` around docker (stderr progress
   becomes errors); check `$LASTEXITCODE` instead.
 

@@ -2,27 +2,32 @@
 
 <!-- wp:group {"tagName":"main","layout":{"type":"constrained"}} -->
 <main class="wp-block-group"><!-- wp:group {"align":"wide","className":"page-head","layout":{"type":"default"}} -->
-<div class="wp-block-group alignwide page-head"><!-- wp:query-title {"type":"archive","showPrefix":false} /-->
+<div class="wp-block-group alignwide page-head"><!-- wp:html -->
+<nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/projects/">Projects</a></li></ol></nav>
+<!-- /wp:html -->
+
+<!-- wp:query-title {"type":"archive","showPrefix":false} /-->
 
 <!-- wp:term-description {"className":"lead"} /--></div>
 <!-- /wp:group -->
 
-<!-- wp:group {"align":"wide","className":"section-row","layout":{"type":"default"}} -->
-<div class="wp-block-group alignwide section-row"><!-- wp:heading -->
-<h2 class="wp-block-heading">Projects</h2>
-<!-- /wp:heading -->
+<!-- wp:group {"align":"wide","className":"section section-tight","layout":{"type":"default"}} -->
+<div class="wp-block-group alignwide section section-tight"><!-- wp:query {"queryId":3,"query":{"perPage":12,"pages":0,"offset":0,"postType":"project","inherit":true},"className":"project-cards"} -->
+<div class="wp-block-query project-cards"><!-- wp:post-template -->
+<!-- wp:post-featured-image {"aspectRatio":"16/10","className":"card-media"} /-->
 
-<!-- wp:group {"className":"row-content","layout":{"type":"default"}} -->
-<div class="wp-block-group row-content"><!-- wp:query {"queryId":3,"query":{"perPage":20,"pages":0,"offset":0,"postType":"project","inherit":true},"className":"project-list"} -->
-<div class="wp-block-query project-list"><!-- wp:post-template -->
-<!-- wp:post-title {"level":3,"isLink":true} /-->
+<!-- wp:group {"className":"card-body","layout":{"type":"default"}} -->
+<div class="wp-block-group card-body"><!-- wp:post-date {"format":"Y","className":"card-year"} /-->
 
-<!-- wp:post-date {"format":"Y"} /-->
+<!-- wp:post-title {"level":2,"isLink":true,"className":"card-title"} /-->
 
-<!-- wp:post-excerpt {"excerptLength":24} /-->
+<!-- wp:post-excerpt {"excerptLength":22,"className":"card-text"} /-->
+
+<!-- wp:post-terms {"term":"project_skill","separator":"","className":"badge-list"} /--></div>
+<!-- /wp:group -->
 <!-- /wp:post-template -->
 
-<!-- wp:query-pagination {"layout":{"type":"flex","justifyContent":"space-between"}} -->
+<!-- wp:query-pagination {"className":"pagination","layout":{"type":"flex","justifyContent":"center"}} -->
 <!-- wp:query-pagination-previous /-->
 
 <!-- wp:query-pagination-numbers /-->
@@ -31,12 +36,9 @@
 <!-- /wp:query-pagination -->
 
 <!-- wp:query-no-results -->
-<!-- wp:paragraph -->
-<p>No projects here yet.</p>
-<!-- /wp:paragraph -->
+<!-- wp:pattern {"slug":"jmc-portfolio/empty-projects"} /-->
 <!-- /wp:query-no-results --></div>
 <!-- /wp:query --></div>
-<!-- /wp:group --></div>
 <!-- /wp:group --></main>
 <!-- /wp:group -->
 

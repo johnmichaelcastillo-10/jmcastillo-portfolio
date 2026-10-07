@@ -1,104 +1,87 @@
 # DESIGN.md
 
-Design spec for the portfolio theme. Coding agents: read this before touching
-`wp-content/themes/jmc-portfolio`. Built with the `design-taste-frontend`,
-`redesign-existing-projects` and `web-design-guidelines` skills in `.claude/skills/`.
+Design system for the portfolio theme (`wp-content/themes/jmc-portfolio`). Coding agents:
+read this before changing the theme. Tokens are theme.json presets (`--wp--preset--*`) plus
+`--jmc-*` tokens at the top of `style.css`; components are classes in `style.css`.
 
 ## Concept
 
-Built from the owner's actual work: warehouse and cold-storage systems. The intro closes on a
-wide photo of a pallet-rack aisle, and its orange rack beams set the accent colour. That
-colour returns as a short "beam" bar before each section label, the one place the accent
-shows without interaction. Each project page opens with a photo of its world (warehouse
-floor, data table, server racks, phone, stage, ticket kiosk).
+Built from the owner's work: warehouse and cold-storage systems. The hero photo is a
+pallet-rack aisle; its **steel-blue uprights** are the primary colour and its **orange beams**
+the accent. The accent appears as the short "beam" bar on section labels, the current-job
+timeline marker, the active-nav underline and list markers. Nowhere else.
 
-Images are real photos under CC BY (found on Openverse), self-hosted as WebP, each with a
-visible credit caption: photographer link, licence link, and what was changed. Never use a
-photo without a licence that allows it, never hotlink, never drop the credit, and avoid
-photos showing a real company's brand (it reads as a claim of having built it).
+Credible-product polish without template tells: one photo-led hero, real content only (résumé
+facts, no invented metrics), restraint with effects (glass used once, on the stats card over
+the photo; one faint dot-grid pattern, reused in the contact panel).
 
-## Read
+## Colour
 
-A personal page that reads as written, not generated. One tight column, a label in the left
-margin for each section, an intro sentence instead of a headline-and-buttons hero, and lists
-instead of cards. Dials: variance 5, motion 3, density 4.
+| Role | Token | Light | Dark |
+| --- | --- | --- | --- |
+| Background | `base` | #f7f7f5 | #0d1117 |
+| Surface (cards) | `surface` | #ffffff | #141a22 |
+| Surface 2 (badges, fills) | `surface-2` | #f0f1ef | #1b222c |
+| Border | `line` | #e3e4e1 | #262f3b |
+| Field border / strong border | `field` | #b5b8b2 | #3d4756 |
+| Muted text | `muted` | #636b78 | #8d97a7 |
+| Text | `body` | #363d48 | #c6ccd6 |
+| Headings | `contrast` | #11151b | #f1f3f6 |
+| Primary (rack steel) | `primary` / `primary-soft` / `on-primary` | #1f4a8a / #e8eef7 / #fff | #7fa7ec / #16233a / #0d1117 |
+| Accent (beam orange) | `accent` / `accent-soft` | #c2410c / #fdeee5 | #fb8c3c / #2c1a0e |
+| Success / Warning / Error / Info | `success` `warning` `error` `info` | #15803d #a15c07 #b42318 #1d4ed8 | #4ade80 #fbbf24 #f87171 #60a5fa |
 
-What makes it not look machine-made, and must be kept:
-
-- No default "AI stack" tells: not Inter or Geist, not a blue accent, no glows, no cards grid,
-  no centered hero with two buttons, no uppercase mono eyebrows.
-- Copy is first person and specific to the work. Links sit inside sentences.
-- Small type, generous margins, warm paper instead of pure white.
-
-## Color
-
-| Token (theme.json slug) | Light | Dark |
-| --- | --- | --- |
-| `base` (paper) | #f9f8f6 | #121110 |
-| `surface` (inputs) | #ffffff | #1a1917 |
-| `surface-2` (row hover, notices) | #f1efeb | #22201e |
-| `line` | #e6e3de | #2c2a27 |
-| `field` (input hover border) | #a8a29b | #57534e |
-| `muted` (labels, secondary text) | #736d66 | #9a948c |
-| `body` | #3d3a36 | #d6d2cc |
-| `contrast` (ink) | #181715 | #f3f1ee |
-| `accent` | #c2410c | #fb923c |
-
-The orange accent only appears on hover, focus rings and the submit button's hover. Links are
-ink with a faint underline. Dark mode follows `prefers-color-scheme`.
+Dark mode follows `prefers-color-scheme`. Shadows are ink-tinted, never pure black.
 
 ## Type
 
-Schibsted Grotesk (OFL) for text, IBM Plex Mono (OFL) only for years and dates. Self-hosted.
+Schibsted Grotesk (OFL, 400–700 variable) for everything; IBM Plex Mono (OFL) only for years
+and the 404 code. Self-hosted. Display 2.5–4.5rem/1.04, weight 650, tracking -0.035em;
+h2 1.875–2.75rem; h3 1.25rem; lead 1.1875rem; body 1rem/1.65; small 0.875rem; xs 0.8125rem.
+Headings sentence case, `text-wrap: balance`.
 
-| Role | Size | Weight | Notes |
-| --- | --- | --- | --- |
-| Intro (h1) | clamp(1.5rem, 1.1rem + 1.6vw, 2.125rem) | 500 | line-height 1.28, tracking -0.025em; second sentence in `muted` |
-| Section label (h2) | 0.875rem | 500 | `muted`, sticky in the margin |
-| Item title (h3) | 1rem | 600 | ink |
-| Body | 1rem | 400 | line-height 1.65 |
-| Small | 0.875rem | 400 | |
-| Mono | 0.8125rem | 400 | years, dates |
+## Space, shape, depth
 
-Headings sentence case, buttons and links Title Case. No em or en dashes in copy; date ranges
-are written out ("Since 2025").
+Container 1180px wide, prose 720px. Section padding 4.5–7.5rem. Radius: 8 (controls),
+12 (alerts, nav cards), 18 (cards, panels). Shadows: `--jmc-shadow-sm` at rest,
+`-md` on hover, `-lg` for floating things (stats card, open menu).
 
-## Layout
+## Components (style.css)
 
-Wide size 880px, content column 640px, label column 9.5rem. Below 720px the label stacks above
-its content. Rows align on the text baseline. Section padding about 48px; intro top padding up
-to 136px.
+Buttons (`.wp-block-button` styles fill / `is-style-secondary` / `is-style-text`, and `.btn`
+`.btn-secondary` `.btn-sm` for raw links; `btn-arrow`, `btn-external` add →/↗), badges
+(`.badge`, `.badge-outline`, `.badge-accent`, `.badge-list` also styles post-terms), cards
+(`.card`, project cards in `.project-cards`, `.is-bento` makes the first a 2×2 tile), icon chips,
+alerts (`.alert-success` / `.alert-error`), form fields, breadcrumbs, empty states, pagination,
+timeline, toolkit, stats card, footer.
 
-## Components
+Icons: inline SVG via `jmc_icon( 'name' )` from `assets/icons` (Lucide, ISC; GitHub from
+Simple Icons, CC0). Decorative icons are `aria-hidden`.
 
-- **Intro**: h1 sentence plus three inline text links (Résumé, GitHub, Email). External links
-  get a small ↗ that nudges on hover.
-- **Work**: list rows (title, year right-aligned, one-line summary). The whole row is the link;
-  hover tints the row with `surface-2`.
-- **About**: two short paragraphs, then skills as labelled rows divided by hairlines.
-- **Experience**: year column beside role, organisation and one paragraph.
-- **Contact**: one sentence with the email inline, then a two-column form (name, email) with
-  the message full width. Inputs 44px tall, 8px radius.
-- **Header**: name and a plain `<nav>` of four anchors (Custom HTML block). Never the
-  Navigation block: it inlines ~20 KB of menu CSS and loads ~16 KB of JS for a hamburger.
-  On phones the links wrap under the name and the header stops being sticky. A hairline
-  fades in under it once the page scrolls (CSS scroll timeline).
-- **Inner pages**: title on the same left edge as the header; body on the label grid, with
-  project metadata (year, stack, links) in the label column.
-- **Footer**: hairline, name and year, text links (GitHub, Email, Back to top). No Social
-  Icons block (~12 KB of brand CSS). Pinned to the window bottom on short pages.
+## Sections
 
-## Engineering rules
-
-- No emoji script, no Interactivity API on the front end. The only theme JS is the contact
-  form's "Sending…" state.
-- Decorative arrows use `content: "↗" / ""` so screen readers skip them.
-- List rows are one stretched link; keyboard focus outlines the whole row.
-- Hover-only effects sit inside `@media (hover: hover)`.
-- Print: ink on white, no header, footer or form.
+Header (sticky, blur, hairline on scroll; mobile menu behind a 44px button, see site.js) →
+Hero (badge, display headline, lead, primary + secondary + text action, photo with stats card) →
+Work (split heading, bento cards) → About (full-bleed surface band, prose + toolkit card) →
+Experience (timeline cards on a rail, education card) → Contact (panel: methods list + form
+card) → Footer (brand, two link columns, credits + back to top).
 
 ## Motion
 
-The intro rises 10px and fades in once on load. Sections fade up as they scroll into view via
-`animation-timeline: view()` where supported. Hovers are 150 to 200ms with
-`cubic-bezier(0.16, 1, 0.3, 1)`. Everything is off under `prefers-reduced-motion: reduce`.
+150–240ms, `cubic-bezier(0.16, 1, 0.3, 1)`, transform / opacity / colour only. Hero settles in
+once; content fades up on scroll via CSS `animation-timeline: view()` where supported; card
+hover lifts 4px and zooms the photo 3.5%. All of it collapses under
+`prefers-reduced-motion: reduce`; the form spinner stops spinning but stays visible.
+
+## Images
+
+Real photos under CC BY via Openverse, self-hosted WebP, alt text from
+`scripts/media/credits.json`. Credit is shown under the hero and project-page images and on
+the Photo credits page (linked in the footer). Never hotlink, never drop a credit, avoid
+photos that show a real company's brand.
+
+## Rules that keep it fast
+
+No Navigation or Social Icons blocks, no emoji script, no Interactivity API. Theme JS is
+`assets/js/site.js` (menu + current section, ~2 KB) and the form's loading state. No
+runtime dependencies.
