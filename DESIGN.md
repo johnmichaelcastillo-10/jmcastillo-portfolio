@@ -7,8 +7,9 @@ read this before changing the theme. Tokens are theme.json presets (`--wp--prese
 ## Concept
 
 The copy presents the owner as a software developer in general (web applications and APIs);
-employers appear only in Experience. Visually, the hero photo is a pallet-rack aisle; its
-**steel-blue uprights** are the primary colour and its **orange beams** the accent. The accent appears as the short "beam" bar on section labels, the current-job
+employers appear only in Experience. The hero photo is a developer at a laptop. The palette
+is **steel blue** (primary) and **beam orange** (accent), from warehouse racking. The accent
+appears as the short "beam" bar on section labels, the headline underline, the current-job
 timeline marker, the active-nav underline and list markers. Nowhere else.
 
 Credible-product polish without template tells: one photo-led hero, real content only (résumé
@@ -67,7 +68,7 @@ hanging off its left edge; soft blue/orange washes behind) →
 Work (split heading, bento cards) → About (full-bleed surface band, prose + toolkit card) →
 Experience (timeline cards on a rail, education card) → Contact (the page's one dark
 moment: a deep rack-steel panel, fixed colours in both schemes, with the form card floating
-on it) → Footer (brand, two link columns, credits + back to top).
+on it) → Footer (brand, two link columns, back to top).
 
 Card photos share one grade (slightly desaturated, more contrast, faint ink wash) so six
 photographers read as one set; hover restores full colour.
@@ -81,10 +82,10 @@ hover lifts 4px and zooms the photo 3.5%. All of it collapses under
 
 ## Images
 
-Real photos under CC BY via Openverse, self-hosted WebP, alt text from
-`scripts/media/credits.json`. Credit is shown under the hero and project-page images and on
-the Photo credits page (linked in the footer). Never hotlink, never drop a credit, avoid
-photos that show a real company's brand.
+Only CC0 or public-domain photos (via Openverse, `license=cc0,pdm`), so the site shows no
+credits. Self-hosted WebP with alt text from `scripts/media/media.json`; sources are recorded
+there and in `assets/images/SOURCES.md`. Never hotlink, never use a licence that needs
+attribution, avoid photos that show a real company's brand or identifiable faces.
 
 ## Rules that keep it fast
 

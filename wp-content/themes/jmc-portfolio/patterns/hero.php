@@ -6,11 +6,11 @@
  * Description: Two columns: headline, summary and actions beside a tall photo with a stats card.
  *
  * The copy describes the owner as a developer in general; employers belong in Experience
- * only. The photo's steel-blue uprights and orange beams are where the primary and accent
- * colours come from. The stats are résumé facts only: change them when the résumé changes.
+ * only. The photo is CC0 (see assets/images/SOURCES.md), so it carries no credit. The stats
+ * are résumé facts only: change them when the résumé changes.
  */
 
-$hero_src = get_theme_file_uri( 'assets/images/hero-warehouse-portrait.webp' );
+$hero_src = get_theme_file_uri( 'assets/images/hero-developer.webp' );
 ?>
 <!-- wp:group {"tagName":"section","anchor":"top","align":"wide","className":"hero","layout":{"type":"default"}} -->
 <section id="top" class="wp-block-group alignwide hero"><!-- wp:group {"className":"hero-copy","layout":{"type":"default"}} -->
@@ -43,7 +43,7 @@ $hero_src = get_theme_file_uri( 'assets/images/hero-warehouse-portrait.webp' );
 
 <!-- wp:group {"className":"hero-media","layout":{"type":"default"}} -->
 <div class="wp-block-group hero-media"><!-- wp:image {"aspectRatio":"4/5","scale":"cover","sizeSlug":"full","linkDestination":"none","className":"hero-figure"} -->
-<figure class="wp-block-image size-full hero-figure"><img src="<?php echo esc_url( $hero_src ); ?>" alt="A long aisle between tall pallet racks with orange beams in a distribution warehouse" style="aspect-ratio:4/5;object-fit:cover"/><figcaption class="wp-element-caption">Photo: <a href="https://www.flickr.com/photos/42408834@N06/4324416999">toolstop</a>, <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a>, cropped.</figcaption></figure>
+<figure class="wp-block-image size-full hero-figure"><img src="<?php echo esc_url( $hero_src ); ?>" alt="Hands typing on a laptop showing PHP code in an editor" style="aspect-ratio:4/5;object-fit:cover"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:html -->
