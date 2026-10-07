@@ -1,6 +1,6 @@
 <?php
 /**
- * Site tagline and portfolio projects, taken from the résumé.
+ * Site tagline and portfolio projects, taken from the resume.
  *
  *   docker compose run --rm cli wp eval-file /scripts/seed-content.php
  *

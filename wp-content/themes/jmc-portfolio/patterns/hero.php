@@ -7,7 +7,7 @@
  *
  * The copy describes the owner as a developer in general; employers belong in Experience
  * only. The photo is CC0 (see assets/images/SOURCES.md), so it carries no credit. The stats
- * are résumé facts only: change them when the résumé changes.
+ * are resume facts only: change them when the resume changes.
  */
 
 $hero_src = get_theme_file_uri( 'assets/images/hero-code.webp' );
@@ -32,7 +32,7 @@ $hero_src = get_theme_file_uri( 'assets/images/hero-code.webp' );
 <!-- /wp:button -->
 
 <!-- wp:button {"className":"is-style-secondary","metadata":{"bindings":{"url":{"source":"jmc-portfolio/resume"}}}} -->
-<div class="wp-block-button is-style-secondary"><a class="wp-block-button__link wp-element-button">Résumé (PDF)</a></div>
+<div class="wp-block-button is-style-secondary"><a class="wp-block-button__link wp-element-button">Resume</a></div>
 <!-- /wp:button -->
 
 <!-- wp:button {"className":"is-style-text btn-external"} -->

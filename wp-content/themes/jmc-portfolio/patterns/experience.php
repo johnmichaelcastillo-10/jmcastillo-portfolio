@@ -3,7 +3,7 @@
  * Title: Experience
  * Slug: jmc-portfolio/experience
  * Categories: jmc-portfolio
- * Description: Work history as a timeline, with education below. Résumé facts only.
+ * Description: Work history as a timeline, with education below. Resume facts only.
  *
  * Dates are written out ("Mar 2025 to now") because WordPress turns " - " into an en dash.
  */

@@ -13,7 +13,7 @@ the **Monochrome** group (Apple-like, minimal): #09090B · #18181B · #3F3F46 ·
 (#18181B, #FAFAFA in dark mode) appears as the short bar on section labels, the headline
 underline, the current-job timeline marker, the active-nav underline and list markers.
 
-Credible-product polish without template tells: one photo-led hero, real content only (résumé
+Credible-product polish without template tells: one photo-led hero, real content only (resume
 facts, no invented metrics), restraint with effects (glass used once, on the stats card over
 the photo; one faint dot-grid pattern, reused in the contact panel).
 

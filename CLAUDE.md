@@ -8,7 +8,7 @@ true or a new non-obvious lesson is learned. Design rules live in `DESIGN.md`, s
 
 John Michael Castillo's personal portfolio: a WordPress block theme
 (`wp-content/themes/jmc-portfolio`) plus a plugin (`wp-content/plugins/jmc-portfolio-core`:
-projects, skills, contact form, résumé link, meta tags), running locally in Docker.
+projects, skills, contact form, resume link, meta tags), running locally in Docker.
 Hosting is not decided yet.
 
 ## Git and accounts (do not get wrong)
@@ -21,7 +21,7 @@ Hosting is not decided yet.
 - Work on `main`. The remote's old `master` branch is someone else's 2022 Coursera capstone
   ("Noha M."); never reuse anything from it. Switching GitHub's default branch to `main` is
   the user's job.
-- Never commit `.env`, `backups/` or the résumé PDF (it contains a phone number).
+- Never commit `.env`, `backups/` or the resume PDF (it contains a phone number).
 
 ## Run and verify
 
@@ -73,7 +73,7 @@ php -l <file>                                          # host PHP 8.5.11, lint o
 - Identity rule (from the owner): present him as a software developer in general. Employers,
   including Mets Cold Storage, appear **only in the Experience section**, never in the hero,
   About, Work intro, project write-ups, tagline or meta tags.
-- Content rule: only facts from the résumé (`Downloads\Castillo-Resume-Dev.pdf`). Never invent
+- Content rule: only facts from the resume (`Downloads\Castillo-Resume-Dev.pdf`). Never invent
   metrics, outcomes or promises. Ask the user for numbers.
 
 ## WordPress lessons learned here
@@ -85,7 +85,7 @@ php -l <file>                                          # host PHP 8.5.11, lint o
 - `wptexturize` turns `" - "` and digit ranges into en dashes. Copy bans dashes, so write
   "Since 2025", "Mar to May 2024".
 - kses strips `<email>`-looking text from post titles; message titles use `Name — email`.
-- Buttons bound to post meta / the résumé option (Block Bindings) render nothing when empty;
+- Buttons bound to post meta / the resume option (Block Bindings) render nothing when empty;
   see `includes/links.php`.
 - Navigation and Social Icons blocks are banned on the front end (≈20 KB and ≈12 KB of inline
   CSS, plus the Interactivity API). Header and footer are PHP patterns holding Custom HTML;
@@ -109,7 +109,7 @@ Image generation (Higgsfield) costs credits: never use it without asking.
 
 - PHP 8.3 winget package half-uninstalled: VS Code's PHP IntelliSense held a file. With VS
   Code closed, run `winget uninstall --id PHP.PHP.8.3 -e`, then delete its leftover folder.
-- Missing from the user: photo or sanitized screenshots, LinkedIn URL, résumé copy without
+- Missing from the user: photo or sanitized screenshots, LinkedIn URL, resume copy without
   the phone number, project numbers. Ask before adding the 3D warehouse digital twin or the
   Nuxt ERP rewrite (work projects; confidentiality unknown).
 - Hosting choice, then SMTP for contact mail and analytics.

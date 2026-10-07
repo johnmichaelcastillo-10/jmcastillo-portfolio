@@ -1,6 +1,6 @@
 <?php
 /**
- * Link buttons driven by Block Bindings: project links (post meta) and the résumé
+ * Link buttons driven by Block Bindings: project links (post meta) and the resume
  * (a site option). A bound button whose link is empty renders as nothing.
  */
 
@@ -21,12 +21,12 @@ add_action(
 
 		add_settings_field(
 			'jmc_resume_url',
-			__( 'Résumé (PDF) URL', 'jmc-portfolio-core' ),
+			__( 'Resume (PDF) URL', 'jmc-portfolio-core' ),
 			static function () {
 				printf(
 					'<input type="url" class="regular-text code" id="jmc_resume_url" name="jmc_resume_url" value="%s" /><p class="description">%s</p>',
 					esc_attr( get_option( 'jmc_resume_url', '' ) ),
-					esc_html__( 'Upload the PDF under Media, then paste its URL here. The "Download résumé" button stays hidden while this is empty.', 'jmc-portfolio-core' )
+					esc_html__( 'Upload the PDF under Media, then paste its URL here. The "Download resume" button stays hidden while this is empty.', 'jmc-portfolio-core' )
 				);
 			},
 			'general',
@@ -42,7 +42,7 @@ add_action(
 		register_block_bindings_source(
 			'jmc-portfolio/resume',
 			array(
-				'label'              => __( 'Résumé URL', 'jmc-portfolio-core' ),
+				'label'              => __( 'Resume URL', 'jmc-portfolio-core' ),
 				'get_value_callback' => static fn() => get_option( 'jmc_resume_url', '' ),
 			)
 		);

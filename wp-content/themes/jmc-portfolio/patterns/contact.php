@@ -36,7 +36,7 @@ $resume = (string) get_option( 'jmc_resume_url', '' );
 	<?php if ( '' !== $resume ) : ?>
 	<li>
 		<span class="icon-chip"><?php echo jmc_icon( 'file-text' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG. ?></span>
-		<span><span class="contact-method-label">Résumé</span><a href="<?php echo esc_url( $resume ); ?>">Download PDF</a></span>
+		<span><span class="contact-method-label">Resume</span><a href="<?php echo esc_url( $resume ); ?>">Download PDF</a></span>
 	</li>
 	<?php endif; ?>
 	<li>
