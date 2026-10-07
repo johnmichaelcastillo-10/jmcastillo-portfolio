@@ -58,6 +58,10 @@ php -l <file>                                          # host PHP 8.5.11, lint o
   are personal work only, added by the owner. Experience duties stay generic ("internal
   business web applications"). The Work section, its nav/footer links and the hero's "View my
   work" button appear only when a project is published (`jmc_has_projects()`).
+- **Live site:** https://jmcastillo-portfolio.netlify.app (Netlify project `jmcastillo-portfolio`,
+  team `johnmichaelcastillo-10`, Free plan, this folder is linked via `.netlify/`). Deploy with
+  `.\scripts\publish.ps1 -Deploy`. Visibility, form detection and notifications are
+  dashboard-only settings (no API/CLI): https://app.netlify.com/projects/jmcastillo-portfolio
 - **Hosting is static (Netlify).** `scripts/publish.ps1` runs `scripts/export-static.php`
   (host PHP, crawls http://localhost:8088 from `/`, `/projects/`, `/message-sent/` and the
   sitemap, downloads every referenced asset, rewrites URLs to `STATIC_URL`, strips REST/feed

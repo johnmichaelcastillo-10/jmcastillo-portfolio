@@ -32,6 +32,11 @@ if ($LASTEXITCODE -ne 0) { throw 'Static export failed; nothing was deployed.' }
 Copy-Item static\* dist\ -Recurse -Force
 
 if ($Deploy) {
-    npx --yes netlify-cli deploy --prod --dir=dist
+    # Prefer a global install (npm install -g netlify-cli); fall back to npx.
+    if (Get-Command netlify -ErrorAction SilentlyContinue) {
+        netlify deploy --prod --dir=dist
+    } else {
+        npx --yes netlify-cli deploy --prod --dir=dist
+    }
     if ($LASTEXITCODE -ne 0) { throw 'Netlify deploy failed.' }
 }
