@@ -11,3 +11,6 @@ backups/
 
 # Graphify output: regenerate with `graphify update .`
 graphify-out/
+
+# Static export: rebuild with scripts/publish.ps1
+dist/
