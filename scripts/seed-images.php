@@ -66,4 +66,18 @@ foreach ( $credits as $credit ) {
 	WP_CLI::log( "Attached {$credit['file']} to {$slug}" );
 }
 
+// The footer links here; card thumbnails rely on it for their CC BY credit.
+if ( ! get_page_by_path( 'photo-credits' ) ) {
+	wp_insert_post(
+		array(
+			'post_type'    => 'page',
+			'post_status'  => 'publish',
+			'post_name'    => 'photo-credits',
+			'post_title'   => 'Photo credits',
+			'post_content' => "<!-- wp:paragraph -->\n<p>The photos on this site are used under Creative Commons licences. Thank you to the photographers.</p>\n<!-- /wp:paragraph -->\n\n<!-- wp:shortcode -->\n[jmc_photo_credits]\n<!-- /wp:shortcode -->",
+		)
+	);
+	WP_CLI::log( 'Created the Photo credits page' );
+}
+
 WP_CLI::success( 'Project images are in place.' );

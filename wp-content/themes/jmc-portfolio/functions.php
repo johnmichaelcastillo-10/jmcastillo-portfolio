@@ -2,11 +2,48 @@
 /**
  * JMC Portfolio theme setup.
  *
- * Design rules live in DESIGN.md at the repo root; tokens in theme.json; templates in
- * /templates and /parts; front-page sections in /patterns.
+ * Design rules live in DESIGN.md at the repo root; tokens in theme.json and the :root block
+ * of style.css; templates in /templates and /parts; sections in /patterns.
  */
 
 defined( 'ABSPATH' ) || exit;
+
+/**
+ * Inline SVG icon from assets/icons (Lucide, ISC; GitHub mark from Simple Icons, CC0).
+ * Inline rather than an <img> so icons take currentColor; decorative unless $label is set.
+ */
+function jmc_icon( string $name, string $label = '' ): string {
+	static $cache = array();
+
+	if ( ! isset( $cache[ $name ] ) ) {
+		$file = get_theme_file_path( "assets/icons/{$name}.svg" );
+		$svg  = is_readable( $file ) ? (string) file_get_contents( $file ) : '';
+		$svg  = preg_replace( '/<!--.*?-->|<title>.*?<\/title>/s', '', $svg );
+		// Strip sizing and class from the root <svg> only: inner shapes (e.g. a <rect>) need
+		// their own width/height.
+		$svg = preg_replace_callback(
+			'/<svg\b[^>]*>/',
+			static fn( $m ) => preg_replace( '/\s(class|width|height|role)="[^"]*"/', '', $m[0] ),
+			$svg,
+			1
+		);
+		// Simple Icons are filled shapes; Lucide icons are strokes and set their own fill="none".
+		if ( ! str_contains( $svg, 'fill=' ) ) {
+			$svg = str_replace( '<svg', '<svg fill="currentColor"', $svg );
+		}
+		$cache[ $name ] = trim( preg_replace( '/\s+/', ' ', $svg ) );
+	}
+
+	if ( '' === $cache[ $name ] ) {
+		return '';
+	}
+
+	$a11y = '' === $label
+		? 'aria-hidden="true" focusable="false"'
+		: 'role="img" aria-label="' . esc_attr( $label ) . '"';
+
+	return str_replace( '<svg', '<svg class="icon icon-' . esc_attr( $name ) . '" ' . $a11y, $cache[ $name ] );
+}
 
 add_action(
 	'after_setup_theme',
@@ -18,7 +55,19 @@ add_action(
 add_action(
 	'wp_enqueue_scripts',
 	static function () {
-		wp_enqueue_style( 'jmc-portfolio', get_stylesheet_uri(), array(), wp_get_theme()->get( 'Version' ) );
+		$version = wp_get_theme()->get( 'Version' );
+		wp_enqueue_style( 'jmc-portfolio', get_stylesheet_uri(), array(), $version );
+		// Mobile menu and current-section highlighting. Deferred; the page works without it.
+		wp_enqueue_script(
+			'jmc-portfolio-site',
+			get_theme_file_uri( 'assets/js/site.js' ),
+			array(),
+			$version,
+			array(
+				'in_footer' => true,
+				'strategy'  => 'defer',
+			)
+		);
 	}
 );
 
@@ -27,8 +76,13 @@ add_action(
 	static function () {
 		register_block_pattern_category( 'jmc-portfolio', array( 'label' => __( 'Portfolio', 'jmc-portfolio' ) ) );
 
-		// A button that reads as a plain link: the hero's secondary action sits beside one
-		// primary button instead of competing with it.
+		register_block_style(
+			'core/button',
+			array(
+				'name'  => 'secondary',
+				'label' => __( 'Secondary', 'jmc-portfolio' ),
+			)
+		);
 		register_block_style(
 			'core/button',
 			array(
@@ -50,12 +104,21 @@ add_filter( 'emoji_svg_url', '__return_false' );
 // "Name · Tagline" instead of WordPress's en dash.
 add_filter( 'document_title_separator', static fn() => '·' );
 
+// Runs before first paint so CSS can collapse the mobile menu only when JS is available
+// (without it the header simply shows its links).
 add_action(
 	'wp_head',
 	static function () {
-		// Browser chrome matches the canvas in both colour schemes.
-		echo '<meta name="theme-color" content="#f9f8f6" media="(prefers-color-scheme: light)" />' . "\n";
-		echo '<meta name="theme-color" content="#121110" media="(prefers-color-scheme: dark)" />' . "\n";
+		echo "<script>document.documentElement.classList.add('js')</script>\n";
+	},
+	0
+);
+
+add_action(
+	'wp_head',
+	static function () {
+		echo '<meta name="theme-color" content="#f7f7f5" media="(prefers-color-scheme: light)" />' . "\n";
+		echo '<meta name="theme-color" content="#0d1117" media="(prefers-color-scheme: dark)" />' . "\n";
 
 		// The body face is needed for first paint; preloading avoids a late font swap.
 		printf(

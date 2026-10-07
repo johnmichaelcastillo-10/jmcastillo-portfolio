@@ -1,18 +1,18 @@
 <!-- wp:template-part {"slug":"header","tagName":"header"} /-->
 
 <!-- wp:group {"tagName":"main","layout":{"type":"constrained"}} -->
-<main class="wp-block-group"><!-- wp:group {"align":"wide","className":"page-head page-404","layout":{"type":"default"}} -->
-<div class="wp-block-group alignwide page-head page-404"><!-- wp:heading {"level":1} -->
-<h1 class="wp-block-heading">Page not found</h1>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph {"className":"lead"} -->
-<p class="lead">That link doesn't go anywhere. It may have moved, or the address has a typo.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-<p><a href="/">Home</a>, <a href="/projects/">all projects</a>, or <a href="/#contact">get in touch</a>.</p>
-<!-- /wp:paragraph --></div>
+<main class="wp-block-group"><!-- wp:group {"align":"wide","className":"section","layout":{"type":"default"}} -->
+<div class="wp-block-group alignwide section"><!-- wp:html -->
+<div class="empty-state empty-state-page">
+	<p class="empty-state-code">404</p>
+	<h1 class="empty-state-title">This page isn't here</h1>
+	<p class="empty-state-text">The link may be old, or the address has a typo. Try one of these instead.</p>
+	<div class="empty-state-actions">
+		<a class="btn" href="/">Go to the home page</a>
+		<a class="btn btn-secondary" href="/projects/">Browse projects</a>
+	</div>
+</div>
+<!-- /wp:html --></div>
 <!-- /wp:group --></main>
 <!-- /wp:group -->
 
