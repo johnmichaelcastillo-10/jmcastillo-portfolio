@@ -56,6 +56,14 @@ php -l <file>                                          # host PHP 8.5.11, lint o
   PowerShell 5.1 (it re-encodes):
   `docker compose exec -T -e MYSQL_PWD=... db sh -c "mariadb-dump -u root --single-transaction --databases wordpress > /tmp/x.sql"`
   then `docker compose cp db:/tmp/x.sql backups/`.
+- Project photos live in `scripts/media/` with `credits.json` (alt text + CC BY credit);
+  `scripts/seed-images.php` attaches one to each project that has no featured image (safe
+  to re-run). The plugin prints the attachment caption as the credit under featured images
+  (`includes/media.php`). The hero photo ships with the theme (`assets/images/`).
+- Finding images: Openverse API with `license=cc0,pdm,by`. Flickr's image host
+  (live.staticflickr.com) is unreachable from this network; download through Openverse's
+  proxy `https://api.openverse.org/v1/images/<id>/thumb/?full_size=true&compressed=false`.
+  Crop/convert with host PHP GD (`imagewebp`).
 - Content rule: only facts from the résumé (`Downloads\Castillo-Resume-Dev.pdf`). Never invent
   metrics, outcomes or promises. Ask the user for numbers.
 

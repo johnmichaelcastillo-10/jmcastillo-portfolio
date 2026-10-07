@@ -4,6 +4,19 @@ Design spec for the portfolio theme. Coding agents: read this before touching
 `wp-content/themes/jmc-portfolio`. Built with the `design-taste-frontend`,
 `redesign-existing-projects` and `web-design-guidelines` skills in `.claude/skills/`.
 
+## Concept
+
+Built from the owner's actual work: warehouse and cold-storage systems. The intro closes on a
+wide photo of a pallet-rack aisle, and its orange rack beams set the accent colour. That
+colour returns as a short "beam" bar before each section label, the one place the accent
+shows without interaction. Each project page opens with a photo of its world (warehouse
+floor, data table, server racks, phone, stage, ticket kiosk).
+
+Images are real photos under CC BY (found on Openverse), self-hosted as WebP, each with a
+visible credit caption: photographer link, licence link, and what was changed. Never use a
+photo without a licence that allows it, never hotlink, never drop the credit, and avoid
+photos showing a real company's brand (it reads as a claim of having built it).
+
 ## Read
 
 A personal page that reads as written, not generated. One tight column, a label in the left
