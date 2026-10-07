@@ -39,6 +39,17 @@ add_action(
 	}
 );
 
+// The site uses no emoji; WordPress's emoji polyfill would cost a script and an inline
+// detection snippet on every page.
+remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+remove_action( 'wp_print_styles', 'print_emoji_styles' );
+remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
+remove_action( 'admin_print_styles', 'print_emoji_styles' );
+add_filter( 'emoji_svg_url', '__return_false' );
+
+// "Name · Tagline" instead of WordPress's en dash.
+add_filter( 'document_title_separator', static fn() => '·' );
+
 add_action(
 	'wp_head',
 	static function () {

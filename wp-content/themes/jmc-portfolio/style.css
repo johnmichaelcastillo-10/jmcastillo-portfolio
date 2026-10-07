@@ -2,7 +2,7 @@
 Theme Name:        JMC Portfolio
 Author:            John Michael Castillo
 Description:       A personal portfolio block theme. Pairs with the JMC Portfolio Core plugin for projects.
-Version:           0.4.0
+Version:           0.5.0
 Requires at least: 6.6
 Tested up to:      6.8
 Requires PHP:      8.1
@@ -18,6 +18,7 @@ Text Domain:       jmc-portfolio
 	--jmc-ease: cubic-bezier(0.16, 1, 0.3, 1);
 	--jmc-header: 60px;
 	--jmc-label: 9.5rem;
+	--jmc-error: #b42318;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -32,6 +33,7 @@ Text Domain:       jmc-portfolio
 		--wp--preset--color--contrast: #f3f1ee;
 		--wp--preset--color--accent: #fb923c;
 		--wp--preset--color--on-accent: #121110;
+		--jmc-error: #ff7a6b;
 	}
 }
 
@@ -98,6 +100,17 @@ a:hover {
 	text-decoration-color: currentColor;
 }
 
+/* Footer sits at the bottom of the window on short pages (404, brief projects). */
+.wp-site-blocks {
+	display: flex;
+	flex-direction: column;
+	min-height: 100dvh;
+}
+
+.wp-site-blocks > main {
+	flex: 1 0 auto;
+}
+
 main {
 	overflow-x: clip;
 }
@@ -111,6 +124,32 @@ header.wp-block-template-part {
 	background: color-mix(in srgb, var(--wp--preset--color--base) 85%, transparent);
 	backdrop-filter: saturate(160%) blur(10px);
 	-webkit-backdrop-filter: saturate(160%) blur(10px);
+}
+
+/* A hairline under the header fades in once the page scrolls, so the bar separates from
+   content passing under it without a permanent rule at the top. CSS-only; browsers
+   without scroll-driven animations just don't get the line. */
+header.wp-block-template-part::after {
+	content: "";
+	position: absolute;
+	inset: auto 0 0;
+	height: 1px;
+	background: var(--wp--preset--color--line);
+	opacity: 0;
+}
+
+@supports (animation-timeline: scroll()) {
+	header.wp-block-template-part::after {
+		animation: jmc-show linear both;
+		animation-timeline: scroll(root);
+		animation-range: 0 48px;
+	}
+}
+
+@keyframes jmc-show {
+	to {
+		opacity: 1;
+	}
 }
 
 .admin-bar header.wp-block-template-part {
@@ -129,17 +168,44 @@ header.wp-block-template-part {
 	}
 }
 
-.site-header-inner > .alignwide {
+.site-header-bar {
 	min-height: var(--jmc-header);
 	align-items: center;
+	column-gap: 1.5rem;
 }
 
-header .wp-block-navigation a {
+/* A plain <nav> (Custom HTML block) rather than the Navigation block, which inlines ~20 KB
+   of menu CSS on every page to style four anchor links. */
+.site-nav {
+	display: flex;
+	gap: 1.25rem;
+	font-size: var(--wp--preset--font-size--small);
+}
+
+.site-nav a {
 	color: var(--wp--preset--color--muted);
+	text-decoration: none;
 }
 
-header .wp-block-navigation a:hover {
+.site-nav a:hover {
 	color: var(--wp--preset--color--contrast);
+}
+
+/* Phones: four links fit under the name, so there's no menu to open. The header stops
+   being sticky here; two rows of chrome would eat too much of a small screen. */
+@media (max-width: 600px) {
+	header.wp-block-template-part {
+		position: relative;
+	}
+
+	.site-header-bar {
+		row-gap: 0.25rem;
+		padding-block: 1rem;
+	}
+
+	.site-nav {
+		flex-basis: 100%;
+	}
 }
 
 /* ---------- Intro ---------- */
@@ -148,13 +214,20 @@ header .wp-block-navigation a:hover {
 	padding-block: clamp(4.5rem, 12vw, 8.5rem) clamp(3.5rem, 8vw, 5.5rem);
 }
 
-.hero h1 {
+.hero h1,
+.hero-sub {
 	max-width: 30em;
 	margin: 0;
 }
 
-.hero h1 .soft {
+/* Continues the h1 at the same size, in the muted colour. */
+.hero-sub {
+	font-size: var(--wp--preset--font-size--xx-large);
+	font-weight: 500;
+	line-height: 1.28;
+	letter-spacing: -0.025em;
 	color: var(--wp--preset--color--muted);
+	text-wrap: balance;
 }
 
 .hero-links {
@@ -162,10 +235,12 @@ header .wp-block-navigation a:hover {
 	gap: 1.5rem;
 }
 
-/* Arrow on links that leave the page. */
+/* Arrow on links that leave the page. The "/ ''" alt text keeps screen readers from
+   announcing "north east arrow"; the first declaration is the fallback. */
 .hero-links .wp-block-button__link[href^="http"]::after,
 .project-links .wp-block-button__link::after {
 	content: "↗";
+	content: "↗" / "";
 	display: inline-block;
 	margin-left: 0.2em;
 	font-size: 0.85em;
@@ -180,12 +255,17 @@ header .wp-block-navigation a:hover {
 /* Entrance: the intro settles in once, then nothing moves on its own. */
 @media (prefers-reduced-motion: no-preference) {
 	.hero h1,
+	.hero-sub,
 	.hero-links {
 		animation: jmc-rise 0.8s var(--jmc-ease) both;
 	}
 
+	.hero-sub {
+		animation-delay: 0.06s;
+	}
+
 	.hero-links {
-		animation-delay: 0.12s;
+		animation-delay: 0.14s;
 	}
 }
 
@@ -299,8 +379,22 @@ header .wp-block-navigation a:hover {
 	margin-top: 0.25rem;
 }
 
-.project-list .wp-block-post:hover {
-	background: var(--wp--preset--color--surface-2);
+/* Hover tint only on devices that really hover; on touch it would stick after a tap. */
+@media (hover: hover) {
+	.project-list .wp-block-post:hover {
+		background: var(--wp--preset--color--surface-2);
+	}
+}
+
+/* Keyboard focus outlines the whole row, which is the actual click target, rather
+   than just the title text. */
+.project-list .wp-block-post:has(.wp-block-post-title a:focus-visible) {
+	outline: 2px solid var(--wp--preset--color--accent);
+	outline-offset: 0;
+}
+
+.project-list .wp-block-post-title a:focus-visible {
+	outline: none;
 }
 
 .project-list .wp-block-post > * {
@@ -352,6 +446,7 @@ header .wp-block-navigation a:hover {
 
 .section-link a::after {
 	content: " →";
+	content: " →" / "";
 }
 
 .section-link a:hover {
@@ -479,7 +574,7 @@ header .wp-block-navigation a:hover {
 }
 
 .jmc-contact-form [aria-invalid="true"] {
-	border-color: #c50000;
+	border-color: var(--jmc-error);
 }
 
 .jmc-contact-form textarea {
@@ -525,35 +620,81 @@ header .wp-block-navigation a:hover {
 }
 
 .jmc-contact-notice.is-error {
-	box-shadow: inset 3px 0 0 #c50000;
-}
-
-@media (prefers-color-scheme: dark) {
-	.jmc-contact-form [aria-invalid="true"] {
-		border-color: #ff6b6b;
-	}
-
-	.jmc-contact-notice.is-error {
-		box-shadow: inset 3px 0 0 #ff6b6b;
-	}
+	box-shadow: inset 3px 0 0 var(--jmc-error);
 }
 
 /* ---------- Inner pages ---------- */
 
-.page-head,
-.section {
-	padding-block: clamp(3.5rem, 9vw, 6rem) var(--wp--preset--spacing--50);
+/* Page titles start on the same left edge as the header and the home intro; the body
+   below uses the same label/content grid as the home page. */
+.page-head {
+	padding-block: clamp(3.5rem, 9vw, 6rem) 0;
 }
 
 .page-head h1 {
+	max-width: 22em;
 	margin-block: 0.5rem 0;
 }
 
-.page-head .lead,
+.page-head + .section-row {
+	padding-top: var(--wp--preset--spacing--50);
+}
+
+.page-404 {
+	padding-bottom: var(--wp--preset--spacing--60);
+}
+
 .lead {
+	max-width: 40em;
 	margin-top: 1rem;
 	font-size: var(--wp--preset--font-size--large);
 	color: var(--wp--preset--color--muted);
+}
+
+.section-row.no-label > .row-content {
+	grid-column: 2;
+}
+
+/* Project page: metadata sits in the label column. */
+.project-aside {
+	position: sticky;
+	top: calc(var(--jmc-header) + 1.25rem);
+	align-self: start;
+	display: grid;
+	gap: 1.25rem;
+	font-size: var(--wp--preset--font-size--small);
+}
+
+.project-aside > *,
+.aside-item > * {
+	margin: 0;
+}
+
+.aside-label {
+	color: var(--wp--preset--color--muted);
+}
+
+.project-aside .wp-block-post-date {
+	color: var(--wp--preset--color--contrast);
+}
+
+.project-aside .project-links {
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 0.5rem;
+}
+
+.project-aside .wp-block-button.is-style-text .wp-block-button__link {
+	font-size: var(--wp--preset--font-size--small);
+}
+
+.project-body .row-content > :first-child {
+	margin-top: 0;
+}
+
+.aside-date {
+	align-self: baseline;
+	margin: 0;
 }
 
 .back-link {
@@ -568,27 +709,11 @@ header .wp-block-navigation a:hover {
 
 .back-link a::before {
 	content: "← ";
+	content: "← " / "";
 }
 
 .back-link a:hover {
 	color: var(--wp--preset--color--contrast);
-}
-
-.project-meta {
-	display: flex;
-	flex-wrap: wrap;
-	align-items: baseline;
-	gap: 0.5rem 1.25rem;
-	margin-top: 1.5rem;
-}
-
-.project-meta > * {
-	margin: 0;
-}
-
-.project-links {
-	margin-top: 1.25rem;
-	gap: 1.25rem;
 }
 
 .stack {
@@ -605,8 +730,8 @@ header .wp-block-navigation a:hover {
 	text-decoration: underline;
 }
 
-.entry {
-	margin-top: var(--wp--preset--spacing--50);
+.entry > :first-child {
+	margin-top: 0;
 }
 
 .entry h2 {
@@ -614,10 +739,8 @@ header .wp-block-navigation a:hover {
 	font-size: var(--wp--preset--font-size--large);
 }
 
-.meta {
-	font-family: var(--wp--preset--font-family--mono);
-	font-size: var(--wp--preset--font-size--mono);
-	color: var(--wp--preset--color--muted);
+.entry ul {
+	padding-left: 1.1rem;
 }
 
 .post-nav {
@@ -635,24 +758,28 @@ footer.wp-block-template-part {
 	font-size: var(--wp--preset--font-size--small);
 }
 
-footer.wp-block-template-part > .wp-block-group > .alignwide {
+.site-footer-bar {
+	gap: 0.5rem 1.5rem;
+	padding-block: 1.5rem;
 	border-top: 1px solid var(--wp--preset--color--line);
 }
 
-.section-tight {
-	padding-block: 1.5rem;
+.site-footer-bar > p {
+	margin: 0;
 }
 
-footer .wp-block-social-links {
-	gap: 1rem;
+.footer-links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1.25rem;
 }
 
-footer .wp-block-social-links.is-style-logos-only .wp-social-link {
+.footer-links a {
 	color: var(--wp--preset--color--muted);
-	transition: color 0.15s var(--jmc-ease);
+	text-decoration: none;
 }
 
-footer .wp-block-social-links.is-style-logos-only .wp-social-link:hover {
+.footer-links a:hover {
 	color: var(--wp--preset--color--contrast);
 }
 
@@ -664,12 +791,74 @@ footer .wp-block-social-links.is-style-logos-only .wp-social-link:hover {
 		gap: 1rem;
 	}
 
-	.section-row > h2 {
+	.section-row > h2,
+	.project-aside {
 		position: static;
+	}
+
+	.section-row.no-label > .row-content {
+		grid-column: auto;
+	}
+
+	.project-aside {
+		grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+		padding-bottom: 1.25rem;
+		border-bottom: 1px solid var(--wp--preset--color--line);
 	}
 
 	.jmc-contact-form,
 	.timeline-item {
 		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+/* ---------- Print ---------- */
+
+/* Recruiters print portfolios. Ink on white, no chrome, link targets spelled out. */
+@media print {
+	:root {
+		--wp--preset--color--base: #fff;
+		--wp--preset--color--body: #000;
+		--wp--preset--color--contrast: #000;
+		--wp--preset--color--muted: #444;
+	}
+
+	header.wp-block-template-part,
+	footer.wp-block-template-part,
+	.hero-links,
+	.section-link,
+	.wp-block-jmc-portfolio-contact-form,
+	.post-nav,
+	.back-link {
+		display: none !important;
+	}
+
+	*,
+	*::before,
+	*::after {
+		animation: none !important;
+		transition: none !important;
+	}
+
+	.section-row {
+		break-inside: avoid;
+		padding-block: 1rem;
+	}
+
+	.section-row > h2,
+	.project-aside {
+		position: static;
+	}
+
+	.hero {
+		padding-block: 0 1rem;
+	}
+
+	/* Only external links in write-ups. List rows already use ::after as the stretched
+	   click target, and a mailto address is already visible as its own text. */
+	.entry a[href^="http"]::after {
+		content: " (" attr(href) ")";
+		font-size: 0.8em;
+		color: #444;
 	}
 }

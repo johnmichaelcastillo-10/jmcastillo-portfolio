@@ -145,14 +145,6 @@
 					}
 				}
 			},
-			"core/navigation": {
-				"typography": { "fontSize": "var(--wp--preset--font-size--small)" },
-				"elements": {
-					"link": {
-						"typography": { "textDecoration": "none" }
-					}
-				}
-			},
 			"core/post-date": {
 				"typography": {
 					"fontFamily": "var(--wp--preset--font-family--mono)",
