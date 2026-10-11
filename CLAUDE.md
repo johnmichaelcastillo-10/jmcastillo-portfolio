@@ -1,8 +1,10 @@
 # CLAUDE.md
 
 Project memory for Claude Code. Read this first; update it when something here stops being
-true or a new non-obvious lesson is learned. Design rules live in `DESIGN.md`, setup steps in
-`README.md`; this file holds what is expensive to rediscover.
+true or a new non-obvious lesson is learned. Design rules live in `DESIGN.md`, the GitHub-facing
+overview in `README.md` (hero screenshots in `docs/`, retake them after visual changes), and
+install/publish steps for Windows, Linux and macOS in `DEPLOYMENT.md` (keep it in step with
+the scripts); this file holds what is expensive to rediscover.
 
 ## What this is
 
@@ -62,7 +64,12 @@ php -l <file>                                          # host PHP 8.5.11, lint o
   Vercel user `jmcastillo`, team scope `kaizerrrs-projects`, Hobby plan; linked via `.vercel/`,
   gitignored). The owner deploys by double-clicking `Deploy.cmd`, which runs
   `.\scripts\publish.ps1 -Deploy` (starts Docker Desktop if needed, waits for WordPress, copies
-  `.vercel/` into `dist/`, then `vercel deploy dist --prod`). The account has two teams, so non-interactive CLI calls need
+  `.vercel/` into `dist/`, then `vercel deploy dist --prod`). Linux/macOS twins:
+  `deploy.sh` → `scripts/publish.sh --deploy`, and `scripts/setup.sh`; keep them in step with
+  the `.ps1` versions. They were tested in WSL Ubuntu (PHP 8.3 from apt) with docker stubbed:
+  running `docker compose` from WSL against the Windows Docker Desktop recreates the
+  WordPress container (bind-mount paths differ) and fails on port 8088, after which
+  `docker compose up -d` from Windows restores it. Never run compose from WSL here. The account has two teams, so non-interactive CLI calls need
   `--scope kaizerrrs-projects`. `*.vercel.app` doesn't load from this network (TLS fails, also
   via WebFetch and `vercel curl`): the owner checks the live site from his phone.
   The owner confirmed the Vercel site and form work (2026-10-11). The old Netlify site
