@@ -60,12 +60,14 @@ php -l <file>                                          # host PHP 8.5.11, lint o
   work" button appear only when a project is published (`jmc_has_projects()`).
 - **Live site:** https://jmcastillo-portfolio.vercel.app (Vercel project `jmcastillo-portfolio`,
   Vercel user `jmcastillo`, team scope `kaizerrrs-projects`, Hobby plan; linked via `.vercel/`,
-  gitignored). Deploy with `.\scripts\publish.ps1 -Deploy` (copies `.vercel/` into `dist/`, then
-  `vercel deploy dist --prod`). The account has two teams, so non-interactive CLI calls need
+  gitignored). The owner deploys by double-clicking `Deploy.cmd`, which runs
+  `.\scripts\publish.ps1 -Deploy` (starts Docker Desktop if needed, waits for WordPress, copies
+  `.vercel/` into `dist/`, then `vercel deploy dist --prod`). The account has two teams, so non-interactive CLI calls need
   `--scope kaizerrrs-projects`. `*.vercel.app` doesn't load from this network (TLS fails, also
   via WebFetch and `vercel curl`): the owner checks the live site from his phone.
-  The old Netlify site (jmcastillo-portfolio.netlify.app) is left up until the owner confirms
-  Vercel works, then he deletes it from the Netlify dashboard; `.netlify/` is stale after that.
+  The owner confirmed the Vercel site and form work (2026-10-11). The old Netlify site
+  (jmcastillo-portfolio.netlify.app) is no longer deployed; the owner deletes it from the
+  Netlify dashboard, and `.netlify/` is stale.
 - **Contact form is Web3Forms** (free). `.env` holds `WEB3FORMS_KEY` (public by design, ends up
   in the HTML). The exporter rewrites the form to post to `api.web3forms.com/submit` with
   `access_key`, `subject`, `from_name`, `redirect` = `STATIC_URL/message-sent/` (free plan only
@@ -137,7 +139,7 @@ Image generation (Higgsfield) costs credits: never use it without asking.
 
 - Missing from the user: personal projects (none yet), LinkedIn URL, resume copy without
   the phone number.
-- Analytics. Delete the Netlify project once Vercel is confirmed.
+- Analytics. The owner still has to delete the old Netlify project.
 
 ## graphify
 

@@ -45,6 +45,9 @@ Theme and plugin folders are bind-mounted, so edits show up on refresh.
 WordPress only runs on this computer, as the editor. The public site is a static copy: plain
 HTML, CSS, fonts and images, hosted on Vercel (Hobby plan) with no PHP or database online.
 
+To publish, double-click **`Deploy.cmd`**. It starts Docker if needed, builds the site and
+deploys it, and prints the live URL (or the error, with nothing published). From a terminal:
+
 ```powershell
 .\scripts\publish.ps1            # build dist/ from the local site
 php -S 127.0.0.1:8099 -t dist    # preview it at http://127.0.0.1:8099
