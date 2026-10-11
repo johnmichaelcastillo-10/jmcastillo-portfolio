@@ -2,7 +2,7 @@
 Theme Name:        JMC Portfolio
 Author:            John Michael Castillo
 Description:       A personal portfolio block theme. Pairs with the JMC Portfolio Core plugin for projects.
-Version:           1.4.0
+Version:           1.4.1
 Requires at least: 6.6
 Tested up to:      6.8
 Requires PHP:      8.1
@@ -1624,6 +1624,17 @@ button.wp-element-button:not(:disabled):hover {
 .aside-actions {
 	flex-direction: column;
 	gap: 0.6rem;
+}
+
+/* Core gives full-width buttons flex-basis: 100%, which in a column means full height:
+   with both links set, each button filled the card and the second wrapped off its edge.
+   Selectors match core's specificity so they win on source order. */
+.wp-block-buttons.aside-actions {
+	flex-wrap: nowrap;
+}
+
+.aside-actions > .wp-block-button.wp-block-button__width-100 {
+	flex-basis: auto;
 }
 
 .aside-actions:empty {
