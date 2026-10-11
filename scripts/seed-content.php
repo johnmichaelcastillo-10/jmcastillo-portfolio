@@ -15,7 +15,7 @@ if ( ! defined( 'WP_CLI' ) ) {
 
 update_option( 'blogdescription', 'Software developer working in C#, SQL Server and PHP' );
 
-// On the static site, Netlify Forms sends visitors here after they submit the contact form.
+// On the static site, Web3Forms sends visitors here after they submit the contact form.
 if ( ! get_page_by_path( 'message-sent' ) ) {
 	wp_insert_post(
 		array(

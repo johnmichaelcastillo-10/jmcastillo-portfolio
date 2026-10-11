@@ -1,9 +1,9 @@
 <?php
 /**
  * Exports the running local WordPress site to plain static files in dist/, ready for
- * Netlify (or any static host). Runs on the host's PHP, not in Docker:
+ * Vercel (or any static host). Runs on the host's PHP, not in Docker:
  *
- *   php scripts/export-static.php [--source=http://localhost:8088] [--url=https://example.com] [--out=dist]
+ *   php scripts/export-static.php --url=https://example.com --form-key=<web3forms key> [--source=http://localhost:8088] [--out=dist]
  *
  * What it does:
  * - Starts from the home page, a few known pages and the WordPress sitemap, then follows every
@@ -12,7 +12,9 @@
  *   url(...) references inside CSS.
  * - Rewrites the local site URL to --url (absolute, for canonical/og tags and the sitemap) or,
  *   without --url, to root-relative paths for local previews.
- * - Swaps the contact form over to Netlify Forms (WordPress's admin-post.php isn't there).
+ * - Swaps the contact form over to Web3Forms (WordPress's admin-post.php isn't there). Its
+ *   free plan only redirects back to the same domain, so --url is required when the site
+ *   has a contact form.
  * - Drops head links that point at things a static site doesn't have (REST API, feeds, RSD).
  * - Fails if any page contains a PHP warning, so a broken page can't be published.
  */
@@ -21,10 +23,11 @@ if ( PHP_SAPI !== 'cli' ) {
 	exit( 1 );
 }
 
-$opts   = getopt( '', array( 'source::', 'url::', 'out::' ) );
-$source = rtrim( $opts['source'] ?? 'http://localhost:8088', '/' );
-$target = rtrim( $opts['url'] ?? '', '/' ); // '' = root-relative output
-$out    = $opts['out'] ?? dirname( __DIR__ ) . '/dist';
+$opts     = getopt( '', array( 'source::', 'url::', 'out::', 'form-key::' ) );
+$source   = rtrim( $opts['source'] ?? 'http://localhost:8088', '/' );
+$target   = rtrim( $opts['url'] ?? '', '/' ); // '' = root-relative output
+$out      = $opts['out'] ?? dirname( __DIR__ ) . '/dist';
+$form_key = trim( $opts['form-key'] ?? '' );
 
 $src_parts = parse_url( $source );
 $src_host  = $src_parts['host'] . ( isset( $src_parts['port'] ) ? ':' . $src_parts['port'] : '' );
@@ -119,8 +122,9 @@ if ( is_dir( $out ) ) {
 	foreach ( $it as $f ) {
 		$f->isDir() ? rmdir( $f->getPathname() ) : unlink( $f->getPathname() );
 	}
+} else {
+	mkdir( $out, 0777, true );
 }
-mkdir( $out, 0777, true );
 
 $pages  = array( '/', '/projects/', '/message-sent/' );
 $assets = array();
@@ -182,7 +186,7 @@ while ( $pages ) {
 	echo "page   $path\n";
 }
 
-// The 404 page: Netlify serves /404.html for any missing path.
+// The 404 page: static hosts serve /404.html for any missing path.
 [ $status, $html ] = fetch( "$source/__static-export-404__/" );
 if ( 404 === $status ) {
 	write_file( "$out/404.html", $html );
@@ -254,29 +258,46 @@ foreach ( $m[1] as $child ) {
 }
 
 // Transform every exported HTML file.
-$netlify_form = static function ( string $html ): string {
+$static_form = static function ( string $html ) use ( $form_key, $target, &$errors ): string {
 	if ( ! str_contains( $html, 'jmc-contact-form' ) ) {
+		return $html;
+	}
+	if ( '' === $form_key || '' === $target ) {
+		$errors['form'] = 'the contact form needs --form-key (Web3Forms access key) and --url';
 		return $html;
 	}
 	$html = preg_replace(
 		'#<form class="jmc-contact-form" method="post" action="[^"]*"#',
-		'<form class="jmc-contact-form" name="contact" method="POST" action="/message-sent/" data-netlify="true" netlify-honeypot="jmc_website"',
+		'<form class="jmc-contact-form" method="POST" action="https://api.web3forms.com/submit"',
 		$html
 	);
 	$html = preg_replace(
 		'#<input type="hidden" name="action" value="jmc_contact" />#',
-		'<input type="hidden" name="form-name" value="contact" />'
-		. '<input type="hidden" name="subject" value="New message from your portfolio (%{submissionId})" />',
+		'<input type="hidden" name="access_key" value="' . htmlspecialchars( $form_key, ENT_QUOTES ) . '" />'
+		. '<input type="hidden" name="subject" value="New message from your portfolio" />'
+		. '<input type="hidden" name="from_name" value="Portfolio contact form" />'
+		. '<input type="hidden" name="redirect" value="' . htmlspecialchars( $target, ENT_QUOTES ) . '/message-sent/" />',
 		$html
 	);
 	$html = preg_replace( '#\s*<input type="hidden" name="jmc_ts" value="\d+" />#', '', $html );
-	// Netlify sets the notification's Reply-To from a field named "email", and shows "name"
-	// and "message" as the submission summary, so use plain field names on the static form.
-	return str_replace(
+	// Web3Forms rejects any submission with "botcheck" ticked.
+	$html = str_replace(
+		'Leave this empty <input type="text" name="jmc_website" tabindex="-1" autocomplete="off" />',
+		'Leave this unchecked <input type="checkbox" name="botcheck" tabindex="-1" />',
+		$html
+	);
+	// Web3Forms sets the notification's Reply-To from a field named "email", so use plain
+	// field names on the static form.
+	$html = str_replace(
 		array( 'name="jmc_name"', 'name="jmc_email"', 'name="jmc_message"' ),
 		array( 'name="name"', 'name="email"', 'name="message"' ),
 		$html
 	);
+	// The plugin's form markup changed and a pattern above stopped matching.
+	if ( preg_match( '#name="(jmc_\w+|action)"#', $html ) || ! str_contains( $html, 'name="access_key"' ) ) {
+		$errors['form'] = 'the contact form markup no longer matches the Web3Forms rewrite';
+	}
+	return $html;
 };
 
 $it = new RecursiveIteratorIterator( new RecursiveDirectoryIterator( $out, FilesystemIterator::SKIP_DOTS ) );
@@ -287,7 +308,7 @@ foreach ( $it as $f ) {
 	$html = file_get_contents( $f->getPathname() );
 	$html = preg_replace( '#<link[^>]+(wp-json|xmlrpc\.php|/feed/|EditURI|rel=["\']shortlink)[^>]*>\s*#i', '', $html );
 	$html = preg_replace( '#<meta name="generator"[^>]*>\s*#i', '', $html );
-	$html = $netlify_form( $html );
+	$html = $static_form( $html );
 	file_put_contents( $f->getPathname(), $rewrite( $html ) );
 }
 
