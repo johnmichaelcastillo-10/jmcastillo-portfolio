@@ -23,9 +23,10 @@ Hosted as a static export on Vercel (see Data).
   (SSH alias in `~/.ssh/config`, key `~/.ssh/github_johnmichaelcastillo10`). Repo-local
   `user.name` / `user.email` are set; never change them or use HTTPS for this remote.
 - Never add `Co-Authored-By` or any AI attribution to commits.
-- Work on `main`. The remote's old `master` branch is someone else's 2022 Coursera capstone
-  ("Noha M."); never reuse anything from it. Switching GitHub's default branch to `main` is
-  the user's job.
+- Work on `main`, GitHub's default and only branch. The old `master` branch (someone else's
+  2022 Coursera capstone) was deleted on 2026-10-11; never bring anything from it back.
+- `gh` isn't installed: repo settings (default branch, visibility) are changed by the owner
+  on github.com.
 - Never commit `.env`, `backups/` or the resume PDF (it contains a phone number).
 
 ## Run and verify
