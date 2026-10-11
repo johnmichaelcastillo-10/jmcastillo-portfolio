@@ -35,9 +35,7 @@ if ( ! jmc_has_projects() ) {
 <!-- wp:post-featured-image {"aspectRatio":"16/10","className":"card-media"} /-->
 
 <!-- wp:group {"className":"card-body","layout":{"type":"default"}} -->
-<div class="wp-block-group card-body"><!-- wp:post-date {"format":"Y","className":"card-year"} /-->
-
-<!-- wp:post-title {"level":3,"isLink":true,"className":"card-title"} /-->
+<div class="wp-block-group card-body"><!-- wp:post-title {"level":3,"isLink":true,"className":"card-title"} /-->
 
 <!-- wp:post-excerpt {"excerptLength":22,"className":"card-text"} /-->
 

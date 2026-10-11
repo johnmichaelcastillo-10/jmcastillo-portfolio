@@ -2,7 +2,7 @@
 Theme Name:        JMC Portfolio
 Author:            John Michael Castillo
 Description:       A personal portfolio block theme. Pairs with the JMC Portfolio Core plugin for projects.
-Version:           1.4.1
+Version:           1.4.2
 Requires at least: 6.6
 Tested up to:      6.8
 Requires PHP:      8.1
@@ -1614,11 +1614,6 @@ button.wp-element-button:not(:disabled):hover {
 	color: var(--wp--preset--color--muted);
 	font-size: var(--wp--preset--font-size--xs);
 	font-weight: 600;
-}
-
-.project-aside .wp-block-post-date {
-	color: var(--wp--preset--color--contrast);
-	font-size: var(--wp--preset--font-size--small);
 }
 
 .aside-actions {
