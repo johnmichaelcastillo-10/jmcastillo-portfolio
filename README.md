@@ -7,8 +7,19 @@ block theme, edited locally and published as a fast static site.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/screenshot-dark.webp">
-  <img alt="The portfolio's home page: a large headline, a short introduction, contact and resume buttons, and a photo of code" src="docs/screenshot-light.webp">
+  <img alt="The portfolio's home page: a large headline, a short introduction, View my work, Resume and GitHub buttons, and a photo of code" src="docs/screenshot-light.webp">
 </picture>
+
+<p>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/screenshot-project-dark.webp">
+    <img width="49%" alt="A project page for Terra &amp; Thread Studio: title, summary, a screenshot of the site, and a Project details card with the stack and a View live site button" src="docs/screenshot-project-light.webp">
+  </picture>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/screenshot-about-dark.webp">
+    <img width="49%" alt="The About section: a short introduction beside a Toolkit card listing languages, frameworks, data and tools" src="docs/screenshot-about-light.webp">
+  </picture>
+</p>
 
 ## Features
 
@@ -17,8 +28,8 @@ block theme, edited locally and published as a fast static site.
 - **Automatic dark mode** that follows the visitor's system setting.
 - **Responsive** from small phones up, with a lightweight mobile menu (no heavy core
   Navigation block, so very little JavaScript).
-- **Projects** as their own content type, tagged with skills, with live-site and source-code
-  buttons that hide themselves when empty. The Work section only appears once a project is published.
+- **Projects** as their own content type, tagged with skills, with a live-site button that
+  hides itself when empty. The Work section only appears once a project is published.
 - **Contact form** with spam protection, sent through Web3Forms on the live site.
 - **Privacy-friendly analytics:** Vercel Web Analytics on the live site, with no cookies.
 - **Link previews and SEO:** Open Graph and Twitter card tags, canonical URLs and a sitemap.
