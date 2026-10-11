@@ -91,9 +91,8 @@ The theme and plugin folders are mounted into the container, so code edits show 
 ## Editing content
 
 - **Projects:** Admin → Projects. Set a featured image, an excerpt (the card text) and skills.
-  For the "View live site" and "Source code" buttons, open the editor's ⋮ menu →
-  Preferences → General → Custom fields, then fill in `project_url` and `repo_url`.
-  A button whose field is empty is hidden.
+  For the "View live site" button, open the editor's ⋮ menu → Preferences → General →
+  Custom fields, then fill in `project_url`. The button is hidden while it is empty.
 - **Resume button:** upload the PDF under Media, then paste its URL in Settings → General →
   Resume (PDF) URL. The hero's "Resume" button is hidden until this is set.
 - **Contact form messages:** on the live site they arrive by email through Web3Forms. Locally,

@@ -5,9 +5,9 @@
 
 defined( 'ABSPATH' ) || exit;
 
+// Projects link to their live site only; the owner doesn't link source code repos.
 const JMC_PORTFOLIO_LINK_META = array(
 	'project_url' => 'Live site URL',
-	'repo_url'    => 'Source code URL',
 );
 
 function jmc_portfolio_register_content() {
