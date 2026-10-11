@@ -1,6 +1,6 @@
 #Requires -Version 5.1
 # One-time local setup: creates .env, starts the containers, installs WordPress,
-# activates the portfolio theme and plugin, and seeds sample projects.
+# activates the portfolio theme and plugin, and seeds the tagline and "Message sent" page.
 # Safe to re-run; steps that are already done are skipped.
 # Not 'Stop': in PowerShell 5.1 that turns docker's progress output on stderr into
 # errors. Native commands are checked with $LASTEXITCODE instead.
