@@ -17,3 +17,7 @@ dist/
 
 # Netlify CLI link state
 .netlify/
+
+# Vercel CLI link state and the token `vercel link` writes
+.vercel/
+.env.local

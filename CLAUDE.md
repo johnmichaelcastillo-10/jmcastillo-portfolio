@@ -12,7 +12,7 @@ volumes are `jmcastillo-portfolio_db_data` and `jmcastillo-portfolio_wp_core`).
 John Michael Castillo's personal portfolio: a WordPress block theme
 (`wp-content/themes/jmc-portfolio`) plus a plugin (`wp-content/plugins/jmc-portfolio-core`:
 projects, skills, contact form, resume link, meta tags), running locally in Docker.
-Hosting is not decided yet.
+Hosted as a static export on Vercel (see Data).
 
 ## Git and accounts (do not get wrong)
 
@@ -58,21 +58,27 @@ php -l <file>                                          # host PHP 8.5.11, lint o
   are personal work only, added by the owner. Experience duties stay generic ("internal
   business web applications"). The Work section, its nav/footer links and the hero's "View my
   work" button appear only when a project is published (`jmc_has_projects()`).
-- **Live site:** https://jmcastillo-portfolio.netlify.app (Netlify project `jmcastillo-portfolio`,
-  team `johnmichaelcastillo-10`, Free plan, this folder is linked via `.netlify/`). Deploy with
-  `.\scripts\publish.ps1 -Deploy`. Visibility, form detection and notifications are
-  dashboard-only settings (no API/CLI): https://app.netlify.com/projects/jmcastillo-portfolio
-  Project ID `6ff4e9d9-a159-48e4-9b49-237899dfc845`; the contact form registers as `contact`.
-  `netlify` is a PowerShell shim, so pass JSON through cmd:
-  `cmd /c 'netlify api listSiteForms --data "{\"site_id\":\"<id>\"}"'`. Check
-  `getSite` → `processing_settings.ignore_html_forms` is false before expecting forms.
-- **Hosting is static (Netlify).** `scripts/publish.ps1` runs `scripts/export-static.php`
+- **Live site:** https://jmcastillo-portfolio.vercel.app (Vercel project `jmcastillo-portfolio`,
+  Vercel user `jmcastillo`, team scope `kaizerrrs-projects`, Hobby plan; linked via `.vercel/`,
+  gitignored). Deploy with `.\scripts\publish.ps1 -Deploy` (copies `.vercel/` into `dist/`, then
+  `vercel deploy dist --prod`). The account has two teams, so non-interactive CLI calls need
+  `--scope kaizerrrs-projects`. `*.vercel.app` doesn't load from this network (TLS fails, also
+  via WebFetch and `vercel curl`): the owner checks the live site from his phone.
+  The old Netlify site (jmcastillo-portfolio.netlify.app) is left up until the owner confirms
+  Vercel works, then he deletes it from the Netlify dashboard; `.netlify/` is stale after that.
+- **Contact form is Web3Forms** (free). `.env` holds `WEB3FORMS_KEY` (public by design, ends up
+  in the HTML). The exporter rewrites the form to post to `api.web3forms.com/submit` with
+  `access_key`, `subject`, `from_name`, `redirect` = `STATIC_URL/message-sent/` (free plan only
+  redirects to the same domain, so `STATIC_URL` is required) and honeypot checkbox `botcheck`.
+  It fails the export if the key/URL is missing or the plugin's form markup stops matching.
+  Web3Forms' dashboard errored ("<!DOCTYPE ... is not valid JSON") when the site URL wasn't
+  live yet; deploy first, then register the domain.
+- **Hosting is static.** `scripts/publish.ps1` runs `scripts/export-static.php`
   (host PHP, crawls http://localhost:8088 from `/`, `/projects/`, `/message-sent/` and the
   sitemap, downloads every referenced asset, rewrites URLs to `STATIC_URL`, strips REST/feed
-  head links) into `dist/` (gitignored), then copies `static/` (`_headers`) in. The export
-  fails on PHP warnings or leftover localhost links. Anything that needs PHP at request time
-  won't work live: the contact form becomes a Netlify form (`name="contact"`, honeypot
-  `jmc_website`, success page `/message-sent/`); new server features must have a static
+  head links) into `dist/` (gitignored), then copies `static/` (`vercel.json`: headers,
+  `trailingSlash`) in. The export fails on PHP warnings or leftover localhost links. Anything
+  that needs PHP at request time won't work live; new server features must have a static
   equivalent. A new page reachable only by a link is found by the crawler; one not linked
   anywhere must be added to the seed list in the exporter.
 - `scripts/seed-content.php` sets the tagline and creates the `message-sent` page. Pre-removal backup with the old projects:
@@ -131,7 +137,7 @@ Image generation (Higgsfield) costs credits: never use it without asking.
 
 - Missing from the user: personal projects (none yet), LinkedIn URL, resume copy without
   the phone number.
-- Hosting choice, then SMTP for contact mail and analytics.
+- Analytics. Delete the Netlify project once Vercel is confirmed.
 
 ## graphify
 

@@ -43,26 +43,27 @@ Theme and plugin folders are bind-mounted, so edits show up on refresh.
 ## Publishing (static, serverless)
 
 WordPress only runs on this computer, as the editor. The public site is a static copy: plain
-HTML, CSS, fonts and images, hosted on Netlify with no PHP or database online.
+HTML, CSS, fonts and images, hosted on Vercel (Hobby plan) with no PHP or database online.
 
 ```powershell
 .\scripts\publish.ps1            # build dist/ from the local site
 php -S 127.0.0.1:8099 -t dist    # preview it at http://127.0.0.1:8099
-.\scripts\publish.ps1 -Deploy    # build and deploy to Netlify
+.\scripts\publish.ps1 -Deploy    # build and deploy to Vercel
 ```
 
-One-time Netlify setup:
+One-time setup:
 
-1. `npx netlify-cli login`, then `npx netlify-cli sites:create` (or `link` to an existing site)
-   in this folder.
-2. In the Netlify site settings, turn on **Forms → Enable form detection**, then add an email
-   notification under **Forms → Form notifications** so contact messages reach your inbox.
-3. Put the site's address in `.env` as `STATIC_URL=https://<your-site>.netlify.app` (or your
-   own domain) so canonical, share-preview and sitemap links are absolute.
+1. `npm install -g vercel`, `vercel login`, then `vercel link` in this folder (creates the
+   project; `.vercel/` is gitignored).
+2. Get a free access key at [web3forms.com](https://web3forms.com) with the email that should
+   receive contact messages, and put it in `.env` as `WEB3FORMS_KEY=...`.
+3. Put the site's address in `.env` as `STATIC_URL=https://<project>.vercel.app` (or your own
+   domain) so canonical, share-preview and sitemap links are absolute. Web3Forms' free plan
+   only redirects to the same domain, so the export refuses to run without it.
 
-On the static site the contact form is handled by Netlify Forms (with spam filtering and the
-hidden honeypot field); after sending, visitors land on `/message-sent/`. Locally, the same
-form still saves to Admin → Messages.
+On the static site the contact form posts to Web3Forms, which emails the message (Reply-To is
+the visitor) and sends the visitor to `/message-sent/`. Locally, the same form still saves to
+Admin → Messages. Response headers live in `static/vercel.json`.
 
 ## Editing content
 
