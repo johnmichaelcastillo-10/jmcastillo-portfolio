@@ -122,7 +122,9 @@ add_filter( 'document_title_separator', static fn() => '·' );
 add_action(
 	'wp_head',
 	static function () {
-		echo "<script>document.documentElement.classList.add('js')</script>\n";
+		// Also applies a theme chosen with the header toggle before first paint (site.js
+		// writes the same key), so a dark choice never flashes light.
+		echo "<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('jmc-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>\n";
 	},
 	0
 );

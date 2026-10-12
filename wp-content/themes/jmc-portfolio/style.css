@@ -2,7 +2,7 @@
 Theme Name:        JMC Portfolio
 Author:            John Michael Castillo
 Description:       A personal portfolio block theme. Pairs with the JMC Portfolio Core plugin for projects.
-Version:           1.4.2
+Version:           1.5.0
 Requires at least: 6.6
 Tested up to:      6.8
 Requires PHP:      8.1
@@ -40,8 +40,40 @@ Text Domain:       jmc-portfolio
 	--jmc-gutter: var(--wp--style--root--padding-left, 1.5rem);
 }
 
+/* A theme picked with the header toggle (data-theme on <html>, set before paint in
+   functions.php) wins over the system setting. Each dark rule below exists twice, for the
+   system preference and for data-theme="dark": change both. */
+:root[data-theme="light"] {
+	color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+	color-scheme: dark;
+	--wp--preset--color--base: #09090b;
+	--wp--preset--color--surface: #18181b;
+	--wp--preset--color--surface-2: #222226;
+	--wp--preset--color--line: #2a2a2f;
+	--wp--preset--color--field: #3f3f46;
+	--wp--preset--color--muted: #a1a1aa;
+	--wp--preset--color--body: #d4d4d8;
+	--wp--preset--color--contrast: #fafafa;
+	--wp--preset--color--primary: #fafafa;
+	--wp--preset--color--primary-soft: #27272a;
+	--wp--preset--color--on-primary: #09090b;
+	--wp--preset--color--accent: #fafafa;
+	--wp--preset--color--accent-soft: #27272a;
+	--wp--preset--color--success: #4ade80;
+	--wp--preset--color--warning: #fbbf24;
+	--wp--preset--color--error: #f87171;
+	--wp--preset--color--info: #a1a1aa;
+
+	--jmc-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+	--jmc-shadow-md: 0 1px 2px rgb(0 0 0 / 0.35), 0 12px 32px -16px rgb(0 0 0 / 0.7);
+	--jmc-shadow-lg: 0 2px 4px rgb(0 0 0 / 0.35), 0 24px 48px -20px rgb(0 0 0 / 0.8);
+}
+
 @media (prefers-color-scheme: dark) {
-	:root {
+	:root:not([data-theme="light"]) {
 		/* Monochrome at night: #09090B canvas, #18181B cards, #3F3F46 borders, #A1A1AA muted
 		   text, #FAFAFA ink and buttons. */
 		--wp--preset--color--base: #09090b;
@@ -324,6 +356,49 @@ header.wp-block-template-part::after {
 
 .menu-open .menu-toggle .icon-x {
 	display: block;
+}
+
+/* Light/dark toggle (site.js; hidden without JS). Sits after the nav on wide screens and
+   beside the menu button on narrow ones. The icon shows the theme it switches to. */
+.theme-toggle {
+	display: grid;
+	order: 1;
+	place-items: center;
+	width: 44px;
+	height: 44px;
+	padding: 0;
+	border: 1px solid var(--wp--preset--color--line);
+	border-radius: var(--jmc-radius-sm);
+	background: var(--wp--preset--color--surface);
+	color: var(--wp--preset--color--contrast);
+	cursor: pointer;
+	transition: background-color var(--jmc-fast) var(--jmc-ease);
+}
+
+.theme-toggle[hidden] {
+	display: none;
+}
+
+.theme-toggle:hover {
+	background: var(--wp--preset--color--surface-2);
+}
+
+.theme-toggle .icon {
+	width: 18px;
+	height: 18px;
+}
+
+.theme-toggle .icon-sun,
+.dark-theme .theme-toggle .icon-moon {
+	display: none;
+}
+
+.dark-theme .theme-toggle .icon-sun {
+	display: block;
+}
+
+.site-header .site-menu {
+	margin-left: auto;
 }
 
 /* =========================================================================
@@ -1043,14 +1118,23 @@ button.wp-element-button:not(:disabled):hover {
 
 /* Photos are lit for white pages; take the glare off them on the dark canvas. */
 @media (prefers-color-scheme: dark) {
-	:root {
+	:root:not([data-theme="light"]) {
 		--jmc-photo-brightness: 0.85;
 	}
 
-	.hero-figure img,
-	.wp-block-post-featured-image:not(.card-media) img {
+	:root:not([data-theme="light"]) .hero-figure img,
+	:root:not([data-theme="light"]) .wp-block-post-featured-image:not(.card-media) img {
 		filter: brightness(0.85) saturate(0.92);
 	}
+}
+
+:root[data-theme="dark"] {
+	--jmc-photo-brightness: 0.85;
+}
+
+:root[data-theme="dark"] .hero-figure img,
+:root[data-theme="dark"] .wp-block-post-featured-image:not(.card-media) img {
+	filter: brightness(0.85) saturate(0.92);
 }
 
 /* ---- Project cards ---- */
@@ -1496,12 +1580,19 @@ button.wp-element-button:not(:disabled):hover {
 }
 
 @media (prefers-color-scheme: dark) {
-	.contact-panel {
+	:root:not([data-theme="light"]) .contact-panel {
 		border-color: var(--wp--preset--color--line);
 		background:
 			radial-gradient(70% 90% at 0% 0%, rgb(250 250 250 / 0.06), transparent 62%),
 			#121214;
 	}
+}
+
+:root[data-theme="dark"] .contact-panel {
+	border-color: var(--wp--preset--color--line);
+	background:
+		radial-gradient(70% 90% at 0% 0%, rgb(250 250 250 / 0.06), transparent 62%),
+		#121214;
 }
 
 .contact-panel::before {
@@ -1904,6 +1995,13 @@ footer.wp-block-template-part {
 @media (max-width: 800px) {
 	.js .menu-toggle {
 		display: grid;
+		margin-left: -1rem;
+	}
+
+	/* The nav is a dropdown here: the toggle sits just before the menu button. */
+	.theme-toggle {
+		order: 0;
+		margin-left: auto;
 	}
 
 	.js .site-menu {

@@ -8,7 +8,8 @@
  *
  * Plain markup in a Custom HTML block rather than the Navigation block (which inlines
  * ~20 KB of CSS and loads the Interactivity API). assets/js/site.js wires the menu button
- * and marks the section in view. The menu only collapses behind the button when <html>
+ * and the light/dark toggle (hidden until then), and marks the section in view. The menu
+ * only collapses behind the button when <html>
  * has the `js` class (added inline in <head>), so without JS the links stay visible.
  */
 ?>
@@ -18,6 +19,10 @@
 		<span class="brand-mark" aria-hidden="true">JM</span>
 		<span class="brand-name">John Michael Castillo</span>
 	</a>
+	<button class="theme-toggle" type="button" hidden aria-label="Switch to dark theme" data-label-dark="Switch to dark theme" data-label-light="Switch to light theme">
+		<?php echo jmc_icon( 'moon' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG. ?>
+		<?php echo jmc_icon( 'sun' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG. ?>
+	</button>
 	<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu">
 		<?php echo jmc_icon( 'menu' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG. ?>
 		<?php echo jmc_icon( 'x' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG. ?>
