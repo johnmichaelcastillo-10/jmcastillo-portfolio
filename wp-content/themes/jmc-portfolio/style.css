@@ -2,7 +2,7 @@
 Theme Name:        JMC Portfolio
 Author:            John Michael Castillo
 Description:       A personal portfolio block theme. Pairs with the JMC Portfolio Core plugin for projects.
-Version:           1.5.0
+Version:           1.5.1
 Requires at least: 6.6
 Tested up to:      6.8
 Requires PHP:      8.1
@@ -1909,7 +1909,10 @@ footer.wp-block-template-part {
 	}
 }
 
-/* Content fades up as it scrolls in, where the browser can do it in CSS alone. */
+/* Content rises as it scrolls in, where the browser can do it in CSS alone. Motion only, no
+   fade: the animation is tied to scroll position, so anything resting at the bottom edge of
+   the screen stayed half-transparent and its text failed contrast (Lighthouse, /projects/,
+   2026-10-26). */
 @supports (animation-timeline: view()) {
 	@media (prefers-reduced-motion: no-preference) {
 		.section-head,
@@ -1919,10 +1922,16 @@ footer.wp-block-template-part {
 		.timeline-item,
 		.education,
 		.contact-panel {
-			animation: jmc-rise linear both;
+			animation: jmc-scroll-rise linear both;
 			animation-timeline: view();
 			animation-range: entry 0% entry 28%;
 		}
+	}
+}
+
+@keyframes jmc-scroll-rise {
+	from {
+		transform: translateY(14px);
 	}
 }
 
